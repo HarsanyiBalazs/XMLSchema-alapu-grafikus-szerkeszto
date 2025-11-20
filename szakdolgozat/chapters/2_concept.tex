@@ -1,30 +1,22 @@
 \Chapter{Koncepció}
 
-\Section{A fejezet célja}
+\\Section{Mi az XML}
 
-Ez a fejezet még nem a saját eredményekkel foglalkozik, hanem bemutatja, mi a problémakör, milyen módszerekkel, milyeneredményeket sikerült elérni eddig másoknak.
+Az XML (Extensible Markup Language)egy egyszerű és rugalmas jelölőnyelv és fájlformátum, amit adatok rendezésére, tárolására és szállítására használnak. A XML Working Group (eredetileg SGML Editorial Review Board) 1996-ban kezdte el fejlesztését, aminek első verziója 1998-ben jelent meg, a W3C ajánlásával. A tervezés során arra törekedtek, hogy az XML-feldolgozó programok könnyen elkészíthetők legyenek, és az XML számos különféle alkalmazással kompatibilisen működjön. A dokumentumoknak gyorsan és egyszerűen kialakíthatóknak kell lenniük, továbbá fontos szempont volt az is, hogy az ember számára olvashatók maradjanak.
 
-A hivatkozások jelentős része ehhez a fejezethez szokott kötődni.
-(Egy hivatkozás például így néz ki \cite{coombs1987markup}.)
-Itt lehet bemutatni a hasonló alkalmazásokat.
+Egy XML dokumentum nem előre, hanem egyénileg definiált címkékből áll, ezeknek lehetnek értékkel ellátott attribútumai és tartalma. Egy címke tartalma, állhat szövegből,további címkékből vagy lehet üres is. A címke és attribútumok tetszés szerint nevezhetőek és a címkék bármilyen komplexitási szintre beágyazhatóak. Az XML kizárólag az információ rendszerezésére összpontosít.
 
-\Section{Tartalom és felépítés}
+\Section{XML sémák}
 
-A fejezet tartalma témától függően változhat. Az alábbiakat attól függően különböző arányban tartalmazhatják.
-\begin{itemize}
-\item Irodalomkutatás. Amennyiben a dolgozat egy módszer kidolgozására, kifejlesztésére irányul, akkor itt lehet részletesen végignézni (módszertani vagy időrendi bontásban), hogy az eddigiekben milyen eredmények születtek a témakörben.
-\item Technológia. Mivel jellemzően kutatásról vagy szoftverfejlesztésről van szó, ezért annak a jellemző elemeit, technikai részleteit itt kell bemutatni.
-Ez tehát egy módszeres bevezetés ahhoz, hogy ha valaki nem jártas a témakörben, akkor tudja, hogy a dolgozat milyen aktuálisan elérhető eredményeket, eszközöket használt fel.
-\item Piackutatás. Bizonyos témáknál új termék vagy szolgáltatás kifejlesztése a cél.
-Ekkor érdemes annak alaposan utánanézni, hogy aktuálisan milyen eszközök érhetők el a piacon.
-Ez szoftverek esetében a hasonló alkalmazások bemutatását, táblázatos formában történő összehasonlítását jelentheti.
-Szerepelhetnek képek és észrevételek a viszonyításként bemutatott alkalmazásokhoz.
-\item Követelmény specifikáció. Külön szakaszban érdemes részletesen kitérni az elkészítendő alkalmazással kapcsolatos követelményekre.
-Ehhez tartozhatnak forgatókönyvek (\textit{scenario}-k).
-A szemléletesség kedvéért lehet hozzájuk képernyőkép vázlatokat is készíteni, vagy a használati eseteket más módon szemléltetni.
-\end{itemize}
+Az XML sémák olyan opcionális leírások vagy fájlok, amellyel szabályozni lehet egy XML dokumentum  szerkezetét és tartalmát. A séma tartalmazhatja, hogy milyen elemek és attribútumok szerepelhetnek egy XML-ben, milyen típusú adatok megengedettek, milyen sorrendben jelenhetnek meg, illetve melyek kötelezők vagy opcionálisak. Egy XML dokumentum csak akkor tekinthető érvényesnek, ha a séma összes elvárásának megfelel.
 
-\Section{Amit csak említés szintjén érdemes szerepeltetni}
+Az XML sémák azért lényegesek, mert garantálják az XML-fájlok egységes felépítését és könnyű feldolgozhatóságát. A séma meghatározza a dokumentum szerkezetét, így biztosítva, hogy a program helyesen tudja értelmezni, és minimalizálva a futás közbeni hibák kockázatát. Emellett a validálás segítségével gyorsan és egyszerűen kiszűrhetők a dokumentumban előforduló hibák.
 
-Az olvasóról annyit feltételezhetünk, hogy programozásban valamilyen szinten járatos, és a matematikai alapfogalmakkal sem ebben a dolgozatban kell megismertetni.
-A speciális eszközök, programozási nyelvek, matematikai módszerekk és jelölések persze jó, hogy ha említésre kerülnek, de nem kell nagyon belemenni a közismertnek tekinthető dolgokba.
+Az első sémanyelv, a DTD (document type definition) már valamilyen formában az XML megjelenése előtt is jelen volt, mivel az SGML nyelvcsalád általános használatához volt kifejlesztve, így csak a meglévő nyelvet kellet átdolgozni. A DTD definiálható saját fájlban, de akár az XML dokumentumban is. A DTD alkalmas megadni az elemeket, azoknak a tartalmát, számosságát és sorrendjét, az attríbútomokat, és ezeken felül entitásokkal hivatkozásokat lehet készíteni. Bár az alapvetők megtalálhatóak, a nyelvnek nagy hiányosságai vannak. Kevés az adattípusok száma és nem képes újabb, komplexebb típusokat definiálni, így nem lehet megkötéseket tenni a szövegértékeknek. A névterek kezelésére sem képes, így a több forrásból származó XML állományok kezelésében problémás.További hátránya, hogy a szintaxisa eltér az XML-től, így más XML-t kezelő eszközökkel nem használható. Mindezek miatt viszonylag hamar megjelentek az újabb, fejlettebb sémanyelvek, amelyek fokozatosan kiszorították a DTD használatát.
+
+
+%https://www.xml.com/pub/a/w3j/s3.bosak.html
+
+%https://www.w3.org/TR/REC-xml/
+
+%https://www.w3schools.com/xml/xml_dtd_intro.asp
