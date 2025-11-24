@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "libxml2-wasm": "^0.6.0"
+  }
+}

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- A gyokerelem nevterrel es a schema helyevel  -->
+
+<Vallalat xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="vallalat.xsd">
+
+    <!-- A dolgozok adatai  -->
+
+    <Dolgozo id="d1" D_O="o1">
+        <Fizetes></Fizetes>
+        <Nev>Lakatos Ottó</Nev>
+        <Cim>  
+            <Iranyito_szam>3744</Iranyito_szam>
+            <Varos>Kazincbarcika</Varos>
+            <Utca>Tancsics Utca 22</Utca>
+        </Cim>
+        <Vegzettseg>Érettségi</Vegzettseg>
+        <E-mail>lakott@gmail.com</E-mail>
+        <E-mail>lakO@ceges.com</E-mail>
+        <E-mail>lakotthoni@freemail.com</E-mail>
+    </Dolgozo>
+
+    <Dolgozo id="d2" D_O="o2">
+        <Fizetes>2000000</Fizetes>
+        <Nev>Tóth Balázs</Nev>
+        <Cim>  
+            <Iranyito_szam>2252</Iranyito_szam>
+            <Varos>Miskolc</Varos>
+            <Utca>Hosok ut 1</Utca>
+        </Cim>
+        <E-mail>tthB@freemail.hu</E-mail>
+        <E-mail>toThB@ceges.com</E-mail>
+        <E-mail>tthB@yahoo.hu</E-mail>
+    </Dolgozo>
+
+    <Dolgozo  D_O="o3">
+        <Fizetes>120000</Fizetes>
+        <Nev>Tóth Krisztina</Nev>
+        <Cim>  
+            <Iranyito_szam>2252</Iranyito_szam>
+            <Varos>Miskolc</Varos>
+            <Utca>Hosok ut 1</Utca>
+        </Cim>
+        <Vegzettseg>Diploma</Vegzettseg>
+        <E-mail>ttkr@freemail.hu</E-mail>
+        <E-mail>toKrB@ceges.com</E-mail>
+        <E-mail>ttKrB@yahoo.hu</E-mail>
+    </Dolgozo>
+
+    <!-- A beosztasok adatai  -->
+
+    <Beosztas BID="b1" B_D="d1">
+        <Minimum_vegzettseg>Érettségi</Minimum_vegzettseg>
+        <Beosztas_nev>Leltár Menedzser</Beosztas_nev>
+    </Beosztas>
+
+    <Beosztas BID="b2" B_D="d2">
+        <Minimum_vegzettseg>Diploma</Minimum_vegzettseg>
+        <Beosztas_nev>Emberi erőforrások Menedzser</Beosztas_nev>
+    </Beosztas>
+
+    <Beosztas BID="b3" B_D="d3">
+        <Minimum_vegzettseg>Diploma</Minimum_vegzettseg>
+        <Beosztas_nev>Programozó</Beosztas_nev>
+    </Beosztas>
+
+    <!-- Az eszkozok adatai  -->
+
+    <Eszkoz EID="e1" E_D="d1">
+        <Eszkoz_nev>Telefon</Eszkoz_nev>
+        <Ar>100000</Ar>
+    </Eszkoz>
+
+    <Eszkoz EID="e2" E_D="d2">
+        <Eszkoz_nev>Laptop</Eszkoz_nev>
+        <Ar>300000</Ar>
+    </Eszkoz>
+
+    <Eszkoz EID="e3" E_D="d3">
+        <Eszkoz_nev>Laptop</Eszkoz_nev>
+        <Ar>300000</Ar>
+    </Eszkoz>
+
+    <!-- Az osztalyok adatai  -->
+
+    <Osztaly OID="o1">
+        <Osztaly_nev>Leltár</Osztaly_nev>
+    </Osztaly>
+
+    <Osztaly OID="o2">
+        <Osztaly_nev>Emberi erőforrások</Osztaly_nev>
+    </Osztaly>
+
+    <Osztaly OID="o3">
+        <Osztaly_nev>Informatika</Osztaly_nev>
+    </Osztaly>
+
+    <!-- Az osztalyok és az epuletek osszekotteteseinek adatai  -->
+
+    <Osztaly-Epulet_beosztas OE_O="o1" OE_E="ep1">
+        <Mikortol>2001-12-31</Mikortol>
+    </Osztaly-Epulet_beosztas>
+
+    <Osztaly-Epulet_beosztas OE_O="o2" OE_E="ep2">
+        <Mikortol>1999-04-12</Mikortol>
+    </Osztaly-Epulet_beosztas>
+
+    <Osztaly-Epulet_beosztas OE_O="o3" OE_E="ep3">
+        <Mikortol>2000-08-10</Mikortol>
+    </Osztaly-Epulet_beosztas>
+
+    <!-- Az epuletek adatai  -->
+
+    <Epulet ÉID="ep1">
+        <Epulet_nev>Raktár 1</Epulet_nev>
+        <Cim>  
+            <Iranyito_szam>3704</Iranyito_szam>
+            <Varos>Berente</Varos>
+            <Utca>Berente út 5</Utca>
+        </Cim>
+    </Epulet>
+
+    <Epulet ÉID="ep2">
+        <Epulet_nev>Fő épület</Epulet_nev>
+        <Cim>  
+            <Iranyito_szam>3744</Iranyito_szam>
+            <Varos>Kazincbarcika</Varos>
+            <Utca>Kazinc út 5</Utca>
+        </Cim>
+    </Epulet>
+
+    <Epulet ÉID="ep3">
+        <Epulet_nev>Informatika épület</Epulet_nev>
+        <Cim>  
+            <Iranyito_szam>3744</Iranyito_szam>
+            <Varos>Kazincbarcika</Varos>
+            <Utca>Petőfi út 2</Utca>
+        </Cim>
+    </Epulet>
+
+</Vallalat>
