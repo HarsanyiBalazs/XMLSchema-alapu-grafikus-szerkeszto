@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Vendeglatas xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="vendeglatas.xsd">
+
+    <Etterem ekod="e1">
+        <Nev>Trofea</Nev>
+        <Cim>
+            <Varos>Budapest</Varos>
+            <Utca>Visegradi</Utca>
+            <Hazszam>13</Hazszam>
+        </Cim>
+        <Csillag>4</Csillag>
+    </Etterem>
+
+    <Etterem ekod="e2">
+        <Nev>Grundel</Nev>
+        <Cim>
+            <Varos>Kazincbarcika</Varos>
+            <Utca>Tancsics</Utca>
+            <Hazszam>20</Hazszam>
+        </Cim>
+        <Csillag>3</Csillag>
+    </Etterem>
+
+    <Foszakacs fkod="f1" e_f="e1">
+        <Nev>Benedek Elek</Nev>
+        <Eletkor>35</Eletkor>
+        <Vegzettseg>Szakkozep iskola</Vegzettseg>
+        <Vegzettseg>Le Cordon Bleu</Vegzettseg>
+        <Vegzettseg>Institut Paul Bocuse</Vegzettseg>
+    </Foszakacs>
+
+    <Foszakacs fkod="f2" e_f="e2">
+        <Nev>Mihaly Jozsef</Nev>
+        <Eletkor>32</Eletkor>
+        <Vegzettseg>Foiskola</Vegzettseg>
+        <Vegzettseg>Le Cordon Bleu</Vegzettseg>
+    </Foszakacs>
+
+    <Szakacs szkod="sz1" e_sz="e1">
+        <Nev>Otlet Elek</Nev>
+        <Reszleg>Saucer</Reszleg>
+        <Vegzettseg>Szakkozep iskola</Vegzettseg>
+        <Vegzettseg>Le Cordon Bleu</Vegzettseg>
+    </Szakacs>
+
+    <Szakacs szkod="sz2" e_sz="e2">
+        <Nev>Haragos Antal</Nev>
+        <Reszleg>Takarito</Reszleg>
+        <Vegzettseg>Szakkozep iskola</Vegzettseg>
+        <Vegzettseg>Le Cordon Bleu</Vegzettseg>
+    </Szakacs>
+
+    <Gyakornok gykod="gy1" e_gy="e1">
+        <Nev>Bordas David</Nev>
+        <Gyakorlat>
+            <Kezdete>2024.10.08.</Kezdete>
+            <Idotartama>2 honap</Idotartama>
+        </Gyakorlat>
+        <Muszak>Delelott</Muszak>
+        <Muszak>Este</Muszak>
+    </Gyakornok>
+
+    <Gyakornok gykod="gy2" e_gy="e2">
+        <Nev>Bordas Roland</Nev>
+        <Gyakorlat>
+            <Kezdete>2024.10.08.</Kezdete>
+            <Idotartama>3 honap</Idotartama>
+        </Gyakorlat>
+        <Muszak>Delutan</Muszak>
+    </Gyakornok>
+
+    <Vendeg vkod="v1">
+        <Cim>
+            <Varos>Kazincbarcika</Varos>
+            <Utca>Almos</Utca>
+            <Hazszam>2</Hazszam>
+        </Cim>
+        <Nev>Orosz Jozsef</Nev>
+        <Eletkor>22</Eletkor>
+    </Vendeg>
+
+    <Vendeg vkod="v2">
+        <Cim>
+            <Varos>Budapest</Varos>
+            <Utca>Hosok</Utca>
+            <Hazszam>66</Hazszam>
+        </Cim>
+        <Nev>Lakatos Antonia</Nev>
+        <Eletkor>29</Eletkor>
+    </Vendeg>
+
+    <Rendeles e_v_e="gy1" e_v_v="v1">
+        <Osszeg>5000</Osszeg>
+        <Etel>Rantotthus</Etel>
+    </Rendeles>
+
+    <Rendeles e_v_e="gy2" e_v_v="v2">
+        <Osszeg>7000</Osszeg>
+        <Etel>Rakott krumpli</Etel>
+    </Rendeles>
+
+</Vendeglatas>
