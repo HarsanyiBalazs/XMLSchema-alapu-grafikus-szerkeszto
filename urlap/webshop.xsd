@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="CurrentOrders">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="UserProfile" type="userType" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element name="Order" type="orderType" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <xs:key name="profileKey">
+            <xs:selector xpath="UserProfile" />
+            <xs:field xpath="@userID" />
+        </xs:key>
+
+        <xs:key name="orderKey">
+            <xs:selector xpath="Order" />
+            <xs:field xpath="@orderID" />
+        </xs:key>
+
+        <xs:keyref refer="profileKey" name="FK_UserProfile_Order">
+            <xs:selector xpath="Order" />
+            <xs:field xpath="@FK_UID_OID" />
+        </xs:keyref>
+
+    </xs:element>
+
+
+    <xs:complexType name="userType">
+        <xs:sequence>
+            <xs:element name="UserName" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="([a-zA-Z0-9]){5,}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="UserAddress" type="addressType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Name" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="E-mail" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="([a-zA-Z0-9])+@([a-zA-Z0-9])+\.([a-zA-Z0-9])+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="userID" type="ProfileKeyType" use="required" />     
+    </xs:complexType>
+
+
+    <xs:complexType name="orderType">
+        <xs:sequence>
+            <xs:element name="Item" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ItemName" type="xs:string"></xs:element>
+                        <xs:element name="ItemPrice" type="xs:positiveInteger"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="BillingAddress" type="addressType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="orderDate" type="xs:date" use="required"/>
+        <xs:attribute name="orderID" type="xs:string" use="required" />
+        <xs:attribute name="FK_UserProfile_Order" type="ProfileKeyType" use="required" />
+    </xs:complexType>
+
+    <xs:simpleType name="ProfileKeyType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{4}[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
+
+
+    <xs:complexType name="addressType">
+        <xs:all>
+            <xs:element name="Country">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Hungary"></xs:enumeration>
+                        <xs:enumeration value="Slovakia"></xs:enumeration>
+                        <xs:enumeration value="Austria"></xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="PostCode" >
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]{4,5}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Town" type="xs:string"></xs:element>
+            <xs:element name="StreetAddress" type="xs:string"></xs:element>
+        </xs:all>
+    </xs:complexType>
+
+
+</xs:schema>

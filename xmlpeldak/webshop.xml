@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- A gyokerelem nevterrel es a schema helyevel  -->
+
+<CurrentOrders xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="webshop.xsd">
+
+    <UserProfile userID="TUSR5324" >
+        <UserName>TestUser5</UserName>
+        <Name>Tom Jhonson</Name>
+        <E-mail>TJH@fmail.com</E-mail>
+    </UserProfile>
+
+    <UserProfile userID="TLAR5100" >
+        <UserName>ADMINaccount</UserName>
+        <UserAddress>
+            <Country>Hungary</Country>
+            <PostCode>4215</PostCode>
+            <StreetAddress>Hosok Tere 1</StreetAddress>
+            <Town>Budapest</Town>
+        </UserAddress>
+        <Name>Timothy Smith</Name>
+        <E-mail>TJH@fmail.com</E-mail>
+    </UserProfile>
+
+    <Order orderDate="2025-11-24" orderID="KGLF22" FK_UserProfile_Order="TLAR5100">
+       <Item>
+            <ItemName>Iphone 6 pro</ItemName>
+            <ItemPrice>6444</ItemPrice>
+       </Item> 
+       <BillingAddress>
+            <Country>Hungary</Country>
+            <PostCode>4215</PostCode>
+            <StreetAddress>Hosok Tere 1</StreetAddress>
+            <Town>Budapest</Town>
+       </BillingAddress>
+    </Order>
+
+    <Order orderDate="2025-11-25" orderID="KLPS82" FK_UserProfile_Order="TUSR5324">
+       <Item>
+            <ItemName>Pro Gamer Mouse Ultra</ItemName>
+            <ItemPrice>8700</ItemPrice>
+       </Item> 
+       <Item>
+            <ItemName>Pro Gamer Headset Ultra</ItemName>
+            <ItemPrice>20100</ItemPrice>
+       </Item> 
+       <BillingAddress>
+            <Country>Slovakia</Country>
+            <PostCode>05215</PostCode>
+            <StreetAddress>Example Street 1</StreetAddress>
+            <Town>Prague</Town>
+       </BillingAddress>
+    </Order>
+
+    <Order orderDate="2025-11-25" orderID="RSAM01" FK_UserProfile_Order="TUSR5324">
+       <Item>
+            <ItemName>Iphone 6 pro</ItemName>
+            <ItemPrice>6444</ItemPrice>
+       </Item> 
+       <BillingAddress>
+            <Country>Austria</Country>
+            <PostCode>11151</PostCode>
+            <StreetAddress>Vienna Street 22</StreetAddress>
+            <Town>Vienna</Town>
+       </BillingAddress>
+    </Order>
+
+</CurrentOrders>

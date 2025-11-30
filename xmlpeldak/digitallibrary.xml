@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<DigitalLibrary xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="digitallibrary.xsd">
+    <Book>
+        <Author>JK. Rowling</Author>
+        <BookName>Harry Potter</BookName>
+        <ReleaseDate>2000-10-10</ReleaseDate>
+        <FileFormats>pdf epub mobi</FileFormats>
+        <Price>500HUF 3.00ZLOTY 2.55EUR</Price>
+    </Book>
+    <Book>
+        <Author>J. R. R. Tolkien</Author>
+        <BookName>The Hobbit</BookName>
+        <ReleaseDate>1937-09-21</ReleaseDate>
+        <FileFormats>pdf epub mobi mp3</FileFormats>
+        <Price>2300HUF 31.00ZLOTY 11.00EUR</Price>
+    </Book>
+    <Book>
+        <Author>Miguel de Cervantes</Author>
+        <BookName>Don Quixote</BookName>
+        <ReleaseDate>1605-11-24</ReleaseDate>
+        <FileFormats>epub mobi</FileFormats>
+        <Price>2000HUF 8.15ZLOTY 7.00EUR</Price>
+    </Book>
+</DigitalLibrary>

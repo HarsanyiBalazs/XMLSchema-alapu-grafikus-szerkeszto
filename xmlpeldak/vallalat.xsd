@@ -95,7 +95,13 @@
     <xs:element name="Fizetes" type="xs:positiveInteger" />
     <xs:element name="Nev" type="xs:string" />
     <xs:element name="Vegzettseg" type="xs:string" />
-    <xs:element name="E-mail" type="xs:string" />
+    <xs:element name="E-mail">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                 <xs:pattern value="([a-zA-Z0-9])+@([a-zA-Z0-9])+\.([a-zA-Z0-9])+"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
 
 
     <!--a cimtipus es a benne levo elemek-->
