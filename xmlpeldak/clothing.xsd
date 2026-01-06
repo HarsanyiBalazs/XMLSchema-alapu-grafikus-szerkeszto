@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="clothing">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="clothing_set" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="head"></xs:element>
+                            <xs:element ref="torso"></xs:element>
+                            <xs:element ref="legs"></xs:element>
+                            <xs:element ref="feet"></xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="head">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="bowler hat"></xs:enumeration>
+                <xs:enumeration value="bucket hat"></xs:enumeration>
+                <xs:enumeration value="sun hat"></xs:enumeration>
+                <xs:enumeration value="baseball cap"></xs:enumeration>
+                <xs:enumeration value="beanie"></xs:enumeration>
+                <xs:enumeration value="fez"></xs:enumeration>
+                <xs:enumeration value="hatless"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="torso">
+        <xs:annotation>
+            <xs:appinfo>type="select"</xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="poncho"></xs:enumeration>
+                <xs:enumeration value="t-shirt"></xs:enumeration>
+                <xs:enumeration value="sweater"></xs:enumeration>
+                <xs:enumeration value="jacket"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="legs">
+        <xs:annotation>
+            <xs:appinfo>type="radio"</xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="jeans"></xs:enumeration>
+                <xs:enumeration value="shorts"></xs:enumeration>
+                <xs:enumeration value="skirt"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="feet">
+        <xs:annotation>
+            <xs:appinfo>type="checkbox"</xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="shoes"></xs:enumeration>
+                <xs:enumeration value="sandals"></xs:enumeration>
+                <xs:enumeration value="boots"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+
+
+
+
+</xs:schema>

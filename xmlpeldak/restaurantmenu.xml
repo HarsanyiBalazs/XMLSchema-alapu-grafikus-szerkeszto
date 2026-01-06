@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="restaurantmenu.xsd">
+    <item>
+        <name>Spaghetti</name>
+        <price>3200</price>
+        <available>Yes</available>
+    </item>
+    <item>
+        <name>Tomato soup</name>
+        <price>2100</price>
+        <available>Yes</available>
+    </item>
+    <item>
+        <name>Pizza</name>
+        <price>5000</price>
+        <available>No</available>
+    </item>
+</menu>

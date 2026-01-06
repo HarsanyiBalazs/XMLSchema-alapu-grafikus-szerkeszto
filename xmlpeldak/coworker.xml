@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Form xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="coworker.xsd">
+    <Performance>
+        <Jhon_Smith>
+            1
+        </Jhon_Smith>
+        <Jane_Doe>
+            4
+        </Jane_Doe>
+        <George_Washington>
+            6
+        </George_Washington>
+        <Joe_Stalone>
+            2
+        </Joe_Stalone>
+    </Performance>
+    <Promotion>
+        George_Washington
+        Jane_Doe
+    </Promotion>
+</Form>

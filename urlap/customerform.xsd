@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="form">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="overall_satisfaction">
+                    <xs:annotation>
+                        <xs:appinfo>type="radio"</xs:appinfo>
+                        <xs:documentation>How would you rate your overall satisfaction with our company?</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:enumeration value="1"></xs:enumeration>
+                            <xs:enumeration value="2"></xs:enumeration>
+                            <xs:enumeration value="3"></xs:enumeration>
+                            <xs:enumeration value="4"></xs:enumeration>
+                            <xs:enumeration value="5"></xs:enumeration>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="future">
+                    <xs:annotation>
+                        <xs:appinfo>type="radio"</xs:appinfo>
+                        <xs:documentation>How likely are you to use our services again?</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:enumeration value="1"></xs:enumeration>
+                            <xs:enumeration value="2"></xs:enumeration>
+                            <xs:enumeration value="3"></xs:enumeration>
+                            <xs:enumeration value="4"></xs:enumeration>
+                            <xs:enumeration value="5"></xs:enumeration>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="speed">
+                    <xs:annotation>
+                        <xs:appinfo>type="radio"</xs:appinfo>
+                        <xs:documentation>How fast would you rate the speed of delivery?</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:enumeration value="1"></xs:enumeration>
+                            <xs:enumeration value="2"></xs:enumeration>
+                            <xs:enumeration value="3"></xs:enumeration>
+                            <xs:enumeration value="4"></xs:enumeration>
+                            <xs:enumeration value="5"></xs:enumeration>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="further_comments" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>type="textarea"</xs:appinfo>
+                        <xs:documentation>Do you have any further comments?</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="data_agreement" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>You agree to our data retention policies</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

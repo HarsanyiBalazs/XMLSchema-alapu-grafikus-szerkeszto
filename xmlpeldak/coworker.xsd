@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="Form">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Performance" type="performanceType">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            type="multiple-choice"
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Rate the performance of your co-workers
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Promotion" type="promotionType">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            type="checkbox"
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Select which of your co-worker you think deserves to be promoted
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="promotionType">
+        <xs:list itemType="nameType"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="nameType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Jhon_Smith"></xs:enumeration>
+            <xs:enumeration value="Jane_Doe"></xs:enumeration>
+            <xs:enumeration value="George_Washington"></xs:enumeration>
+            <xs:enumeration value="Joe_Stalone"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="performanceType">
+        <xs:sequence>
+            <xs:element name="Jhon_Smith" type="ratingType"></xs:element>
+            <xs:element name="Jane_Doe" type="ratingType"></xs:element>
+            <xs:element name="George_Washington" type="ratingType"></xs:element>
+            <xs:element name="Joe_Stalone" type="ratingType"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ratingType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:enumeration value="1"></xs:enumeration>
+            <xs:enumeration value="2"></xs:enumeration>
+            <xs:enumeration value="3"></xs:enumeration>
+            <xs:enumeration value="4"></xs:enumeration>
+            <xs:enumeration value="5"></xs:enumeration>
+            <xs:enumeration value="6"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+</xs:schema>

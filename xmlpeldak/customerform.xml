@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<form xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="customerform.xsd">
+    <overall_satisfaction>1</overall_satisfaction>
+    <future>1</future>
+    <speed>4</speed>
+    <further_comments>the deliveryman kicked my dog,I am never buying from here again</further_comments>
+    <data_agreement>true</data_agreement>
+</form>

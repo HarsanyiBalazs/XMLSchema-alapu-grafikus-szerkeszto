@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<clothing xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="clothing.xsd">
+    <clothing_set>
+        <head>hatless</head>
+        <torso>poncho</torso>
+        <legs>jeans</legs>
+        <feet>shoes</feet>
+    </clothing_set>
+</clothing>

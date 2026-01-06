@@ -23,7 +23,6 @@
             <xs:selector xpath="Order" />
             <xs:field xpath="@FK_UID_OID" />
         </xs:keyref>
-
     </xs:element>
 
 
@@ -55,7 +54,6 @@
         <xs:attribute name="userID" type="ProfileKeyType" use="required" />     
     </xs:complexType>
 
-
     <xs:complexType name="orderType">
         <xs:sequence>
             <xs:element name="Item" minOccurs="1" maxOccurs="unbounded">
@@ -79,10 +77,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-
-
-
-
     <xs:complexType name="addressType">
         <xs:all>
             <xs:element name="Country">
@@ -105,6 +99,5 @@
             <xs:element name="StreetAddress" type="xs:string"></xs:element>
         </xs:all>
     </xs:complexType>
-
 
 </xs:schema>

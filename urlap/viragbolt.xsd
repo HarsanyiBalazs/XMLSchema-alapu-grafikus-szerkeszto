@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="viragbolt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="csokor" type="csokorType" minOccurs="1" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:appinfo>type="multiple-choice-checkbox"</xs:appinfo>
+                        <xs:documentation>Válaszd ki, hogy milyen virágok legyenek csokorban!</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="hatarido" type="hataridoType" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Válaszd ki mikorra legyen kész a megrendelés! (Csak 2026 áprilisától küldjük a csokrokat)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="hataridoType">
+        <xs:restriction base="xs:date">
+            <xs:minInclusive value="2026-04-01"></xs:minInclusive>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="csokorType">
+        <xs:sequence>
+            <xs:element name="rozsa" type="ratingType"></xs:element>
+            <xs:element name="liliom" type="ratingType"></xs:element>
+            <xs:element name="haranglab" type="ratingType"></xs:element>
+            <xs:element name="tulipan" type="ratingType"></xs:element>
+            <xs:element name="hortenzia" type="ratingType"></xs:element>
+            <xs:element name="orchidea" type="ratingType"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="meret" type="meretType" use="required">
+            <xs:annotation>
+                <xs:documentation>Milyen méretű legyen a csokor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="ratingType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="nagyon nem szeretnem"></xs:enumeration>
+            <xs:enumeration value="nem szeretnem"></xs:enumeration>
+            <xs:enumeration value="semleges"></xs:enumeration>
+            <xs:enumeration value="szeretnem"></xs:enumeration>
+            <xs:enumeration value="nagyon szeretnem"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="meretType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="kicsi"></xs:enumeration>
+            <xs:enumeration value="közepes"></xs:enumeration>
+            <xs:enumeration value="nagy"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

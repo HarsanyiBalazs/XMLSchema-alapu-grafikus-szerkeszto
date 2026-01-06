@@ -1,23 +1,17 @@
 import fs from 'node:fs';
-import { XmlDocument,XsdValidator,XmlValidateError } from 'libxml2-wasm';
+import { XmlDocument,XsdValidator } from 'libxml2-wasm';
 
-
-
-const doc1 = XmlDocument.fromBuffer(fs.readFileSync('vallalat.xml'));
-
-
+const doc = XmlDocument.fromBuffer(fs.readFileSync('vallalat.xml'));
 const schema = XmlDocument.fromBuffer(fs.readFileSync('vallalat.xsd'));
 const validator = XsdValidator.fromDoc(schema);
 
 try {
-    validator.validate(doc1);
+    validator.validate(doc);
+    console.log("The file is valid");
 } catch (err) {
     console.log(err.details);
 }
 
-
-
-
-doc1.dispose();
+doc.dispose();
 validator.dispose();
 schema.dispose();

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<viragbolt xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="viragbolt.xsd">
+    <csokor meret="nagy">
+        <rozsa>semleges</rozsa>
+        <liliom>szeretnem</liliom>
+        <haranglab>nagyon szeretnem</haranglab>
+        <tulipan>nem szeretnem</tulipan>
+        <hortenzia>nagyon nem szeretnem</hortenzia>
+        <orchidea>nem szeretnem</orchidea>
+    </csokor>
+    <csokor meret="kicsi">
+        <rozsa>nagyon szeretnem</rozsa>
+        <liliom>nagyon nem szeretnem</liliom>
+        <haranglab>nagyon nem szeretnem</haranglab>
+        <tulipan>nagyon nem szeretnem</tulipan>
+        <hortenzia>nagyon nem szeretnem</hortenzia>
+        <orchidea>nagyon nem szeretnem</orchidea>
+    </csokor>
+    <hatarido>
+        2026-08-01
+    </hatarido>
+</viragbolt>
