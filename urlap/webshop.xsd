@@ -44,6 +44,11 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="E-mail" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <xs:type>email</xs:type>
+                    </xs:appinfo>
+                </xs:annotation>
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:pattern value="([a-zA-Z0-9])+@([a-zA-Z0-9])+\.([a-zA-Z0-9])+"/>

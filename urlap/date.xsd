@@ -7,7 +7,9 @@
                 <xs:element name="Year" type="xs:gYear"></xs:element>
                 <xs:element name="Month" type="xs:gMonth">
                     <xs:annotation>
-                        <xs:documentation>Provide in MM number format</xs:documentation>
+                        <xs:appinfo>
+                            <xs:description>Provide in MM number format</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
                 <xs:element name="Day" type="xs:gDay"></xs:element>

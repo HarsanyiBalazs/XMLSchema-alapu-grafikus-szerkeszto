@@ -7,21 +7,17 @@
                 <xs:element name="Performance" type="performanceType">
                     <xs:annotation>
                         <xs:appinfo>
-                            type="multiple-choice"
+                            <xs:type>multiple-choice</xs:type>
+                            <xs:description>Rate the performance of your co-workers</xs:description>
                         </xs:appinfo>
-                        <xs:documentation>
-                            Rate the performance of your co-workers
-                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
                 <xs:element name="Promotion" type="promotionType">
                     <xs:annotation>
                         <xs:appinfo>
-                            type="checkbox"
+                            <xs:type>checkbox</xs:type>
+                            <xs:description>Select which of your co-worker you think deserves to be promoted</xs:description>
                         </xs:appinfo>
-                        <xs:documentation>
-                            Select which of your co-worker you think deserves to be promoted
-                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
             </xs:sequence>
