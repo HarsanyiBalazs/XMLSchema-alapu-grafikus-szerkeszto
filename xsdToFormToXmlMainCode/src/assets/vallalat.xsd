@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <!-- A gyokerelem elemei  -->
+
+    <xs:element name="Vallalat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Dolgozo" type="dolgozoTipus" maxOccurs="unbounded"/>
+                <xs:element name="Beosztas" type="beosztasTipus" maxOccurs="unbounded"/>
+                <xs:element name="Eszkoz" type="eszkozTipus" maxOccurs="unbounded"/>
+                <xs:element name="Osztaly" type="osztalyTipus" maxOccurs="unbounded"/>
+                <xs:element name="Osztaly-Epulet_beosztas" type="osztaly-epulet_beosztasTipus" maxOccurs="unbounded"/>
+                <xs:element name="Epulet" type="epuletTipus" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    
+
+
+    <!--a fo kulcsok-->
+
+        <xs:key name="dolgozo_kulcs">
+            <xs:selector xpath="Dolgozo" />
+            <xs:field xpath="@id" />
+        </xs:key>
+
+        <xs:key name="beosztas_kulcs">
+            <xs:selector xpath="Beosztas" />
+            <xs:field xpath="@BID" />
+        </xs:key>
+
+        <xs:key name="eszkoz_kulcs">
+            <xs:selector xpath="eszkoz" />
+            <xs:field xpath="@EID" />
+        </xs:key>
+
+        <xs:key name="osztaly_kulcs">
+            <xs:selector xpath="Osztaly" />
+            <xs:field xpath="@OID" />
+        </xs:key>
+
+        <xs:key name="epulet_kulcs">
+            <xs:selector xpath="Epulet" />
+            <xs:field xpath="@ÉID" />
+        </xs:key>
+
+        <!--az idegen kulcsok-->
+
+        <xs:keyref refer="dolgozo_kulcs" name="eszkoz_dolgozo_idegen_kulcs">
+            <xs:selector xpath="Eszkoz" />
+            <xs:field xpath="@E_D" />
+        </xs:keyref>
+
+        <xs:keyref refer="osztaly_kulcs" name="dolgozo_osztaly_idegen_kulcs">
+            <xs:selector xpath="Dolgozo" />
+            <xs:field xpath="@D_O" />
+        </xs:keyref>
+
+        <xs:keyref refer="osztaly_kulcs" name="OE_osztaly_idegen_kulcs">
+            <xs:selector xpath="Osztaly-Epulet_beosztas" />
+            <xs:field xpath="@OE_O" />
+        </xs:keyref>
+
+        <xs:keyref refer="epulet_kulcs" name="OE_epulet_idegen_kulcs">
+            <xs:selector xpath="Osztaly-Epulet_beosztas" />
+            <xs:field xpath="@OE_E" />
+        </xs:keyref>
+
+        <!-- 1-1 kapcsolat megvalositasa-->
+
+        <xs:unique name="unique_beosztas">
+            <xs:selector xpath="Beosztas" />
+            <xs:field xpath="@B_D" />
+        </xs:unique>
+
+    </xs:element>
+
+    <!-- tipusok-->
+    
+
+    <!--a dolgozo tipus es benne levo elemek-->
+    <xs:complexType name="dolgozoTipus">
+        <xs:sequence>
+            <xs:element ref="Fizetes" />
+            <xs:element ref="Nev" />
+            <xs:element name="Cim" type="cimTipus"/>
+            <xs:element ref="Vegzettseg" />
+            <xs:element ref="E-mail" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required" />
+        <xs:attribute name="D_O" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:element name="Fizetes" type="xs:positiveInteger" />
+    <xs:element name="Nev" type="xs:string" />
+    <xs:element name="Vegzettseg" type="xs:string" />
+    <xs:element name="E-mail" type="xs:string" />
+
+
+    <!--a cimtipus es a benne levo elemek-->
+    <xs:complexType name="cimTipus">
+        <xs:sequence>
+            <xs:element ref="Iranyito_szam" />
+            <xs:element ref="Varos" />
+            <xs:element ref="Utca" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--az iranyitoszam elem csak magyar iranyitoszamokat fogad el-->
+    <xs:element name="Iranyito_szam">
+        <xs:simpleType>
+            <xs:restriction base="xs:positiveInteger">
+                <xs:minInclusive value="1000"/>
+                <xs:maxInclusive value="9999"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="Varos" type="xs:string" />
+    <xs:element name="Utca" type="xs:string" />
+
+
+
+    <!-- a beosztastipus es a benne levo elemek-->
+    <xs:complexType name="beosztasTipus">
+        <xs:sequence>
+            <xs:element ref="Minimum_vegzettseg" />
+            <xs:element ref="Beosztas_nev" />
+        </xs:sequence>
+        <xs:attribute name="BID" type="xs:string" use="required" />
+        <xs:attribute name="B_D" type="xs:string" />
+    </xs:complexType>
+    
+    <!--az minimum vegzettsegbe csak a Diploma es Érettségi ertekeket fogadja el-->
+    <xs:element name="Minimum_vegzettseg" >
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="Diploma"/>
+                <xs:enumeration value="Érettségi"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="Beosztas_nev" type="xs:string" />
+
+
+    <!-- az eszkoztipus es a benne levo elemek-->
+    <xs:complexType name="eszkozTipus">
+        <xs:sequence>
+            <xs:element ref="Eszkoz_nev" />
+            <xs:element ref="Ar" />
+        </xs:sequence>
+        <xs:attribute name="EID" type="xs:string" use="required" />
+        <xs:attribute name="E_D" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:element name="Eszkoz_nev" type="xs:string" />
+    <xs:element name="Ar" type="xs:integer" />
+
+
+    <!-- az osztalytipus es a benne levo elemek-->
+    <xs:complexType name="osztalyTipus">
+        <xs:sequence>
+            <xs:element ref="Osztaly_nev" />
+        </xs:sequence>
+        <xs:attribute name="OID" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:element name="Osztaly_nev" type="xs:string" />
+
+
+    <!-- az osztaly-epulet_beosztasTipus es a benne levo elemek-->
+    <xs:complexType name="osztaly-epulet_beosztasTipus">
+        <xs:sequence>
+            <xs:element ref="Mikortol" />
+        </xs:sequence>
+        <xs:attribute name="OE_O" type="xs:string" use="required" />
+        <xs:attribute name="OE_E" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:element name="Mikortol" type="xs:date" />
+
+
+
+    <!-- az epuletTipus_beosztasTipus es a benne levo elemek-->
+    <xs:complexType name="epuletTipus">
+        <xs:sequence>
+            <xs:element ref="Epulet_nev" />
+            <xs:element name="Cim" type="cimTipus"/>
+        </xs:sequence>
+        <xs:attribute name="ÉID" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:element name="Epulet_nev" type="xs:string" />
+    
+
+</xs:schema>

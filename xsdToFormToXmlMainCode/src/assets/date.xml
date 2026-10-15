@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Date xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="date.xsd">
+    <Year>2001</Year>
+    <Month>--06</Month>
+    <Day>---03</Day>
+    <YearMonth>2001-06</YearMonth>
+    <MonthDay>--06-03</MonthDay>
+</Date>
