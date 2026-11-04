@@ -19,6 +19,9 @@ export class App implements OnInit{
   form!: FormGroup;
   schema!: FormSchema;
   xmlOutput = '';
+  showValidationErrors = false;
+  radioGroupNames = new WeakMap<AbstractControl, string>();
+  radioGroupCounter = 0;
 
 
   async ngOnInit(): Promise<void> {
@@ -42,7 +45,7 @@ export class App implements OnInit{
     };
 
   async loadFile() {
-    const response = await fetch('assets/date.xsd');
+    const response = await fetch('assets/clothing.xsd');
     if (!response.ok) {
       throw new Error('Failed to load file');
     }
@@ -67,6 +70,16 @@ export class App implements OnInit{
 
   getAttributeControl(group: AbstractControl, key: string | number | symbol): AbstractControl {
     return (group as FormGroup).get('@' + String(key))!;
+  }
+
+  getRadioGroupName(control: AbstractControl): string {
+    let name = this.radioGroupNames.get(control);
+
+    if (!name) {
+      name = `radio-group-${++this.radioGroupCounter}`;
+      this.radioGroupNames.set(control, name);
+    }
+    return name;
   }
 
   // ---- array helper ----
@@ -109,6 +122,7 @@ export class App implements OnInit{
       return;
     }
     // Run validation and display errors
+    this.showValidationErrors = true;
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
 
@@ -235,6 +249,9 @@ export interface FormControlSchema extends BaseSchema {
   //xs:list
   listItemType?: string; // the type of the list
   listItemOptions?: string[];
+  listMinItems?: number;
+  listMaxItems?: number;
+  listLength?: number;
   listItemValidators?: {
     min?: number;
     max?: number;
@@ -704,80 +721,38 @@ function parseComplexType(xsd: any, node: any): FormGroupSchema {
 
 function parseSimpleType(xsd: any, node: any): FormControlSchema {
 
+  // Handle union as string
+  if (node.union) {
+    return {
+      type: 'string',
+      xsdType: 'string',
+      ui: {
+        widget: 'text'
+      }
+    };
+  }
 
-  //Handle list
-  if (node.list) {
-    // ItemType as an attribute
-    const itemTypeAttribute = getAttr(node.list, 'itemType')?.split(':').pop();
+  // Handle list
+  const outerRestriction = node.restriction;
 
-    if (itemTypeAttribute) {
-      return {
-        type: 'string',
-        xsdType: 'list',
-        listItemType: itemTypeAttribute,
-        ui: {
-          widget: 'text'
-        }
-      };
-    }
+  const listNode =
+    node.list ??
+    outerRestriction?.simpleType?.list;
 
-
-    //ItemType with restrictions
-    const inlineSimpleType = node.list.simpleType;
-
-    /*if (!inlineSimpleType) {
-      throw new Error(
-        'xs:list must contain an inline xs:simpleType.'
-      );
-    }*/
-    if(!inlineSimpleType){
-      return {
-        type: 'string',
-        xsdType: 'list',
-        listItemType: 'text',
-        ui: {
-          widget: 'text'
-        }
-      };
-    }
-
-    const itemRestriction = inlineSimpleType.restriction;
-
-    /*if (!itemRestriction) {
-      throw new Error(
-        'The inline xs:simpleType must contain xs:restriction.'
-      );
-    }*/
-    if(!itemRestriction){
-      return {
-        type: 'string',
-        xsdType: 'list',
-        listItemType: 'text',
-        ui: {
-          widget: 'text'
-        }
-      };
-    }
-
-    const itemType = getAttr(itemRestriction, 'base')
+  if (listNode) {
+    // Item type declared as an attribute
+    const itemTypeAttribute = getAttr(listNode, 'itemType')
       ?.split(':')
       .pop();
 
-    /*if (!itemType) {
-        throw new Error(
-          'The inline item restriction must specify a base type.'
-      );
-    }*/
-    if (!itemType) {
-      return {
-        type: 'string',
-        xsdType: 'list',
-        listItemType: 'text',
-        ui: {
-          widget: 'text'
-        }
-      };
-    }
+    // Inline item type restrictions
+    const inlineSimpleType = listNode.simpleType;
+    const itemRestriction = inlineSimpleType?.restriction;
+
+    const itemType =
+      itemTypeAttribute ??
+      getAttr(itemRestriction, 'base')?.split(':').pop() ??
+      'string';
 
     const listSchema: FormControlSchema = {
       type: 'string',
@@ -786,51 +761,69 @@ function parseSimpleType(xsd: any, node: any): FormControlSchema {
       ui: { widget: 'text' }
     };
 
-    // Restrictions that apply to each individual item.
-    const itemValidators: NonNullable<FormControlSchema['listItemValidators']> = {};
+    // Restrictions on the number of list items
+    if (outerRestriction?.length) {
+      listSchema.listLength = Number(
+        getAttr(outerRestriction.length, 'value')
+      );
+    }
 
-    if (itemRestriction.minInclusive) {
+    if (outerRestriction?.minLength) {
+      listSchema.listMinItems = Number(
+        getAttr(outerRestriction.minLength, 'value')
+      );
+    }
+
+    if (outerRestriction?.maxLength) {
+      listSchema.listMaxItems = Number(
+        getAttr(outerRestriction.maxLength, 'value')
+      );
+    }
+
+    // Restrictions on each individual item
+    const itemValidators:
+      NonNullable<FormControlSchema['listItemValidators']> = {};
+
+    if (itemRestriction?.minInclusive) {
       itemValidators.min = Number(
         getAttr(itemRestriction.minInclusive, 'value')
       );
     }
 
-    if (itemRestriction.maxInclusive) {
+    if (itemRestriction?.maxInclusive) {
       itemValidators.max = Number(
         getAttr(itemRestriction.maxInclusive, 'value')
       );
     }
 
-    if (itemRestriction.minLength) {
+    if (itemRestriction?.minLength) {
       itemValidators.minLength = Number(
         getAttr(itemRestriction.minLength, 'value')
       );
     }
 
-    if (itemRestriction.maxLength) {
+    if (itemRestriction?.maxLength) {
       itemValidators.maxLength = Number(
         getAttr(itemRestriction.maxLength, 'value')
       );
     }
 
-    if (itemRestriction.pattern) {
+    if (itemRestriction?.pattern) {
       itemValidators.pattern = getAttr(
         itemRestriction.pattern,
         'value'
       );
     }
 
-    listSchema.listItemValidators = itemValidators;
-
-    // Enumeration values allowed for each list item.
-    if (itemRestriction.enumeration) {
+    if (itemRestriction?.enumeration) {
       listSchema.listItemOptions = asArray(
         itemRestriction.enumeration
       ).map(e => getAttr(e, 'value'));
     }
 
+    listSchema.listItemValidators = itemValidators;
+
     return listSchema;
-    
   }
 
 
@@ -998,6 +991,45 @@ function mapValidators(schema: FormControlSchema) {
 
       const items = String(value).trim().split(/\s+/);
 
+      // Exact number of list items
+      if (
+        schema.listLength !== undefined &&
+        items.length !== schema.listLength
+      ) {
+        return {
+          listLength: {
+            requiredLength: schema.listLength,
+            actualLength: items.length
+          }
+        };
+      }
+
+      // Minimum number of list items
+      if (
+        schema.listMinItems !== undefined &&
+        items.length < schema.listMinItems
+      ) {
+        return {
+          listMinItems: {
+            requiredLength: schema.listMinItems,
+            actualLength: items.length
+          }
+        };
+      }
+
+      // Maximum number of list items
+      if (
+        schema.listMaxItems !== undefined &&
+        items.length > schema.listMaxItems
+      ) {
+        return {
+          listMaxItems: {
+            requiredLength: schema.listMaxItems,
+            actualLength: items.length
+          }
+        };
+      }
+
       const invalidItems = items.filter(item => {
           if (!isValidXsdValue(item, schema.listItemType!)) {
             return true;
@@ -1154,18 +1186,18 @@ function isValidXsdValue(value: string, xsdType: string): boolean {
 
     case 'gYear':
       return /^-?\d{4,}(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
-
+   
     case 'gYearMonth':
-      return /^-?\d{4,}-\d{2}(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
+      return /^-?\d{4,}-(?:0[1-9]|1[0-2])(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
 
     case 'gMonth':
-      return /^--\d{2}(?:--)?(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
+      return /^(?:--)?(?:0[1-9]|1[0-2])(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
 
     case 'gMonthDay':
-      return /^--\d{2}-\d{2}(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
+      return /^(?:--)?(?:02-(?:0[1-9]|1\d|2[0-9])|(?:04|06|09|11)-(?:0[1-9]|[12]\d|30)|(?:01|03|05|07|08|10|12)-(?:0[1-9]|[12]\d|3[01]))(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
 
     case 'gDay':
-      return /^---\d{2}(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
+      return /^(?:---)?(?:0[1-9]|[12]\d|3[01])(?:Z|[+-]\d{2}:\d{2})?$/.test(value);
 
     case 'duration':
       return /^-?P(?=\d|T\d)(?:\d+Y)?(?:\d+M)?(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?$/.test(value);
@@ -1243,8 +1275,21 @@ function serializeControl(schema: FormControlSchema, value: any): string {
   if (isEmptyValue(value)) {
     return '';
   }
+  value= String(value);
+  switch (schema.xsdType) {
+    case 'gMonth':
+      return value.startsWith('--') ? removeXmlSymbols(value) : removeXmlSymbols( `--${value}`);
 
-  return removeXmlSymbols(value);
+    case 'gMonthDay':
+      return value.startsWith('--') ? removeXmlSymbols(value) : removeXmlSymbols(`--${value}`);
+
+    case 'gDay':
+      return value.startsWith('---') ? removeXmlSymbols(value) :removeXmlSymbols( `---${value}`);
+
+    default:
+      return removeXmlSymbols(value);
+  }
+
 }
 
 //Checks for the attributes belongting to a group
