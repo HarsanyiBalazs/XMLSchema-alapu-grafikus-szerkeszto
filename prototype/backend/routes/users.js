@@ -1,0 +1,113 @@
+const express = require("express");
+const router = express.Router();
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const bycrypt = require("bcrypt");
+require('dotenv').config();
+
+const handleErrors = (err) => {
+    console.log(err.message, err.code);
+    let errors = {name: "", password: ""};
+
+    //duplicate error code
+    if(err.code === 11000){
+        errors.name = 'that username is already in use';
+        return errors;
+    }
+
+    //validation errors
+    if (err.message.includes('user validation failed')){
+        Object.values(err.errors).forEach(({properties}) => {
+            errors[properties.path] = properties.message;
+        })
+    }
+
+    return errors;
+};
+
+const maximumAge = 3 * 24 * 60 * 60;
+
+const createToken = (id) =>{
+    return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: maximumAge
+    });
+};
+
+
+//post signup
+
+router.post('/signup', async (req,res) =>{
+    try{
+        const newUser = await new User(req.body);
+        if(newUser.password.length >7)
+        {   
+            const salt = await bycrypt.genSalt();
+            newUser.password = await bycrypt.hash(newUser.password, salt);
+        }
+        const savedUser = await newUser.save();
+        const token = await createToken(savedUser._id);
+        await res.cookie("jwt",token,{httpOnly: true, maxAge: maximumAge * 1000,secure: true});
+        res.status(200).json({user: savedUser._id});
+    }
+    catch(error){
+        const errors = handleErrors(error);
+        res.status(400).json({errors});
+    }
+});
+
+
+//post login
+
+router.post('/login', async (req,res) =>{
+        const loginUser = await new User(req.body);
+    try{
+        const user = await User.login(loginUser.name,loginUser.password);
+        const token = await createToken(user._id);
+        await res.cookie("jwt",token,{httpOnly: true, maxAge: maximumAge * 1000,secure: true});
+        res.status(200).json({user: user._id});
+    }
+    catch(error){
+        res.status(400).json({message:"an error occured", error: error});
+    }
+});
+
+//get logout
+
+router.get('/logout', async (req,res) =>{
+    try{
+        res.clearCookie("jwt");
+        res.status(200).json({message:"Successfull logout"});
+    }
+    catch(error){
+        res.status(400).json({message:"an error occured", error: error});
+    }
+});
+
+//get userID
+
+router.get('/user',async (req,res) =>{
+    try{
+        const token = await req.cookies.jwt;
+        if (token){
+            jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,async (err, decodedToken)=>{
+                if(err){
+                    console.log(err.message);
+                    throw(Error("401"));
+                }else{
+                    console.log(decodedToken)
+                    let user = await User.findById(decodedToken);
+                    res.status(200).json({user: user._id});
+                }
+                })
+            }else{
+                //401 not logged in 403 no permission
+                res.local.user = null;
+                throw(Error("401"));
+            }  
+    }
+    catch(error){
+        res.status(401).json({message:"no user is logged in"});
+    }
+});
+
+module.exports = router;

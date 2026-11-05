@@ -1,0 +1,12 @@
+<p>xmlvalidator works!</p>
+
+<form [formGroup]="xmlForm" (ngSubmit)="validateXml()">
+    <label for="schema">Schema</label>
+    <textarea formControlName="schema"></textarea>
+    <div class="name error"></div>
+    <label for="xml">Xml</label>
+    <textarea formControlName="xml"></textarea>
+    <div class="password error"></div>
+    <button type="submit">Sign up</button>
+</form>
+<div id="result"></div>
