@@ -1,0 +1,33 @@
+<div class="table-container">
+  <table *ngIf="responses?.length; else noResponses">
+    <thead>
+      <tr>
+        <th>Beküldő felhasználóneve</th>
+        <th>Beküldés időpontja</th>
+        <th>XML fájl</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let response of responses">
+        <td>{{ response.formSubmitter }}</td>
+        <td>{{ response.createdAt | date:'yyyy-MM-dd HH:mm'}}</td>
+        <td>
+          <button (click)="downloadXml(response.form)" class="download-button">
+            XML letöltése
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noResponses>
+    <p *ngIf="responses; else loading">
+      Nem találhatóak beküldött űrlapok.
+    </p>
+  </ng-template>
+
+  <ng-template #loading>
+    <p>Adatok betöltése...</p>
+  </ng-template>
+</div>

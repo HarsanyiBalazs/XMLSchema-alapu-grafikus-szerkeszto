@@ -1,0 +1,64 @@
+<div class="login-container">
+  <h2>Bejelentkezés</h2>
+  <br>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <!-- USERNAME -->
+    <div class="form-field">
+      <label for="name">Felhasználónév</label>
+
+      <input id="name" type="text" formControlName="name">
+
+      <div *ngIf="
+        showValidationErrors &&
+        loginForm.get('name')?.invalid
+      " class="validation-errors">
+
+        <p *ngIf="loginForm.get('name')?.hasError('required')">
+          A felhasználónév megadása kötelező.
+        </p>
+
+        <p *ngIf="loginForm.get('name')?.hasError('minlength')">
+          A felhasználónévnek legalább
+          {{ loginForm.get('name')?.getError('minlength')?.requiredLength }}
+          karakter hosszúnak kell lennie.
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- PASSWORD -->
+    <div class="form-field">
+      <label for="password">Jelszó</label>
+
+      <input id="password" type="password" formControlName="password">
+
+      <div *ngIf="
+        showValidationErrors &&
+        loginForm.get('password')?.invalid"
+        class="validation-errors">
+
+        <p *ngIf="loginForm.get('password')?.hasError('required')">
+          A jelszó megadása kötelező.
+        </p>
+
+        <p *ngIf="loginForm.get('password')?.hasError('minlength')">
+          A jelszónak legalább
+          {{ loginForm.get('password')?.getError('minlength')?.requiredLength }}
+          karakter hosszúnak kell lennie.
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- BACKEND ERROR -->
+    <div *ngIf="serverError" class="validation-errors">
+      <p>{{ serverError }}</p>
+    </div>
+
+    <button type="submit">Bejelentkezés</button>
+
+  </form>
+</div>

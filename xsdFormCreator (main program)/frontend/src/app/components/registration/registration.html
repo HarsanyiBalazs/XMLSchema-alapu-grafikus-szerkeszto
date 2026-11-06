@@ -1,0 +1,68 @@
+<div class="register-container">
+  <h2>Regisztráció</h2>
+  <br>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="sendRegistration()">
+
+    <!-- USERNAME -->
+    <div class="form-field">
+      <label for="name">Felhasználónév</label>
+
+      <input id="name" type="text" formControlName="name">
+
+      <div *ngIf="
+        showValidationErrors &&
+        (registrationForm.get('name')?.invalid ||
+         serverErrors['name'])
+      " class="validation-errors">
+
+        <p *ngIf="registrationForm.get('name')?.hasError('required')">
+          A felhasználónév megadása kötelező.
+        </p>
+
+        <p *ngIf="registrationForm.get('name')?.hasError('minlength')">
+          A felhasználónévnek legalább
+          {{ registrationForm.get('name')?.getError('minlength')?.requiredLength }}
+          karakter hosszúnak kell lennie.
+        </p>
+
+        <p *ngIf="serverErrors['name']">
+          {{ serverErrors['name'] }}
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- PASSWORD -->
+    <div class="form-field">
+      <label for="password">Jelszó</label>
+
+      <input id="password" type="password" formControlName="password">
+
+      <div *ngIf="
+        showValidationErrors &&
+        (registrationForm.get('password')?.invalid ||
+         serverErrors['password'])" class="validation-errors">
+
+        <p *ngIf="registrationForm.get('password')?.hasError('required')">
+          A jelszó megadása kötelező.
+        </p>
+
+        <p *ngIf="registrationForm.get('password')?.hasError('minlength')">
+          A jelszónak legalább
+          {{ registrationForm.get('password')?.getError('minlength')?.requiredLength }}
+          karakter hosszúnak kell lennie.
+        </p>
+
+        <p *ngIf="serverErrors['password']">
+          {{ serverErrors['password'] }}
+        </p>
+
+      </div>
+    </div>
+
+    <button type="submit">Fiók létrehozása</button>
+
+  </form>
+</div>

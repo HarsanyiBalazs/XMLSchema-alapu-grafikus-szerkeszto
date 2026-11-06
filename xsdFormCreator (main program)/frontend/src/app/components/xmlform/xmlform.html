@@ -1,0 +1,295 @@
+<div class="schema-container">
+
+  <h2>Séma szerkesztése</h2>
+
+  <br>
+  <form [formGroup]="xmlSchemaForm" (ngSubmit)="updateSchema()">
+
+    <div class="form-field">
+      <label for="name">Séma név</label>
+      <input id="name" type="text" formControlName="name">
+    </div>
+
+    <div class="form-field">
+      <label for="schema">Séma tartalma</label>
+      <textarea formControlName="schema" id="schema" rows="20"></textarea>
+    </div>
+    <button type="submit">Séma feltöltése</button>
+  </form>
+
+  <br>
+  <div class="form-url">
+    Az űrlap elérhető lesz a következő helyen:
+    <a [href]="'http://localhost:4200/fillform/' + projectId">
+      http://localhost:4200/fillform/{{ projectId }}
+    </a>
+  </div>
+  <br>
+
+  <button (click)="generateForm()" class="generate-button">Űrlap létrehozása</button>
+</div>
+
+<div class="dynamic-form-container">
+  <!-- GROUP -->
+  <form *ngIf="form && showForm" [formGroup]="form">
+
+    <ng-container *ngTemplateOutlet="renderField; context: { schema: schema, control: form ,level: 0}">
+    </ng-container>
+
+  </form>
+
+  <button type="submit" *ngIf="form && schema" (click)="generateXmlOutput()">
+    XML létrehozása
+  </button>
+
+  <div *ngIf="xmlOutput" class="xml-output">
+    <h3>Létrehozott XML</h3>
+
+    <textarea [value]="xmlOutput" rows="20" cols="100" readonly>
+    </textarea>
+  </div>
+</div>
+
+<!--  Recursive template -->
+<ng-template #renderField let-schema="schema" let-control="control" let-level="level">
+
+  <!-- GROUP -->
+  <div *ngIf="schema.type === 'group'" [formGroup]="asGroup(control)" class="form-group"
+    [style.margin-left.px]="level * 25">
+
+    <!-- GROUP LABEL -->
+    <h3 *ngIf="schema.label || schema.name">
+      {{ schema.label || schema.name }}
+    </h3>
+
+    <p *ngIf="schema.description" class="group-description">{{ schema.description }}</p>
+
+
+    <!-- ATTRIBUTES -->
+    <div *ngIf="schema.attributes">
+
+      <div *ngFor="let attr of (schema.attributes | keyvalue); trackBy: trackByAttribute">
+
+        <ng-container *ngTemplateOutlet="renderField;
+            context: {
+              schema: attr.value,
+              control: getAttributeControl(control, attr.key),
+              level: level + 1
+            }">
+        </ng-container>
+
+      </div>
+
+    </div>
+
+
+    <!-- SIMPLE CONTROLS -->
+    <div *ngFor="let entry of getSimpleControls(schema.controls);trackBy: trackByKey">
+      <ng-container *ngTemplateOutlet="renderField;
+          context: {
+            schema: entry[1],
+            control: getControl(control, entry[0]),
+            level: level + 1
+          }">
+      </ng-container>
+    </div>
+
+    <!-- ARRAYS -->
+    <div *ngFor="let entry of getArrayControls(schema.controls),trackBy: trackByKey">
+      <ng-container *ngTemplateOutlet="renderField;
+          context: {
+            schema: entry[1],
+            control: getControl(control, entry[0]),
+            level: level + 1
+          }">
+      </ng-container>
+    </div>
+
+    <!-- COMPLEX GROUPS -->
+    <div *ngFor="let entry of getComplexControls(schema.controls),trackBy: trackByKey">
+      <ng-container *ngTemplateOutlet="renderField;
+          context: {
+            schema: entry[1],
+            control: getControl(control, entry[0]),
+            level: level + 1
+          }">
+      </ng-container>
+    </div>
+
+  </div>
+
+
+
+
+  <!-- ARRAY -->
+  <div *ngIf="schema.type === 'array'" class="form-array">
+
+    <div *ngFor="let item of asArray(control).controls; let i = index">
+
+      <ng-container *ngTemplateOutlet="renderField;
+          context: {
+            schema: schema.item,
+            control: item,
+            level: level + 1
+          }">
+      </ng-container>
+
+      <button type="button" (click)="removeItem(asArray(control), schema, i)"
+        [disabled]="asArray(control).length <= (schema.minItems ?? 0)">
+        Remove {{ schema.item.name || 'item' }}
+      </button>
+
+    </div>
+
+    <button type="button" (click)="addItem(asArray(control), schema)" [disabled]="
+        schema.maxItems !== undefined &&
+        asArray(control).length >= schema.maxItems">
+      Add {{ schema.item.name || 'item' }}
+    </button>
+
+  </div>
+
+  <!-- FIELDS -->
+  <div *ngIf="schema.type !== 'group' && schema.type !== 'array'" class="form-field">
+
+    <label>
+      {{ schema.label || schema.name }}
+      <span *ngIf="schema.required" class="required-marker">*</span>
+    </label>
+
+    <p *ngIf="schema.description" class="field-description">
+      {{ schema.description }}
+    </p>
+
+    <ng-container [ngSwitch]="schema.ui?.widget || 'text'">
+
+      <!-- text -->
+      <input *ngSwitchCase="'text'" type="text" [formControl]="asControl(control)"
+        [attr.placeholder]="schema.ui?.placeholder ?? null" [attr.minlength]="schema.ui?.minlength ?? null"
+        [attr.maxlength]="schema.ui?.maxlength ?? null" [attr.pattern]="schema.ui?.pattern ?? null"
+        [attr.size]="schema.ui?.size ?? null" />
+
+      <!-- textarea -->
+      <textarea *ngSwitchCase="'textarea'" [formControl]="asControl(control)"
+        [attr.placeholder]="schema.ui?.placeholder ?? null" [attr.rows]="schema.ui?.rows ?? null"
+        [attr.cols]="schema.ui?.cols ?? null" [attr.minlength]="schema.ui?.minlength ?? null"
+        [attr.maxlength]="schema.ui?.maxlength ?? null" [attr.pattern]="schema.ui?.pattern ?? null">
+      </textarea>
+
+      <!-- number -->
+      <input *ngSwitchCase="'number'" type="number" [formControl]="asControl(control)"
+        [attr.placeholder]="schema.ui?.placeholder ?? null" [attr.min]="schema.ui?.min ?? null"
+        [attr.max]="schema.ui?.max ?? null" [attr.step]="schema.ui?.step ?? null" />
+
+      <!-- range -->
+      <input *ngSwitchCase="'range'" type="range" [formControl]="asControl(control)" [attr.min]="schema.ui?.min ?? null"
+        [attr.max]="schema.ui?.max ?? null" [attr.step]="schema.ui?.step ?? null" />
+
+      <!-- date -->
+      <input *ngSwitchCase="'date'" type="date" [formControl]="asControl(control)" [attr.min]="schema.ui?.min ?? null"
+        [attr.max]="schema.ui?.max ?? null" [attr.step]="schema.ui?.step ?? null" />
+
+      <!-- password -->
+      <input *ngSwitchCase="'password'" type="password" [formControl]="asControl(control)"
+        [attr.placeholder]="schema.ui?.placeholder ?? null" [attr.minlength]="schema.ui?.minlength ?? null"
+        [attr.maxlength]="schema.ui?.maxlength ?? null" [attr.pattern]="schema.ui?.pattern ?? null"
+        [attr.size]="schema.ui?.size ?? null" />
+
+      <!-- email -->
+      <input *ngSwitchCase="'email'" type="email" [formControl]="asControl(control)"
+        [attr.placeholder]="schema.ui?.placeholder ?? null" [attr.minlength]="schema.ui?.minlength ?? null"
+        [attr.maxlength]="schema.ui?.maxlength ?? null" [attr.pattern]="schema.ui?.pattern ?? null"
+        [attr.size]="schema.ui?.size ?? null" />
+
+
+      <!-- checkbox select -->
+      <div *ngSwitchCase="'checkbox'">
+
+        <label *ngFor="let option of schema.options">
+          <input type="checkbox" [checked]="asControl(control).value === option" [name]="getRadioGroupName(control)"
+            (change)="selectCheckboxOption(asControl(control), option)" />
+          {{ option }}
+        </label>
+
+      </div>
+
+      <!-- select -->
+      <select *ngSwitchCase="'select'" [formControl]="asControl(control)">
+
+        <option *ngFor="let opt of schema.options" [value]="opt">
+          {{ opt }}
+        </option>
+
+      </select>
+
+      <!-- radio -->
+      <div *ngSwitchCase="'radio'">
+
+        <label *ngFor="let opt of schema.options">
+
+          <input type="radio" [formControl]="asControl(control)" [value]="opt" />
+
+          {{ opt }}
+
+        </label>
+
+      </div>
+
+    </ng-container>
+
+
+
+    <!-- VALIDATION ERRORS -->
+    <div *ngIf="
+        asControl(control).invalid &&
+        (asControl(control).touched || asControl(control).dirty)
+      " class="validation-errors">
+
+      <p *ngIf="asControl(control).hasError('required')">
+        A mező kitöltése kötelező.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('maxlength')">
+        Maximum hosszúság:
+        {{ asControl(control).getError('maxlength')?.requiredLength }}
+        karakter.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('minlength')">
+        Minimum hosszúság:
+        {{ asControl(control).getError('minlength')?.requiredLength }}
+        karakter.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('pattern')">
+        Az érték nem felel meg a kívánt formátumnak.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('min')">
+        Az érték kisebb a megengedett minimumnál.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('max')">
+        Az érték nagyobb a megengedett maximumnál.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('invalidXsdType')">
+        Az érték nem felel meg a kívánt formátumnak.
+      </p>
+
+      <p *ngIf="asControl(control).hasError('invalidListItems')">
+        Egy vagy több listaelem érvénytelen.
+      </p>
+
+      <p *ngIf="
+          asControl(control).hasError('listLength') ||
+          asControl(control).hasError('listMinItems') ||
+          asControl(control).hasError('listMaxItems')">
+        Az elemek száma nem felel meg a listára vonatkozó korlátozásoknak. 
+      </p>
+
+    </div>
+
+  </div>
+
+</ng-template>

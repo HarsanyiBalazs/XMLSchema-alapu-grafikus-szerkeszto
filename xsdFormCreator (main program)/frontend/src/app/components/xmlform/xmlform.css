@@ -1,0 +1,250 @@
+/* SCHEMA EDITOR */
+.schema-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+.schema-container h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+/* Fields */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    font-weight: bold;
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.form-field textarea {
+    resize: vertical;
+    font-family: monospace;
+    line-height: 1.5;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* URL */
+.form-url {
+    margin: 25px 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    overflow-wrap: anywhere;
+}
+
+.form-url a {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Buttons */
+.schema-container button,
+.dynamic-form-container button {
+    padding: 10px 16px;
+    margin: 5px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.schema-container button:hover,
+.dynamic-form-container button:hover {
+    background-color: #111;
+}
+
+.schema-container button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* Generate form button */
+.schema-container .generate-button {
+    margin-top: 15px;
+}
+
+/* DYNAMIC FORM */
+.dynamic-form-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+/* Groups */
+.form-group {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.form-group h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.group-description,
+.field-description {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Individual fields */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    font-weight: bold;
+    color: #333;
+}
+
+.required-marker {
+    color: #d32f2f;
+}
+
+/* Inputs */
+.form-field input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.form-field textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* Range */
+.form-field input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Radio and checkbox */
+.form-field input[type="radio"],
+.form-field input[type="checkbox"] {
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.form-field label:has(input[type="radio"]),
+.form-field label:has(input[type="checkbox"]) {
+    font-weight: normal;
+    margin-right: 15px;
+}
+
+/* Arrays */
+.form-array {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px dashed #aaa;
+    border-radius: 6px;
+}
+
+.form-array>div {
+    margin-bottom: 15px;
+}
+
+/* Validation */
+.validation-errors {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.validation-errors p {
+    margin: 2px 0;
+}
+
+/* Generated XML */
+.xml-output {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.xml-output h3 {
+    margin-bottom: 15px;
+}
+
+.xml-output textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #f5f5f5;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+
+    .schema-container,
+    .dynamic-form-container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    .form-group {
+        margin-left: 0 !important;
+        padding: 12px;
+    }
+}

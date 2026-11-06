@@ -1,0 +1,30 @@
+<ul>
+    <li >
+        <a [routerLink]="'/'">
+            Kezdőlap
+        </a>
+    </li>
+    @if (isLoggedIn){
+    <li>
+        <a [routerLink]="'/projects'">
+            Sémák            
+        </a>
+
+    </li>
+    <li>
+        <button (click)="logOut()" >
+            Kijelentkezés
+        </button>
+    </li>}@else{
+    <li>
+        <a [routerLink]="'/login'">
+            Bejelentkezés            
+        </a>
+
+    </li>
+    <li>
+        <a [routerLink]="'/register'">
+            Regisztráció            
+        </a>
+    </li>}
+</ul>

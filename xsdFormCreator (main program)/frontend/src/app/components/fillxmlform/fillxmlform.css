@@ -1,0 +1,159 @@
+
+/* Main container */
+.dynamic-form-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Groups */
+.form-group {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.form-group h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.group-description,
+.field-description {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Individual fields */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-field > label {
+  font-weight: bold;
+  color: #333;
+}
+
+.required-marker {
+  color: #d32f2f;
+}
+
+/* Text inputs, select and textarea */
+.form-field input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.form-field textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: #333;
+}
+
+/* Range input */
+.form-field input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Radio and checkbox */
+.form-field input[type="radio"],
+.form-field input[type="checkbox"] {
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.form-field label:has(input[type="radio"]),
+.form-field label:has(input[type="checkbox"]) {
+  font-weight: normal;
+  margin-right: 15px;
+}
+
+/* Array */
+.form-array {
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px dashed #aaa;
+  border-radius: 6px;
+}
+
+.form-array > div {
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+.dynamic-form-container button {
+  padding: 10px 16px;
+  margin: 5px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dynamic-form-container button:hover {
+  background-color: #111;
+}
+
+.dynamic-form-container button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.validation-errors {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.validation-errors p {
+  margin: 2px 0;
+}
+
+.success-message {
+  padding: 15px;
+  margin-top: 15px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+  .dynamic-form-container {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .form-group {
+    margin-left: 0 !important;
+    padding: 12px;
+  }
+}

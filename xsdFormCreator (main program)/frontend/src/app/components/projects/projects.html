@@ -1,0 +1,60 @@
+<h2>Sémák</h2>
+
+<a [routerLink]="'/form'" class="upload-button">Új séma feltöltése</a>
+
+<div class="table-container">
+    <table *ngIf="projects?.length; else noProjects">
+      <thead>
+        <tr>
+          <th>Neve</th>
+          <th>Létrehozva </th>
+          <th>Utoljára frissítve</th>
+          <th>Műveletek</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let project of projects">
+          <td>{{ project.name }}</td>
+
+          <td>
+            {{ project.createdAt | date:'yyyy-MM-dd HH:mm' }}
+          </td>
+
+          <td>
+            {{ project.updatedAt | date:'yyyy-MM-dd HH:mm' }}
+          </td>
+
+          <td class="actions">
+            <button
+              [routerLink]="['/form', project._id]"
+              class="edit-button">
+              Séma szerkesztése
+            </button>
+
+            <button 
+              [routerLink]="['/filledxml', project._id]">
+              Kitöltött űrlapok
+            </button>
+
+            <button
+              (click)="onDeleteClick(project)"
+              class="delete-button">
+              Törlés
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noProjects>
+      <p *ngIf="projects; else loading">
+        Nem találhatóak beküldött sémák.
+      </p>
+    </ng-template>
+
+    <ng-template #loading>
+      <p>Adatok betöltése...</p>
+    </ng-template>
+
+</div>

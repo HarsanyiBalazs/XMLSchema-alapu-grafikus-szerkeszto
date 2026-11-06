@@ -1,0 +1,113 @@
+<div class="home-container">
+
+    <h1>XSD űrlap készítő</h1>
+
+    <p class="subtitle">
+        XSD-alapú dinamikus űrlapkészítő alkalmazás
+    </p>
+
+    <section>
+        <h2>Üdvözöljük az alkalmazásban!</h2>
+
+        <p>
+            Az alkalmazás lehetőséget biztosít XSD-alapú dinamikus
+            űrlapok létrehozására, az adatok beküldésére és a kitöltött
+            űrlapok XML-formátumban történő letöltésére.
+        </p>
+    </section>
+
+    <section>
+        <h2>Hogyan használható a program?</h2>
+
+        <ol>
+            <li>
+                <strong>Új űrlap létrehozása:</strong>
+                Bejelentkezés után a Sémák menüpontban lehet új űrlapot létrehozni.
+                Ehhez meg kell adni az űrlap nevét, majd meg kell adni a XML sémát, akár szövegesen,
+                akár XSD-fájl formájában.
+            </li>
+
+            <li>
+                <strong>Űrlap kitöltése:</strong>
+                A létrehozott űrlap egy külön linken keresztül érhető el,
+                amelyet a séma adatlapján lehet megtalálni.
+                A link megnyitásával a felhasználó kitöltheti az XSD alapján
+                generált űrlapot.
+            </li>
+
+            <li>
+                <strong>XML-fájlok letöltése:</strong>
+                A beküldött űrlapokhoz tartozó XML-fájlok a sémák
+                kitöltött űrlapok menüpontjában tölthetőek le.
+            </li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Támogatott funkciók</h2>
+
+        <p>
+            Az alkalmazás az XML Schema Definition (XSD) számos
+            funkcióját képes feldolgozni, amelyek alapján automatikusan
+            létrehozza a megfelelő űrlapelemeket.
+        </p>
+
+        <ul>
+            <li>Egyszerű és összetett típusok feldolgozása.</li>
+            <li>XML-elemek és attribútumok definiálása.</li>
+            <li>Kötelező és opcionális mezők kezelése.</li>
+            <li>Ismétlődő elemek kezelése (minOccurs, maxOccurs).</li>
+            <li>Értékkorlátozások feldolgozása (minInclusive, maxInclusive, minLength, maxLength).</li>
+            <li>Felsorolások (enumeration) kezelése.</li>
+            <li>Különböző űrlapelemek automatikus generálása az XSD-ben megadott információk alapján.</li>
+        </ul>
+
+        <p>
+            Az generált űrlap megjelenése az XSD-sémán belül
+            a következő módon befolyásolható:
+        </p>
+
+        <pre><code>
+        &lt;xs:element name="speed" type="speedType"&gt;
+            &lt;xs:annotation&gt;
+                &lt;xs:appinfo&gt;
+                    &lt;xs:type&gt;radio&lt;/xs:type&gt;
+                    &lt;xs:description&gt;How fast would you rate the speed of delivery&lt;/xs:description&gt;
+                &lt;/xs:appinfo&gt;
+            &lt;/xs:annotation&gt;
+        &lt;/xs:element&gt;
+        </code></pre>
+
+
+        <p>
+            Az elemhez tartozó űrlapkomponens típusa az
+            <code>xs:appinfo</code> részen belül adható meg.
+            A fenti példában a <code>radio</code> érték hatására
+            a mező legördülő lista helyett rádiógombokként jelenik meg.
+
+            Az űrlap bemeneti felületeihez leírás is rendelhető
+            az <code>xs:description</code> segítségével. Ebben
+            megadható, hogy milyen választ várunk a felhasználótól,
+            illetve milyen formai követelményeknek kell megfelelnie
+            a megadott értéknek.
+        </p>
+    </section>
+
+    <section>
+        <h2>Korlátozások és nem támogatott funkciók</h2>
+
+        <p>
+            Az alkalmazás nem támogatja az XSD szabvány összes
+            funkcióját. Az alábbi szerkezetek feldolgozása jelenleg
+            nem biztosított, illetve nem vezet validált xml dokumentumhoz:
+        </p>
+
+        <ul>
+            <li>xs:choice szerkezeteket feldolgozza, de úgy kezeli, mint az xs:all vagy xs:sequence szerkezeteket.</li>
+            <li>xs:extension segítségével történő típusbővítés nem támogatott.</li>
+            <li>Únió-ban nem történik validálás.</li>
+            <li>Listában nem történik validálás saját típus megadása esetén.</li>
+        </ul>
+    </section>
+
+</div>

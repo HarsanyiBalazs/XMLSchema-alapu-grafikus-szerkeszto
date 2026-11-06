@@ -1,0 +1,38 @@
+<div class="schema-container">
+  <form [formGroup]="xmlSchemaForm" (ngSubmit)="sendSchema()">
+
+    <div class="form-field">
+      <label for="name">Séma név</label>
+      <input id="name" type="text" formControlName="name" placeholder="Enter a schema name">
+
+      @if (xmlSchemaForm.get('name')?.invalid &&
+      xmlSchemaForm.get('name')?.touched) {
+      <p class="error">Kérjük, adjon meg egy sémanevet.</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="schemaFile">Szöveges fájl vagy XSD fájl betöltése</label>
+      <input id="schemaFile" type="file" accept=".txt,.xsd,text/plain,application/xml,text/xml"
+        (change)="onFileSelected($event)">
+
+      @if (fileError) {
+      <p class="error">{{ fileError }}</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="schema">Séma tartalma</label>
+      <textarea id="schema" formControlName="schema" rows="20" placeholder="Paste or write your XSD schema here...">
+    </textarea>
+
+      @if (xmlSchemaForm.get('schema')?.invalid &&
+      xmlSchemaForm.get('schema')?.touched) {
+      <p class="error">Kérjük, adja meg a séma tartalmát.</p>
+      }
+    </div>
+
+    <button type="submit">Séma feltöltése</button>
+
+  </form>
+</div>
