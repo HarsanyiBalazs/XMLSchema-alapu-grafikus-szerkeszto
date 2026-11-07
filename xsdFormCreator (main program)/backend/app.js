@@ -7,14 +7,15 @@ require('dotenv').config();
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+app.use(cookieParser());
 app.use(cors({
     origin: process.env.FRONTEND_URL, // Your frontend URL
     credentials: true // Required for cookies
 }));
 app.use(express.json());
-app.use(cookieParser());
 
-const PORT = 3000;
+
 
 //Route the user api
 const userRoutes = require("./routes/users");
@@ -28,18 +29,17 @@ app.use("/projects",projectRoutes);
 const formRoutes = require("./routes/filledForms");
 app.use("/filledForms",formRoutes);
 
-app.listen(PORT, (error) => {
+main().catch((error) => console.log(error));
+
+async function main() {
+    await mongoose.connect(process.env.DATABASE_URL);
+    mongoose.set("strictQuery", true);
+
+    app.listen(PORT, (error) => {
     if(!error){
         console.log("Server listening at:",PORT)
     }else{
         console.log("An error occured",error);
     }
 })
-
-main().catch((error) => console.log(error));
-
-async function main() {
-    const connectionString =  process.env.DATABASE_URL;
-    await mongoose.connect(connectionString);
-    mongoose.set("strictQuery", true);
 }

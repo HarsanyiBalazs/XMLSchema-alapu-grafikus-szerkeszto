@@ -44,7 +44,7 @@ export class Registration implements OnInit {
     this.accountService.postSignup(this.registrationForm.value).subscribe(
         data => {
           console.log(data.user);
-          this.accountService.loggedIn.next(true);
+          this.accountService.setLoginState(true);
           if(data.user){
             this.router.navigate(['/']);
           }

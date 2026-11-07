@@ -136,7 +136,7 @@
 
       <button type="button" (click)="removeItem(asArray(control), schema, i)"
         [disabled]="asArray(control).length <= (schema.minItems ?? 0)">
-        Remove {{ schema.item.name || 'item' }}
+        {{ schema.item.name || 'Elem' }} törlése
       </button>
 
     </div>
@@ -144,7 +144,7 @@
     <button type="button" (click)="addItem(asArray(control), schema)" [disabled]="
         schema.maxItems !== undefined &&
         asArray(control).length >= schema.maxItems">
-      Add {{ schema.item.name || 'item' }}
+      {{ schema.item.name || 'Elem' }} hozzáadása
     </button>
 
   </div>

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FilledForms } from '../models/filledForms.model';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class FilledFormsService {
-  private api = "http://localhost:3000/filledForms"
+  private api = `${environment.apiUrl}/filledForms`;
 
   constructor(private http: HttpClient){
 
@@ -30,4 +30,10 @@ export class FilledFormsService {
       withCredentials: true
     });
   }*/
+
+  delete(id:string):Observable<FilledForms>{
+      return this.http.delete<FilledForms>(this.api + '/' + id,{
+        withCredentials: true
+      });
+   }
 }

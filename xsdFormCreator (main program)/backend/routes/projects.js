@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
-const {requireAuth, checkUser} = require("../middleware/authMiddleware");
+const {checkUser} = require("../middleware/authMiddleware");
 
 
 
@@ -21,10 +21,13 @@ router.get('/', async (req,res) =>{
 router.get('/user',checkUser,async (req,res) =>{
     try{
         const projects = await Project.find({ user: req.userID });
+        if (!projects || projects.length === 0) {
+            return res.status(200).json([]);
+        }
         res.status(200).json(projects);
     }
     catch(error){
-        res.status(500).json({message:"an error occured", error: error});
+        res.status(500).json({message:"an error occured", error: error.message});
     }
 });
 
@@ -77,6 +80,9 @@ router.delete('/:id',checkUser ,async (req,res) =>{
     try{
         const id = req.params.id
         const project = await Project.findOne({ _id : id });
+        if (!project) {
+            return res.status(404).json({ message: "project not found" });
+        }
         if(project.user == req.userID){
             let deletedProject = await Project.deleteOne({_id : id})
             res.status(200).json(deletedProject);

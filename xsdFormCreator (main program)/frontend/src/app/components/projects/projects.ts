@@ -28,17 +28,17 @@ export class Projects implements OnInit {
         data =>{
           console.log('projects: ',data);
           this.projects =data; 
-          this.changeDetector.detectChanges();
+          this.changeDetector.markForCheck();
 
         },
         error =>{
-          console.error("error: "+ error);
+          console.error("error: ", error.error?.message || error.error?.error || error.message);
         }
       );
   }
 
   onDeleteClick(schema: Project){
-    if(window.confirm("Are you sure you want to delete the schema: "+ schema.schema + "?")){
+    if(window.confirm("Biztos törölni akarod a sémát?")){
       this.projectService.delete(schema._id).subscribe(
         data =>{
           this.initData();

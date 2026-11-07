@@ -44,7 +44,7 @@ export class Login implements OnInit{
     this.accountService.postLogin(this.loginForm.value).subscribe(
         data => {
           console.log(data.user);
-          this.accountService.loggedIn.next(true);
+          this.accountService.setLoginState(true);
           if(data.user){
             this.router.navigate(['/']);
           }

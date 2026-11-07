@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../services/account';
+import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -13,25 +15,22 @@ export class Header implements OnInit{
   private router = inject(Router); 
   private changeDetector = inject(ChangeDetectorRef);
 
-  isLoggedIn!: boolean;
+  isLoggedIn: boolean = false;
+  private authSub?: Subscription;
 
   //isLoggedIn = this.accountService.isLoggedIn().subscribe;
 
   ngOnInit(): void{
-    this.accountService.loadUser();
-    this.accountService.refreshAuthState();
-    this.accountService.isLoggedIn().subscribe(data=>{
+    this.authSub = this.accountService.isLoggedIn().subscribe(data=>{
       this.isLoggedIn = data;
-      this.changeDetector.detectChanges();
+      this.changeDetector.markForCheck();
     });
   };
 
   logOut(){
-    this.accountService.getLogout().subscribe(
+    this.accountService.postLogout().subscribe(
       data =>{
-        /*this.accountService.loadUser();
-        this.accountService.refreshAuthState();*/
-        this.accountService.loggedIn.next(false);
+        this.accountService.loadUser();
         this.router.navigate(['/login']);
         this.changeDetector.detectChanges();
       }

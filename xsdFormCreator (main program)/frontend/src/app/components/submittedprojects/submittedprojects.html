@@ -5,6 +5,7 @@
         <th>Beküldő felhasználóneve</th>
         <th>Beküldés időpontja</th>
         <th>XML fájl</th>
+        <th>XML fájl törlése</th>
       </tr>
     </thead>
 
@@ -15,6 +16,11 @@
         <td>
           <button (click)="downloadXml(response.form)" class="download-button">
             XML letöltése
+          </button>
+        </td>
+        <td>
+          <button (click)="onDeleteClick(response)" class="delete-button">
+            Törlés
           </button>
         </td>
       </tr>

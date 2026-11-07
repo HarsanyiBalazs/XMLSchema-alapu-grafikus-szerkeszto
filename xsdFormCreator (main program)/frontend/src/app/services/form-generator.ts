@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { FormSchema, FormControlSchema, FormGroupSchema, FormArraySchema } from '../models/formSchema.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -293,8 +294,8 @@ export class FormGenerator {
     return type != null && type in this.XSD_TYPE_MAP;
   }
 
-  asArray<T>(value: T | T[] | undefined): T[] {
-    if (value === undefined) {
+  asArray<T>(value: T | T[] | undefined|null): T[] {
+    if (value === undefined || value === null) {
       return [];
     }
 
@@ -317,6 +318,12 @@ export class FormGenerator {
   };
 
   parseElement(xsd: any, node: any): FormSchema {
+
+    //check if node exists
+    if (!node) {
+      return { type: 'string' };
+    }
+
     const originalNode = node;
     const occurs = this.getOccurs(node);
     let schema: FormSchema = { type: 'string' };
@@ -331,6 +338,12 @@ export class FormGenerator {
         node = element;
       }
     }
+
+    //check if ref node exists
+    if (!node) {
+      return { type: 'string' };
+    }
+
     const name = this.getAttr(node, 'name');
 
 
@@ -436,6 +449,10 @@ export class FormGenerator {
   parseComplexType(xsd: any, node: any): FormGroupSchema {
     const controls: Record<string, FormSchema> = {};
     const attributes: Record<string, FormControlSchema> = {};
+
+    if (!node) {
+      return { type: 'group', controls };
+    }
 
     // ---- children ----
 
