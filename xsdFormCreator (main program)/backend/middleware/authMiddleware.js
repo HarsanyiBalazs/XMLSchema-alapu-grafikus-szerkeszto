@@ -45,7 +45,6 @@ const checkUser = (req,res,next) =>{
 
 const checkForCookie = (req, res, next) => {
     const token = req.cookies.jwt;
-    console.log("token:", token);
     
     if (!token) {
         req.userID = null;

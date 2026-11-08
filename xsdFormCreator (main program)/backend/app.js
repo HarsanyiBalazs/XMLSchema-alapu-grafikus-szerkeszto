@@ -15,7 +15,9 @@ app.use(cors({
 }));
 app.use(express.json());
 
-
+if (process.env.TRUST_PROXY === "true") {
+    app.set("trust proxy", 1);
+}
 
 //Route the user api
 const userRoutes = require("./routes/users");

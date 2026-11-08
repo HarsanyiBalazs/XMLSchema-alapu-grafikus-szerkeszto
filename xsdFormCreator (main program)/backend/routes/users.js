@@ -108,9 +108,7 @@ router.get('/user', checkForCookie, async (req, res) => {
     try {
         const token = req.userID;
 
-
         if (token) {
-            let user = await User.findById(token);
             res.status(200).json({ user: req.userID });
         } else {
             //401 not logged in 403 no permission
