@@ -6,8 +6,10 @@
             <xs:sequence>
                 <xs:element name="overall_satisfaction">
                     <xs:annotation>
-                        <xs:appinfo>type="radio"</xs:appinfo>
-                        <xs:documentation>How would you rate your overall satisfaction with our company?</xs:documentation>
+                        <xs:appinfo>
+                            <xs:type>radio</xs:type>
+                            <xs:description>How would you rate your overall satisfaction with our company?</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xs:simpleType>
                         <xs:restriction base="xs:integer">
@@ -21,8 +23,10 @@
                 </xs:element>
                 <xs:element name="future">
                     <xs:annotation>
-                        <xs:appinfo>type="radio"</xs:appinfo>
-                        <xs:documentation>How likely are you to use our services again?</xs:documentation>
+                        <xs:appinfo>
+                            <xs:type>radio</xs:type>
+                            <xs:description>How likely are you to use our services again?</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xs:simpleType>
                         <xs:restriction base="xs:integer">
@@ -36,8 +40,10 @@
                 </xs:element>
                 <xs:element name="speed">
                     <xs:annotation>
-                        <xs:appinfo>type="radio"</xs:appinfo>
-                        <xs:documentation>How fast would you rate the speed of delivery?</xs:documentation>
+                        <xs:appinfo>
+                            <xs:type>radio</xs:type>
+                            <xs:description>How fast would you rate the speed of delivery?</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xs:simpleType>
                         <xs:restriction base="xs:integer">
@@ -51,13 +57,17 @@
                 </xs:element>
                 <xs:element name="further_comments" minOccurs="0">
                     <xs:annotation>
-                        <xs:appinfo>type="textarea"</xs:appinfo>
-                        <xs:documentation>Do you have any further comments?</xs:documentation>
+                        <xs:appinfo>
+                            <xs:type>textarea</xs:type>
+                            <xs:description>Do you have any further comments?</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
                 <xs:element name="data_agreement" type="xs:boolean">
                     <xs:annotation>
-                        <xs:documentation>You agree to our data retention policies</xs:documentation>
+                        <xs:appinfo>
+                            <xs:description>You agree to our data retention policies</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
             </xs:sequence>

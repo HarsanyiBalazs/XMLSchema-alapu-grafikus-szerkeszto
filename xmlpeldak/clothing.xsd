@@ -34,7 +34,9 @@
 
     <xs:element name="torso">
         <xs:annotation>
-            <xs:appinfo>type="select"</xs:appinfo>
+            <xs:appinfo>    
+                <xs:type>select</xs:type>
+            </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
             <xs:restriction base="xs:string">
@@ -48,7 +50,9 @@
 
     <xs:element name="legs">
         <xs:annotation>
-            <xs:appinfo>type="radio"</xs:appinfo>
+            <xs:appinfo>
+                <xs:type>radio</xs:type>
+            </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
             <xs:restriction base="xs:string">
@@ -61,7 +65,9 @@
 
     <xs:element name="feet">
         <xs:annotation>
-            <xs:appinfo>type="checkbox"</xs:appinfo>
+            <xs:appinfo>
+                <xs:type>checkbox</xs:type>
+            </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
             <xs:restriction base="xs:string">

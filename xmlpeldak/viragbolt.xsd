@@ -6,13 +6,16 @@
             <xs:sequence>
                 <xs:element name="csokor" type="csokorType" minOccurs="1" maxOccurs="unbounded">
                     <xs:annotation>
-                        <xs:appinfo>type="multiple-choice-checkbox"</xs:appinfo>
-                        <xs:documentation>Válaszd ki, hogy milyen virágok legyenek csokorban!</xs:documentation>
+                        <xs:appinfo>
+                            <xs:description>Válaszd ki, hogy milyen virágok legyenek csokorban!</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
                 <xs:element name="hatarido" type="hataridoType" minOccurs="1" maxOccurs="1">
                     <xs:annotation>
-                        <xs:documentation>Válaszd ki mikorra legyen kész a megrendelés! (Csak 2026 áprilisától küldjük a csokrokat)</xs:documentation>
+                        <xs:appinfo>
+                            <xs:description>Válaszd ki mikorra legyen kész a megrendelés! (Csak 2026 áprilisától küldjük a csokrokat)</xs:description>
+                        </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
             </xs:sequence>
@@ -36,7 +39,9 @@
         </xs:sequence>
         <xs:attribute name="meret" type="meretType" use="required">
             <xs:annotation>
-                <xs:documentation>Milyen méretű legyen a csokor</xs:documentation>
+                <xs:appinfo>
+                    <xs:description>Milyen méretű legyen a csokor</xs:description>
+                </xs:appinfo>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>

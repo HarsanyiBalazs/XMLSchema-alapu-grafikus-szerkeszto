@@ -9,7 +9,9 @@
                         <xs:sequence>
                             <xs:element name="name" >
                                 <xs:annotation>
-                                    <xs:documentation>First letter is in uppercase</xs:documentation>
+                                    <xs:appinfo>
+                                        <xs:description>First letter is in uppercase</xs:description>
+                                    </xs:appinfo>
                                 </xs:annotation>
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -19,7 +21,9 @@
                             </xs:element>
                             <xs:element name="price">
                                 <xs:annotation>
-                                    <xs:documentation>Minimum 1000 and is in HUF</xs:documentation>
+                                    <xs:appinfo>
+                                        <xs:description>Minimum 1000 and is in HUF</xs:description>
+                                    </xs:appinfo>
                                 </xs:annotation>
                                 <xs:simpleType>
                                     <xs:restriction base="xs:positiveInteger">
@@ -29,7 +33,9 @@
                             </xs:element>
                             <xs:element name="available">
                                 <xs:annotation>
-                                    <xs:appinfo>type="radio"</xs:appinfo>
+                                    <xs:appinfo>
+                                        <xs:type>radio</xs:type>
+                                    </xs:appinfo>
                                 </xs:annotation>
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">

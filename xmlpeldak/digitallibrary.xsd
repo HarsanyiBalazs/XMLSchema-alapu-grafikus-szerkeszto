@@ -10,7 +10,7 @@
                             <xs:element name="BookName" type="xs:string"></xs:element>
                             <xs:element name="Author" type="xs:string"></xs:element>
                             <xs:element name="ReleaseDate" type="xs:date"></xs:element>
-                            <xs:element name="FileFormats" type="formatListType"></xs:element>
+                            <xs:element name="FileFormats" type="formatListType"></xs:element> 
                             <xs:element name="Price" type="priceListType"></xs:element>
                         </xs:all>
                     </xs:complexType>
@@ -18,7 +18,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
+    <!--Eredetileg a lista és az unió sokkal bonyolultabban lett volna implementálva, viszont végül csak szöveg beviteli mezőként jelennek meg.-->
     <xs:simpleType name="priceListType">
         <xs:list itemType="priceUnionType"/>
     </xs:simpleType>
