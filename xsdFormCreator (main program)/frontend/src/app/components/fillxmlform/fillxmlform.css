@@ -23,12 +23,12 @@
 .form-group h3 {
   margin-top: 0;
   margin-bottom: 15px;
-  color: #333;
+  color: black;
 }
 
 .group-description,
 .field-description {
-  color: #666;
+  color: #414040;
   font-size: 0.9rem;
 }
 
@@ -42,7 +42,7 @@
 
 .form-field > label {
   font-weight: bold;
-  color: #333;
+  color: black;
 }
 
 .required-marker {
@@ -138,8 +138,7 @@
 .success-message {
   padding: 15px;
   margin-top: 15px;
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  color: black;
   border-radius: 5px;
   text-align: center;
   font-weight: bold;

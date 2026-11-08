@@ -2,6 +2,58 @@
 
 \Section{Telepítés és használat}
 
+Az alkalmazás futtatásához az alábbi szoftverek és eszközök szükségesek:
+\begin{itemize}
+\item Node.js: A backend futtatásához és a JavaScript-függőségek kezeléséhez szükséges
+\item npm: A Node.js csomagkezelője, amellyel a projekt függőségei telepíthetők.
+\item Angular CLI: A frontend fejlesztői kiszolgálásához és buildeléséhez szükséges.
+\item MongoDB: Az alkalmazás adatainak tárolására szolgáló adatbázis-kezelő rendszer.
+\end{itemize}
+
+A program telepítése és konfigurálása több részből áll.
+\begin{enumerate}
+\item A projekt letöltése vagy klónozása után meg kell nyitni a frontend és a backend mappáját.
+\item Mindkét mappában telepíteni kell a szükséges függőségeket az npm install parancs segítségével.
+\item Telepíteni és elindítani kell a MongoDB adatbázis-kezelő rendszert.
+\item A backend konfigurációjában (.ENV fájlban) amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni.
+\end{enumerate}
+
+A fejlesztői környezet futatásához két külön terminálablak megnyitása szükséges.
+
+Backend indítása:
+\begin{verbatim}
+cd backend
+npm install
+npm start
+\end{verbatim}
+
+Frontend inditása:
+\begin{verbatim}
+cd frontend
+npm install
+ng serve
+\end{verbatim}
+
+A kliensoldal ezt követően általában a http://localhost:4200 címen érhető el, míg a szerveroldal a konfigurációban meghatározott porton fogadja a kéréseket.
+
+Élő környezetben az alkalmazás futtatása eltér a fejlesztői környezetben alkalmazott módszertől és további teendőkre van szükség.
+\begin{enumerate}
+\item A backend konfigurációjában (.ENV fájlban) a fordított proxy és hosting platrformok használatához a TRUST\_PROXY=TRUE kell állítani, és át kell állítani a frontend címét.
+\item A frontend/src/enviroments mappában az environment.production.ts fájlban át kell állítani az apiURL, hogy a megfelelő címre mutasson.
+\end{enumerate}
+
+A backend éles környezetben is Node.js segítségével fut. A szerver elindítható a npm start paranccsal, azonban célszerű valamilyen folyamatkezelő eszközt (például a PM2-t) használni. Ez lehetővé teszi a backend folyamatos működésének biztosítását, az esetleges hibák utáni újraindítást és a naplófájlok kezelését.
+
+A frontenden az Angular alkalmazásból először optimalizált buildet kell készíteni az alábbi paranccsal:
+
+\begin{verbatim}
+ng build --configuration production
+\end{verbatim}
+
+A parancs létrehozza a frontend futtatásához szükséges statikus fájlokat, amelyek tartalmazzák a HTML-, CSS- és JavaScript-állományokat. Ezeket egy webszerver segítségével lehet elérhetővé tenni a felhasználók számára.
+
+Az adatbázis-kezelést ebben az esetben is a MongoDB végzi. Az adatbázis lehet ugyanazon a szerveren telepítve, mint a backend, de külön szerveren vagy felhőalapú szolgáltatásként is működhet.
+
 \Section{Használati útmutató}
 Első lépésként felhasználói fiók létrehozása szükséges. A regisztráció során a felhasználónak meg kell adnia egy egyedi, még nem használatban lévő felhasználónevet és egy legalább nyolc karakterből álló jelszót, ezt követően igénybe veheti a weboldal szolgáltatásait.
 
@@ -10,7 +62,7 @@ A bejelentkezést követően a felhasználó hozzáférést kap a saját sémái
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/bejelentkezes.png}
+\includegraphics[width=\textwidth]{images/bejelentkezes.png}
 \caption{A bejelentkezési felület.}
 \label{fig:bejelentkezes}
 \end{figure}
@@ -19,7 +71,7 @@ A Sémák menüpontban a felhasználó megtekintheti a korábban létrehozott s�
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/semaLista.png}
+\includegraphics[width=\textwidth]{images/semaLista.png}
 \caption{A séma oldal.}
 \label{fig:semaLista}
 \end{figure}
@@ -28,7 +80,7 @@ Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma felt�
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/semaFeltoltes.png}
+\includegraphics[width=\textwidth]{images/semaFeltoltes.png}
 \caption{A séma feltöltésének oldal.}
 \label{fig:semaFeltolt}
 \end{figure}
@@ -82,7 +134,7 @@ Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/urlapKitoltes.png}
+\includegraphics[width=\textwidth]{images/urlapKitoltes.png}
 \caption{Egy generált űrlap.}
 \label{fig:urlapKitolt}
 \end{figure}
@@ -93,9 +145,84 @@ Minden beküldött űrlaphoz tartozik egy XML-dokumentum, amely az űrlap kitöl
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/kitoltottUrlapok.png}
+\includegraphics[width=\textwidth]{images/kitoltottUrlapok.png}
 \caption{Kitöltött űrlapok listája egy sémához.}
 \label{fig:kitoltottUrlapok}
 \end{figure}
 
-\section{Tesztelési lehetőségek}
+\clearpage
+
+\section{Automatizált tesztelés lehetősége}
+
+A webalkalmazások fejlesztése során fontos szempont a felhasználói felület megfelelő működésének ellenőrzése. A manuális tesztelés mellett erre automatizált tesztelési módszerek is alkalmazhatók, amelyek segítségével előre meghatározott felhasználói műveletek és azok eredményei ismételhető módon vizsgálhatók. Az automatizált tesztelés célja annak ellenőrzése, hogy az alkalmazás különböző funkciói a meghatározott követelményeknek megfelelően működnek-e.
+
+Az automatizált felületi tesztelés során egy erre a célra szolgáló tesztelőeszköz a felhasználó lehetséges viselkedését szimulálja. Ezek közé tartozik például egy oldal megnyitása, egy beviteli mező kitöltése, egy gomb megnyomása vagy egy másik oldalra történő navigáció. A tesztelőeszköz ezután ellenőrzi, hogy az applikáció a megadott módon reagált-e az adott műveletre. Ennek segítségével nemcsak az egyes felületi elemek működése vizsgálható, hanem összetettebb felhasználói folyamatok is tesztelhetők.
+
+A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, és a dinamikus űrlapok generálására és kitöltésére. Különösen fontos területet jelenthet az űrlapok validációjának ellenőrzése, hiszen az alkalmazás egyik alapvető feladata, hogy az XSD-sémában meghatározott korlátozásokat és követelményeket a generált űrlapokon is érvényesítse.
+
+\section{Lehetséges tesztforgatókönyvek és tesztesetek}
+
+\subsection{Felhasználói hitelesítés ellenőrzése}
+A regisztráció és a bejelentkezés megfelelő működésének ellenőrzése.
+\begin{table}[h]
+\centering
+\caption{Felhasználói hitelesítés tesztforgatókönyve}
+\label{tab:tesztf1}
+\begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|p{0.4\textwidth}|}
+\hline
+Teszteset & Végrehajtás & Elvárt eredmény \\
+\hline
+Sikeres bejelentkezés & Érvényes felhasználónév és jelszó megadása & A felhasználó bejelentkezik, és elérhetővé válnak a jogosultsághoz kötött funkciók. \\
+\hline
+Hibás jelszó & Helyes felhasználónév, hibás jelszó megadása & A bejelentkezés sikertelen, hibaüzenet jelenik meg. \\
+\hline
+Hiányzó adatok & A bejelentkezési mezők üresen hagyása & A rendszer jelzi a kötelező mezők hiányát. \\
+\hline
+Nem jogosultan válasz elérés & A felhasználó megnyit egy nem saját sémához tartozó válaszoldalt & A betöltött oldal üresen marad \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{XML-séma feltöltésének és feldolgozásának ellenőrzése}
+Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML-sémákat, és képes-e feldolgozni azok tartalmát.
+\begin{table}[h]
+\centering
+\caption{XML-séma feltöltés tesztforgatókönyve}
+\label{tab:tesztf2}
+\begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|p{0.4\textwidth}|}
+\hline
+Teszteset & Végrehajtás & Elvárt eredmény \\
+\hline
+Séma feltöltése fájlból & Egy XSD-fájl kiválasztása és feltöltése & A fájl tartalma bekerül a séma szerkesztőmezőjébe, majd menthető. \\
+\hline
+Séma megadása szövegesen & Egy XSD-séma közvetlen beírása vagy beillesztése a szerkesztőmezőbe & A megadott szöveg menthető. \\
+\hline
+Séma módosítása & 	Egy korábban megadott séma tartalmának megváltoztatása & A módosított séma sikeresen mentésre kerül. \\
+\hline
+Séma feldolgozása & Egy feldolgozható szerkezetű XSD megadása és az űrlapgenerálás elindítása & A rendszer a séma tartalma alapján előállítja a dinamikus űrlapot. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Űrlap generálásának és validációjának ellenőrzése}
+Annak ellenőrzése, hogy megfelelőek-e az XML-séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat.
+\begin{table}[h]
+\centering
+\caption{Űrlap kitöltés tesztforgatókönyve}
+\label{tab:tesztf3}
+\begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|p{0.4\textwidth}|}
+\hline
+Teszteset & Végrehajtás & Elvárt eredmény \\
+\hline
+Űrlap generálása & Az űrlap oldalának megnyitása & A sémában meghatározott elemeknek megfelelő beviteli mezők jelennek meg. \\
+\hline
+Kötelező mező ellenőrzése & Egy kötelező mező üresen hagyása és az űrlap beküldése & A rendszer jelzi a hiányzó értéket. \\
+\hline
+Értéktartomány ellenőrzése & A megengedett minimum- vagy maximumértéken kívüli érték megadása & A rendszer érvénytelennek jelöli az értéket. \\
+\hline
+Felsorolás ellenőrzése & Egy felsorolással korlátozott mezőnél az engedélyezett érték kiválasztása & A mező a sémában meghatározott értékeket jeleníti meg. \\
+\hline
+\end{tabular}
+\end{table}
+
+\clearpage
