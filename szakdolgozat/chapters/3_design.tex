@@ -76,3 +76,38 @@ Ez egy megjegyzés
 \begin{example}
 Ez egy példa
 \end{example}
+
+\section{Az alkalmazás működésének terve}
+
+A cél egy olyan webalkalmazás létrehozása, amely lehetővé teszi XML-sémák feltöltését, az azok alapján dinamikusan előállított űrlapok kitöltését, valamint a kitöltött űrlap alapján XML-formátumba történő beküldése. A rendszer tervezése során fontos szempont, hogy az űrlapok létrehozását és kitöltését külön folyamatként lehessen kezelni. Ennek megfelelően a regisztrált felhasználók által létrehozott űrlapok egy egyedi hivatkozáson keresztül más személyek számára is elérhetővé válhatnak, így azok kitöltéséhez nem kell megadniuk a sémát.
+
+Az alkalmazás használatához a felhasználóknak saját fiókot kell regisztrálni, majd bejelentkezni. A regisztrált felhasználók egy XML-séma feltöltésével készíthetnek egy dinamikus űrlapot. A feltöltött séma feldolgozása során a rendszernek fel kell ismernie az egyes elemek típusát, kötelezőségi feltételeit és egyéb megkötéseit, majd ezek alapján kell kialakítania a megfelelő beviteli mezőket és azok validációs szabályait.
+
+A létrehozott űrlap elérését egy hivatkozás biztosítja majd. A séma tulajdonosa ezt a hivatkozást megoszthatja másokkal, akik így közvetlenül megnyithatják a kitöltőfelületet. Ennek köszönhetően az űrlap kitöltéséhez nem lesz szükség a projektkezelő felület használatára. A kitöltő számára az alkalmazásnak a séma alapján előállított űrlapot kell megjelenítenie, biztosítva az adatok megfelelő formátumú bevitelét és ellenőrzését.
+
+Az űrlap beviteli elemei közé a továbbiak tartoznak:
+\begin{itemize}
+\item egysoros szöveg,
+\item jelszómező,
+\item email cím,
+\item jelölőnégyzet,
+\item rádiógomb,
+\item szám mező,
+\item dátum naptár,
+\item többsoros szöveg,
+\item legördülő lista,
+\item csúszka.
+\end{itemize}
+A beviteli mező típusát a program automatikusan határozza meg, de lehetőség lesz, hogy a sémán belül további adatokat adjon meg a felhasználó, amivel a megadhatja a beviteli mezőt.
+
+Az űrlap beküldése előtt a rendszernek ellenőriznie kell a megadott értékeket a feltöltött XML-sémában meghatározott feltételek alapján. Amennyiben az adatok megfelelnek az előírásoknak, az alkalmazásnak elő kell állítania a megfelelő szerkezetű XML-dokumentumot, majd azt továbbítja, hogy a szerveren letárolja. Hibás vagy hiányos adatok esetén a felhasználónak visszajelzést kell kapnia a javítandó mezőkről.
+
+A beküldött dokumentumokat a séma tulajdonosa, majd külön felületen érheti el. Ezen az oldalon lesz lehetősége letölteni, vagy szükség esetén törölnie a beérkezett XML-dokumentumokat.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{images/folyamatdiagram.png}
+\caption{Az alkalmazás használatot ábrázoló folyamatdiagram.}
+\label{fig:folyamat}
+\end{figure}
