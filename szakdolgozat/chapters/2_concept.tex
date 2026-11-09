@@ -2,7 +2,7 @@
 
 \Section{Mi az XML}
 
-Az XML (Extensible Markup Language)egy egyszerű és rugalmas jelölőnyelv és fájlformátum, amit adatok rendezésére, tárolására és szállítására használnak. A XML Working Group (eredetileg SGML Editorial Review Board) 1996-ban kezdte el fejlesztését, aminek első verziója 1998-ben jelent meg, a W3C ajánlásával. A tervezés során arra törekedtek, hogy az XML-feldolgozó programok könnyen elkészíthetők legyenek, és az XML számos különféle alkalmazással kompatibilisen működjön. A dokumentumoknak gyorsan és egyszerűen kialakíthatóknak kell lenniük, továbbá fontos szempont volt az is, hogy az ember számára olvashatók maradjanak.
+Az XML (Extensible Markup Language)\cite{w3cxml} egy egyszerű és rugalmas jelölőnyelv és fájlformátum, amit adatok rendezésére, tárolására és szállítására használnak. A XML Working Group (eredetileg SGML Editorial Review Board) 1996-ban kezdte el fejlesztését, aminek első verziója 1998-ben jelent meg, a W3C ajánlásával. A tervezés során arra törekedtek, hogy az XML-feldolgozó programok könnyen elkészíthetők legyenek, és az XML számos különféle alkalmazással kompatibilisen működjön\cite{xml_article}. A dokumentumoknak gyorsan és egyszerűen kialakíthatóknak kell lenniük, továbbá fontos szempont volt az is, hogy az ember számára olvashatók maradjanak.
 
 Egy XML dokumentum nem előre, hanem egyénileg definiált címkékből áll, ezeknek lehetnek értékkel ellátott attribútumai és tartalma. Egy címke tartalma, állhat szövegből,további címkékből vagy lehet üres is. A címke és attribútumok tetszés szerint nevezhetőek és a címkék bármilyen komplexitási szintre beágyazhatóak. Az XML kizárólag az információ rendszerezésére összpontosít.
 
@@ -12,11 +12,11 @@ Az XML sémák olyan opcionális leírások vagy fájlok, amellyel szabályozni 
 
 Az XML sémák azért lényegesek, mert garantálják az XML-fájlok egységes felépítését és könnyű feldolgozhatóságát. A séma meghatározza a dokumentum szerkezetét, így biztosítva, hogy a program helyesen tudja értelmezni, és minimalizálva a futás közbeni hibák kockázatát. Emellett a validálás segítségével gyorsan és egyszerűen kiszűrhetők a dokumentumban előforduló hibák.
 
-Az első sémanyelv, a DTD (document type definition) már valamilyen formában az XML megjelenése előtt is jelen volt, mivel az SGML nyelvcsalád általános használatához volt kifejlesztve, így csak a meglévő nyelvet kellet átdolgozni. A DTD definiálható saját fájlban, de akár az XML dokumentumban is.
+Az első sémanyelv, a DTD (document type definition)\cite{dtd} már valamilyen formában az XML megjelenése előtt is jelen volt, mivel az SGML nyelvcsalád általános használatához volt kifejlesztve, így csak a meglévő nyelvet kellet átdolgozni. A DTD definiálható saját fájlban, de akár az XML dokumentumban is.
 
  A DTD alkalmas megadni az elemeket, azoknak a tartalmát, számosságát, sorrendjét, az attríbútomokat, és ezeken felül entitásokkal hivatkozásokat lehet készíteni. Bár az alapvetők megtalálhatóak, a nyelvnek nagy hiányosságai vannak. Kevés az adattípusok száma és nem képes újabb, komplexebb típusokat definiálni, így nem lehet megkötéseket tenni a szövegértékeknek. A névterek kezelésére sem képes, így a több forrásból származó XML állományok kezelésében problémás. További hátránya, hogy a szintaxisa eltér az XML-től, így más XML-t kezelő eszközökkel nem használható. Mindezek miatt viszonylag hamar megjelentek az újabb, fejlettebb sémanyelvek, amelyek fokozatosan kiszorították a DTD használatát.
 
-Az XSD (XML Schema Definition) a DTD továbbfejlesztett alternatívájaként jelent meg. A DTD-vel ellentétben XML-alapú nyelv, így a szintaxisa könnyebben értelmezhető az XML-kezelő eszközök számára. Segítségével nemcsak az elemek és attribútumok előfordulása, sorrendje és számossága határozható meg, hanem azok adattípusa is, és emellett támogatja a névterek használatát.
+Az XSD (XML Schema Definition)\cite{xsd} a DTD továbbfejlesztett alternatívájaként jelent meg. A DTD-vel ellentétben XML-alapú nyelv, így a szintaxisa könnyebben értelmezhető az XML-kezelő eszközök számára. Segítségével nemcsak az elemek és attribútumok előfordulása, sorrendje és számossága határozható meg, hanem azok adattípusa is, és emellett támogatja a névterek használatát.
 
  Az XSD számos beépített adattípust tartalmaz, például szöveges, egész és valós számokat, dátumokat és logikai értékeket, emellett lehetőséget biztosít egyedi, összetett adattípusok létrehozására is. Lehetővé teszi a meglévő adattípusok további korlátozását is, például egy szöveg minimális vagy maximális hosszának, egy szám értéktartományának vagy egy felsorolás megengedett értékeinek meghatározásával. Emellett szabályozható az elemek kötelező vagy opcionális jellege, valamint az ismétlődésük minimális és maximális száma. Ezeknek köszönhetően az XSD sokkal pontosabb ellenőrzést tesz lehetővé, így nemcsak az XML dokumentumok szerkezetének, hanem azok adattartalmának helyessége is vizsgálható.
 
@@ -35,16 +35,24 @@ Szintén lényeges tulajdonság az űrlapokon az opcionálisan megjelenő része
 \Section{Űrlap készítő és kitöltő alkalmazások}
 Ezek az alkalmazások három kategóriába sorolhatóak: üzleti és adminisztratív célú nyomtatványkitöltő rendszerek, általános célú űrlapkészítő és adatgyűjtő rendszerek, végül fejlesztői keretrendszerek és szoftverkomponensek.
 
- Az üzleti célú alkalmazások és nyomtatványkitöltők kategóriában az űrlapok strukturált, gyakran jogi vagy hivatalos folyamatokat támogatnak. Az ilyen rendszerek jellemzően kötött adatstruktúrával és szigorú validációs szabályokkal rendelkeznek, amelyekkel biztosítják a bevitt adatok megfelelő formátumát és teljességét. Ilyen alkalmazás például az Online Nyomtatványkitöltő Alkalmazás (ONYA).
+ Az üzleti célú alkalmazások és nyomtatványkitöltők kategóriában az űrlapok strukturált, gyakran jogi vagy hivatalos folyamatokat támogatnak. Az ilyen rendszerek jellemzően kötött adatstruktúrával és szigorú validációs szabályokkal rendelkeznek, amelyekkel biztosítják a bevitt adatok megfelelő formátumát és teljességét. Ilyen alkalmazás például az Online Nyomtatványkitöltő Alkalmazás (ONYA)\cite{onya} (lásd a \ref{fig:onya}. ábrát).
+ 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{images/onya_example.png}
+\caption{Az ONYA meghatalmazás nyomtatványáról részlet.}
+\label{fig:onya}
+\end{figure}
 
-Az általános célú űrlapkészítők egyszerűvé teszik a felhasználók számára, hogy programozási ismeretek nélkül, saját igényeiknek megfelelő űrlapokat és kérdőíveket hozzanak létre. A létrehozott űrlapok általában interneten keresztül megoszthatók, a beküldött válaszok pedig központilag gyűjthetők és feldolgozhatók. Felhasználási területük rendkívül széles, többek között kérdőívek készítésére, elégedettségmérésre, regisztrációra, jelentkezések kezelésére és különböző felmérések lebonyolítására is alkalmasak. Ebbe a kategóriába sorolható például a Google Forms, a Microsoft Forms, és az evasys.
+Az általános célú űrlapkészítők egyszerűvé teszik a felhasználók számára, hogy programozási ismeretek nélkül, saját igényeiknek megfelelő űrlapokat és kérdőíveket hozzanak létre. A létrehozott űrlapok általában interneten keresztül megoszthatók, a beküldött válaszok pedig központilag gyűjthetők és feldolgozhatók. Felhasználási területük rendkívül széles, többek között kérdőívek készítésére, elégedettségmérésre, regisztrációra, jelentkezések kezelésére és különböző felmérések lebonyolítására is alkalmasak. Ebbe a kategóriába sorolható például a Google Forms\cite{google_form} (lásd a \ref{fig:google_form}. ábrát), a Microsoft Forms\cite{microsoft_form}, és az evasys\cite{evasys}.
 
-Űrlapkészítők programozási környezetben is megjelenhetnek különböző fejlesztői keretrendszerek és szoftverkomponensek részeként is. Ezek az eszközök fejlesztők számára biztosítják, hogy saját alkalmazásaikban hozhassanak létre és kezelhessenek űrlapokat. Támogatják az űrlapelemek programozott definiálását, egyedi validációs szabályok meghatározását, valamint a felhasználói adatok feldolgozását. Előnyük, hogy az űrlapok működése és megjelenése szorosan igazítható az adott alkalmazás követelményeihez, ugyanakkor használatuk programozói ismereteket igényel. Ilyen például a Flask-WTF és a Django Forms.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{images/google_forms_example.png}
+\caption{Képernyőkép a Google Forms űrlapkészítő felületéről.}
+\label{fig:google_form}
+\end{figure}
 
-%https://www.xml.com/pub/a/w3j/s3.bosak.html
+Űrlapkészítők programozási környezetben is megjelenhetnek különböző fejlesztői keretrendszerek és szoftverkomponensek részeként is. Ezek az eszközök fejlesztők számára biztosítják, hogy saját alkalmazásaikban hozhassanak létre és kezelhessenek űrlapokat. Támogatják az űrlapelemek programozott definiálását, egyedi validációs szabályok meghatározását, valamint a felhasználói adatok feldolgozását. Előnyük, hogy az űrlapok működése és megjelenése szorosan igazítható az adott alkalmazás követelményeihez, ugyanakkor használatuk programozói ismereteket igényel. Ilyen például a Flask-WTF \cite{flaskwtf} és a Django Forms \cite{django}.
 
-%https://www.w3.org/TR/REC-xml/
 
-%https://www.w3schools.com/xml/xml_dtd_intro.asp
-
-%https://www.w3.org/TR/xmlschema11-1/

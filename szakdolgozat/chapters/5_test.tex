@@ -57,40 +57,39 @@ Az adatbázis-kezelést ebben az esetben is a MongoDB végzi. Az adatbázis lehe
 \Section{Használati útmutató}
 Első lépésként felhasználói fiók létrehozása szükséges. A regisztráció során a felhasználónak meg kell adnia egy egyedi, még nem használatban lévő felhasználónevet és egy legalább nyolc karakterből álló jelszót, ezt követően igénybe veheti a weboldal szolgáltatásait.
 
-Ha a felhasználó már rendelkezik saját fiókkal, akkor a bejelentkezés után érheti el az alkalmazás funkcióit.
+Ha a felhasználó már rendelkezik saját fiókkal, akkor a bejelentkezés (lásd a \ref{fig:bejelentkezes}. ábrát) után érheti el az alkalmazás funkcióit.
 A bejelentkezést követően a felhasználó hozzáférést kap a saját sémáihoz, amelyek kezelésére külön menüpont áll rendelkezésre.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{images/bejelentkezes.png}
+\frame{\includegraphics[width=\textwidth]{images/bejelentkezes.png}}
 \caption{A bejelentkezési felület.}
 \label{fig:bejelentkezes}
 \end{figure}
 
-A Sémák menüpontban a felhasználó megtekintheti a korábban létrehozott sémáit, valamint új sémát is feltölthet. A listában megjelennek az egyes sémákhoz tartozó alapvető információk és a kezelésükhöz szükséges műveletek. A felhasználónak lehetősége van a sémák adatainak módosítására, a hozzájuk tartozó kitöltött űrlapok megtekintésére, illetve a sémák törlésére.
+A Sémák menüpontban (lásd a \ref{fig:semaLista} ábrát) a felhasználó megtekintheti a korábban létrehozott sémáit, valamint új sémát is feltölthet. A listában megjelennek az egyes sémákhoz tartozó alapvető információk és a kezelésükhöz szükséges műveletek. A felhasználónak lehetősége van a sémák adatainak módosítására, a hozzájuk tartozó kitöltött űrlapok megtekintésére, illetve a sémák törlésére.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{images/semaLista.png}
+\frame{\includegraphics[width=\textwidth]{images/semaLista.png}}
 \caption{A séma oldal.}
 \label{fig:semaLista}
 \end{figure}
 
-Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma feltöltése gombra kattintva. A felhasználónak elsőként meg kell adnia a létrehozandó űrlap nevét, majd hozzá kell rendelnie az űrlap szerkezetét meghatározó XML-sémát. A séma megadása kétféleképpen történhet: a felhasználó közvetlenül beillesztheti vagy begépelheti az XSD-kódot a szöveges mezőbe, illetve feltölthet egy korábban elkészített XSD-fájlt. Ezt követően a séma feltöltés gombbal menthető az új séma és a felhasználó megkapja a linket amin az űrlap elérhető.
+Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma feltöltése gombra kattintva. A felhasználónak elsőként meg kell adnia a létrehozandó űrlap nevét, majd hozzá kell rendelnie az űrlap szerkezetét meghatározó XML-sémát. A séma megadása kétféleképpen történhet: a felhasználó közvetlenül beillesztheti vagy begépelheti az XSD-kódot a szöveges mezőbe, illetve feltölthet egy korábban elkészített XSD-fájlt (lásd a \ref{fig:semaFeltolt}. ábrát). Ezt követően a séma feltöltés gombbal menthető az új séma és a felhasználó megkapja a linket amin az űrlap elérhető.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{images/semaFeltoltes.png}
+\frame{\includegraphics[width=\textwidth]{images/semaFeltoltes.png}}
 \caption{A séma feltöltésének oldal.}
 \label{fig:semaFeltolt}
 \end{figure}
 A lementett sémákat feltöltés után a séma szerkesztése gombra kattintva lehetséges módosítani. Ezen felületen meg lehet változtatni a megadott nevet, az XSD-kódot, megtekinthető az űrlap linkje, és helyben legenerálható az űrlap. Az itt megtalálható űrlap kitöltés után nem lesz elmentve, hanem egy XML kódot készít, ezzel a felhasználó biztosíthatja, hogy megfelelő eredményeket kapjon.
 
-A létrehozott sémákhoz az alkalmazás külön elérési hivatkozást biztosít. Ezen keresztül a felhasználók megnyithatják az adott XML-séma alapján automatikusan generált űrlapot. Az űrlap megjelenése és felépítése a hozzá rendelt XSD-sémától függ. A séma határozza meg az űrlap elemeit, azok típusát, kötelező vagy opcionális jellegét, valamint az értékkorlátozásokat. Az alkalmazás a séma feldolgozása során a meghatározott elemekhez megfelelő beviteli mezőket rendel. Egyszerű szöveges értékek esetén szövegmezők, számértékek esetén numerikus beviteli mezők, felsorolások esetén legördülő listát jelenhetnek meg.
+A létrehozott sémákhoz az alkalmazás külön elérési hivatkozást biztosít. Ezen keresztül a felhasználók megnyithatják az adott XML-séma alapján automatikusan generált űrlapot (lásd a \ref{fig:urlapKitolt}. ábrát). Az űrlap megjelenése és felépítése a hozzá rendelt XSD-sémától függ. A séma határozza meg az űrlap elemeit, azok típusát, kötelező vagy opcionális jellegét, valamint az értékkorlátozásokat. Az alkalmazás a séma feldolgozása során a meghatározott elemekhez megfelelő beviteli mezőket rendel. Egyszerű szöveges értékek esetén szövegmezők, számértékek esetén numerikus beviteli mezők, felsorolások esetén legördülő listát jelenhetnek meg.
 
 Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD-sémában további információkat adjon meg a generált űrlap megjelenésével kapcsolatban. Erre az xs:annotation és xs:appinfo szerkezetek használhatók. Az elemhez tartozó űrlapkomponens típusa az xs:appinfo részen belül adható meg. A lenti példában a radio érték hatására a mező legördülő lista helyett rádiógombokként jelenik meg. Az űrlap bemeneti felületeihez leírás is rendelhető az xs:description segítségével. Ebben megadható, hogy milyen választ várunk a felhasználótól, illetve milyen formai követelményeknek kell megfelelnie a megadott értéknek. 
 \begin{java}
-majd talalnom kell xml-t
 <xs:element name="speed" type="speedType">
  <xs:annotation>
   <xs:appinfo>
@@ -101,51 +100,32 @@ majd talalnom kell xml-t
  </xs:annotation>
 </xs:element>
 \end{java}
-Az következő bemeneti elemeket támogatja a program amik az xs:appinfo-n belül megadhattóak:
-\begin{itemize}
-\item date
-\item select
-\item radio
-\item checkbox
-\item number
-\item range
-\item text
-\item textarea
-\item password
-\item email
-\end{itemize}
+Az következő bemeneti elemeket támogatja a program amik az xs:appinfo-n belül megadhattóak: date, select, radio, checkbox, number, range, text, textarea, password, email.
 
 Az alkalmazás jelenleg nem támogatja az XSD-szabvány bizonyos szerkezeteinek teljes körű feldolgozását. Ezek használata esetén megtörténhet, hogy a generált űrlap nem képes az összes séma által meghatározott feltétel érvényesítésére, így a létrehozott XML-dokumentum nem fog megfelelni az eredeti sémának.
 
 A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a következők:
 \begin{itemize}
-\item list
-\item unio
-\item choice
-\item extend
+\item Az xs:list szerkezetek feldolgozása korlátozott: az alkalmazás az egyszerű beépített típusok esetében képes kezelni a listaelemeket, azonban egyedi típus megadása esetén az azokhoz tartozó korlátozásokat nem érvényesíti.
+\item Az xs:union használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, azonban nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
+\item Az xs:choice szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. Ennek következtében nem biztosított, hogy a generált XML-dokumentum megfeleljen az eredeti séma által meghatározott választási feltételeknek.
+\item Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem feltétlenül jelennek meg a generált űrlapon.
 \end{itemize}
-Az xs:union használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, azonban nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
-
-Az xs:list szerkezetek feldolgozása korlátozott: az alkalmazás az egyszerű beépített típusok esetében képes kezelni a listaelemeket, azonban egyedi típus megadása esetén az azokhoz tartozó korlátozásokat nem érvényesíti.
-
-Az xs:choice szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. Ennek következtében nem biztosított, hogy a generált XML-dokumentum megfeleljen az eredeti séma által meghatározott választási feltételeknek.
-
-Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem feltétlenül jelennek meg a generált űrlapon.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{images/urlapKitoltes.png}
+\frame{\includegraphics[width=\textwidth]{images/urlapKitoltes.png}}
 \caption{Egy generált űrlap.}
 \label{fig:urlapKitolt}
 \end{figure}
 
-A beküldött adatok a megfelelő séma adatlapján található kitöltött űrlapok menüpontban tekinthetők meg. Itt a felhasználó áttekintheti az adott sémához tartozó beküldéseket. A beküldött űrlapok listájában megjelennek a kapcsolódó információk, például a beküldés időpontja és a beküldő felhasználó neve, amennyiben az rendelkezésre áll.
+A beküldött adatok a megfelelő séma adatlapján található kitöltött űrlapok menüpontban tekinthetők meg. Itt a felhasználó áttekintheti az adott sémához tartozó beküldéseket. A beküldött űrlapok listájában megjelennek a kapcsolódó információk, például a beküldés időpontja és a beküldő felhasználó neve, amennyiben az rendelkezésre áll (lásd a \ref{fig:kitoltottUrlapok} ábrát) .
 
 Minden beküldött űrlaphoz tartozik egy XML-dokumentum, amely az űrlap kitöltése során megadott adatokat tartalmazza. A dokumentum letöltésével az adatok az alkalmazástól függetlenül is felhasználhatók, illetve további feldolgozásra átadhatók.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{images/kitoltottUrlapok.png}
+\frame{\includegraphics[width=\textwidth]{images/kitoltottUrlapok.png}}
 \caption{Kitöltött űrlapok listája egy sémához.}
 \label{fig:kitoltottUrlapok}
 \end{figure}
@@ -158,9 +138,13 @@ A webalkalmazások fejlesztése során fontos szempont a felhasználói felület
 
 Az automatizált felületi tesztelés során egy erre a célra szolgáló tesztelőeszköz a felhasználó lehetséges viselkedését szimulálja. Ezek közé tartozik például egy oldal megnyitása, egy beviteli mező kitöltése, egy gomb megnyomása vagy egy másik oldalra történő navigáció. A tesztelőeszköz ezután ellenőrzi, hogy az applikáció a megadott módon reagált-e az adott műveletre. Ennek segítségével nemcsak az egyes felületi elemek működése vizsgálható, hanem összetettebb felhasználói folyamatok is tesztelhetők.
 
+Az automatizált böngészőtesztelés megvalósítására több eszköz is rendelkezésre áll. Ilyen például a Selenium\cite{selenium}, amely a WebDriver felületén keresztül teszi lehetővé a különböző böngészők vezérlését és a felhasználói műveletek automatizálását. Segítségével ellenőrizhető az oldalak navigációja, a beviteli mezők működése és az űrlapok beküldése.
+
+Egy másik lehetőség a Puppeteer\cite{puppeteer}, amely egy JavaScript-alapú könyvtár a böngészők automatizálására. Lehetővé teszi weboldalak megnyitását, a felületi elemek kezelését, a billentyűzet- és egéresemények szimulálását, és az összetettebb felhasználói folyamatok automatizált tesztelését. Alapértelmezés szerint grafikus felület nélkül, úgynevezett headless módban is futtatható.
+
 A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, és a dinamikus űrlapok generálására és kitöltésére. Különösen fontos területet jelenthet az űrlapok validációjának ellenőrzése, hiszen az alkalmazás egyik alapvető feladata, hogy az XSD-sémában meghatározott korlátozásokat és követelményeket a generált űrlapokon is érvényesítse.
 
-\section{Lehetséges tesztforgatókönyvek és tesztesetek}
+\section{Tesztforgatókönyvek és tesztesetek}
 
 \subsection{Felhasználói hitelesítés ellenőrzése}
 A regisztráció és a bejelentkezés megfelelő működésének ellenőrzése.
@@ -224,5 +208,4 @@ Felsorolás ellenőrzése & Egy felsorolással korlátozott mezőnél az engedé
 \hline
 \end{tabular}
 \end{table}
-
-\clearpage
+A bemutatott tesztforgatókönyvekhez tartozó tesztesetek az alkalmazás vizsgálata során sikeres eredménnyel végrehajtásra kerültek.
