@@ -83,13 +83,13 @@ A cél egy olyan webalkalmazás létrehozása, amely lehetővé teszi XML-sémá
 
 Az alkalmazás használatához a felhasználóknak saját fiókot kell regisztrálni, majd bejelentkezni. A regisztrált felhasználók egy XML-séma feltöltésével készíthetnek egy dinamikus űrlapot. A feltöltött séma feldolgozása során a rendszernek fel kell ismernie az egyes elemek típusát, kötelezőségi feltételeit és egyéb megkötéseit, majd ezek alapján kell kialakítania a megfelelő beviteli mezőket és azok validációs szabályait.
 
-A létrehozott űrlap elérését egy hivatkozás biztosítja majd. A séma tulajdonosa ezt a hivatkozást megoszthatja másokkal, akik így közvetlenül megnyithatják a kitöltőfelületet. Ennek köszönhetően az űrlap kitöltéséhez nem lesz szükség a projektkezelő felület használatára. A kitöltő számára az alkalmazásnak a séma alapján előállított űrlapot kell megjelenítenie, biztosítva az adatok megfelelő formátumú bevitelét és ellenőrzését.
+A létrehozott űrlap elérését egy hivatkozás biztosítja majd. A séma tulajdonosa ezt a hivatkozást megoszthatja másokkal, akik ezzel közvetlenül megnyithatják a kitöltőfelületet. Ennek köszönhetően az űrlap kitöltéséhez nem lesz szükség a projektkezelő felület használatára. A kitöltőnek az alkalmazásnak a séma alapján előállított űrlapot kell megjelenítenie, biztosítva az adatok megfelelő formátumú bevitelét és ellenőrzését.
 
-Az űrlap beviteli elemei közé a továbbiak tartoznak: egysoros szöveg, jelszómező,email cím, jelölőnégyzet, rádiógomb, szám mező, dátum naptár, többsoros szöveg, legördülő lista, csúszka. A beviteli mező típusát a program automatikusan határozza meg, de lehetőség lesz, hogy a sémán belül további adatokat adjon meg a felhasználó, amivel a megadhatja a beviteli mezőt.
+Az űrlap beviteli elemei közé a továbbiak tartoznak: egysoros szöveg, jelszómező,email cím, jelölőnégyzet, rádiógomb, szám mező, dátum naptár, többsoros szöveg, legördülő lista, csúszka. A beviteli mező típusát a program automatikusan határozza meg, de arra is lehetőség lesz, hogy a sémán belül további adatokat adjon meg a felhasználó, amivel a megadhatja a beviteli mezőt.
 
 Az űrlap beküldése előtt a rendszernek ellenőriznie kell a megadott értékeket a feltöltött XML-sémában meghatározott feltételek alapján. Amennyiben az adatok megfelelnek az előírásoknak, az alkalmazásnak elő kell állítania a megfelelő szerkezetű XML-dokumentumot, majd azt továbbítja, hogy a szerveren letárolja. Hibás vagy hiányos adatok esetén a felhasználónak visszajelzést kell kapnia a javítandó mezőkről.
 
-A beküldött dokumentumokat a séma tulajdonosa, majd külön felületen érheti el. Ezen az oldalon lesz lehetősége letölteni, vagy szükség esetén törölnie a beérkezett XML-dokumentumokat.
+A beküldött dokumentumokat a séma tulajdonosa majd külön felületen érheti el. Ezen az oldalon lesz lehetősége letölteni, szükség esetén törölnie a beérkezett XML-dokumentumokat.
 
 
 \begin{figure}[h]

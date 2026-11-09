@@ -15,8 +15,14 @@ A program telepítése és konfigurálása több részből áll.
 \item A projekt letöltése vagy klónozása után meg kell nyitni a frontend és a backend mappáját.
 \item Mindkét mappában telepíteni kell a szükséges függőségeket az npm install parancs segítségével.
 \item Telepíteni és elindítani kell a MongoDB adatbázis-kezelő rendszert.
-\item A backend konfigurációjában (.ENV fájlban) amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni.
+\item A backend konfigurációjában, a .ENV fájlban szereplő értékeket érdemes megváltoztatni a futási környezettől függően. Amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni. 
 \end{enumerate}
+
+A konfigurációban az alábbi módon szereplnek a változó-érték párok.
+\begin{verbatim} 
+FRONTEND_URL = http://localhost:4200
+\end{verbatim}
+Az öt benne szereplő érték: a felhasználó ellenőrzést biztosító kulcs ACCESS\_TOKEN\_SECRET, az adatbázis címe DATABASE\_URL, a kliensoldal címe FRONTEND\_URL, a saját portjának a címe PORT, és annak az igazságértéke, hogy fordított proxy használatban van-e az alkalmazás futtatásához TRUST\_PROXY.
 
 A fejlesztői környezet futatásához két külön terminálablak megnyitása szükséges.
 
@@ -102,13 +108,13 @@ Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD-sém
 \end{java}
 Az következő bemeneti elemeket támogatja a program amik az xs:appinfo-n belül megadhattóak: date, select, radio, checkbox, number, range, text, textarea, password, email.
 
-Az alkalmazás jelenleg nem támogatja az XSD-szabvány bizonyos szerkezeteinek teljes körű feldolgozását. Ezek használata esetén megtörténhet, hogy a generált űrlap nem képes az összes séma által meghatározott feltétel érvényesítésére, így a létrehozott XML-dokumentum nem fog megfelelni az eredeti sémának.
+Az alkalmazás jelenleg nem támogatja az XSD-szabvány egyes szerkezeteinek teljes körű feldolgozását. Ezek használata esetén megeshet, hogy a generált űrlap nem képes az összes séma által meghatározott feltétel érvényesítésére, ezért a létrehozott XML-dokumentum nem fog megfelelni az eredeti sémának.
 
 A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a következők:
 \begin{itemize}
 \item Az xs:list szerkezetek feldolgozása korlátozott: az alkalmazás az egyszerű beépített típusok esetében képes kezelni a listaelemeket, azonban egyedi típus megadása esetén az azokhoz tartozó korlátozásokat nem érvényesíti.
-\item Az xs:union használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, azonban nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
-\item Az xs:choice szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. Ennek következtében nem biztosított, hogy a generált XML-dokumentum megfeleljen az eredeti séma által meghatározott választási feltételeknek.
+\item Az xs:union használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, viszont nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
+\item Az xs:choice szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. E-miatt nem biztosított, hogy a generált XML-dokumentum megfeleljen az eredeti séma által meghatározott feltételeknek.
 \item Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem feltétlenül jelennek meg a generált űrlapon.
 \end{itemize}
 
@@ -138,11 +144,11 @@ A webalkalmazások fejlesztése során fontos szempont a felhasználói felület
 
 Az automatizált felületi tesztelés során egy erre a célra szolgáló tesztelőeszköz a felhasználó lehetséges viselkedését szimulálja. Ezek közé tartozik például egy oldal megnyitása, egy beviteli mező kitöltése, egy gomb megnyomása vagy egy másik oldalra történő navigáció. A tesztelőeszköz ezután ellenőrzi, hogy az applikáció a megadott módon reagált-e az adott műveletre. Ennek segítségével nemcsak az egyes felületi elemek működése vizsgálható, hanem összetettebb felhasználói folyamatok is tesztelhetők.
 
-Az automatizált böngészőtesztelés megvalósítására több eszköz is rendelkezésre áll. Ilyen például a Selenium\cite{selenium}, amely a WebDriver felületén keresztül teszi lehetővé a különböző böngészők vezérlését és a felhasználói műveletek automatizálását. Segítségével ellenőrizhető az oldalak navigációja, a beviteli mezők működése és az űrlapok beküldése.
+Az automatizált weboldal tesztelés megvalósítására több eszköz is rendelkezésre áll. Ilyen például a Selenium\cite{selenium}, amely a WebDriver felületén keresztül teszi lehetővé a különböző böngészők vezérlését és a felhasználói műveletek automatizálását. Segítségével ellenőrizhető az oldalak navigációja, a beviteli mezők működése és az űrlapok beküldése.
 
-Egy másik lehetőség a Puppeteer\cite{puppeteer}, amely egy JavaScript-alapú könyvtár a böngészők automatizálására. Lehetővé teszi weboldalak megnyitását, a felületi elemek kezelését, a billentyűzet- és egéresemények szimulálását, és az összetettebb felhasználói folyamatok automatizált tesztelését. Alapértelmezés szerint grafikus felület nélkül, úgynevezett headless módban is futtatható.
+Egy másik lehetőség a Puppeteer\cite{puppeteer}, ami egy JavaScript-alapú könyvtár a webalkalmazások automatizálására. Lehetővé teszi weboldalak megnyitását, a felületi elemek kezelését, a billentyűzet- és egéresemények szimulálását, és ezen felül az összetettebb felhasználói folyamatok automatizált tesztelését. Alapértelmezés szerint grafikus felület nélkül, headless módban is lehetséges a futtatása.
 
-A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, és a dinamikus űrlapok generálására és kitöltésére. Különösen fontos területet jelenthet az űrlapok validációjának ellenőrzése, hiszen az alkalmazás egyik alapvető feladata, hogy az XSD-sémában meghatározott korlátozásokat és követelményeket a generált űrlapokon is érvényesítse.
+A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, és a dinamikus űrlapok generálására és kitöltésére. Különösen fontos területet jelenthet az űrlapok validációjának ellenőrzése, hiszen az alkalmazásnak alapvető feladata, hogy az XSD-sémában meghatározott korlátozások és követelmények a generált űrlapokon is megfeleljenek.
 
 \section{Tesztforgatókönyvek és tesztesetek}
 
