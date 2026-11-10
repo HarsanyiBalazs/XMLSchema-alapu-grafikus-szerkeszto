@@ -1,0 +1,13 @@
+POST http://localhost:3000/users/signup
+Content-Type: application/json
+
+{
+    "name": "holnap11",
+    "password": "utan4444"
+}
+###
+GET  http://localhost:3000/cookies
+
+###
+
+GET http://localhost:3000/users/logout

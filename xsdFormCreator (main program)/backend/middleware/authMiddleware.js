@@ -43,24 +43,4 @@ const checkUser = (req,res,next) =>{
 }
 
 
-const checkForCookie = (req, res, next) => {
-    const token = req.cookies.jwt;
-    
-    if (!token) {
-        req.userID = null;
-        return next(); // Must proceed so the route handler can return { user: null }
-    }
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
-        if (err) {
-            console.log(err.message);
-            req.userID = null;
-            return next();
-        } else {
-            req.userID = decodedToken.id;
-            next();
-        }
-    });
-};
-
-module.exports = {checkForCookie,checkUser};
+module.exports = {checkUser};

@@ -4,8 +4,6 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 require('dotenv').config();
-const { checkForCookie } = require("../middleware/authMiddleware");
-
 
 const handleErrors = (err) => {
     console.log(err.message, err.code);
@@ -78,6 +76,11 @@ router.post('/login', async (req, res) => {
         const user = await User.login(loginUser.name, loginUser.password);
         const token = await createToken(user._id);
         await res.cookie("jwt", token, cookieOptions);
+        user.lastLogin = Date.now();
+        await User.findOneAndUpdate(
+            { _id : user._id },
+            { $set : user}
+        );
         res.status(200).json({ user: user._id });
     }
     catch (error) {
@@ -102,16 +105,22 @@ router.post('/logout', async (req, res) => {
     }
 });
 
-//Get userID
+//Get wheter or not some is logged in
 
-router.get('/user', checkForCookie, async (req, res) => {
+router.get('/user', async (req, res) => {
     try {
-        const token = req.userID;
+        const token = req.cookies.jwt;        
 
         if (token) {
-            res.status(200).json({ user: req.userID });
+            jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
+                if (err) {
+                    console.log(err.message);
+                    res.status(200).json({ user: null });
+                } else {
+                    res.status(200).json({ user: decodedToken.id });
+                }
+            });
         } else {
-            //401 not logged in 403 no permission
             res.status(200).json({ user: null });
         }
 

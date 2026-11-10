@@ -11,7 +11,6 @@ const projectSchema = mongoose.Schema(
         user:{
             type: String,
             required: true,
-            minlength: 4
         },
         createdAt:{
             type: Date,

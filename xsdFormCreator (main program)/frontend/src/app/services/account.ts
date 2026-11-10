@@ -50,7 +50,6 @@ export class AccountService {
     this.getUser().subscribe({
       next: (data) => {
         const isLogged = !!data?.user;
-        //console.log(data?.user);
         this.loggedIn.next(isLogged);
       },
       error: () => {

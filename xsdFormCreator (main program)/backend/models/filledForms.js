@@ -11,7 +11,6 @@ const filledFormsSchema = mongoose.Schema(
         formCreator:{
             type: String,
             required: true,
-            minlength: 4
         },
         formSubmitter:{
             type: String,
