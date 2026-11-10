@@ -58,7 +58,7 @@ ng build --configuration production
 
 A parancs létrehozza a frontend futtatásához szükséges statikus fájlokat, amelyek tartalmazzák a HTML-, CSS- és JavaScript-állományokat. Ezeket egy webszerver segítségével lehet elérhetővé tenni a felhasználók számára.
 
-Az adatbázis-kezelést ebben az esetben is a MongoDB végzi. Az adatbázis lehet ugyanazon a szerveren telepítve, mint a backend, de külön szerveren vagy felhőalapú szolgáltatásként is működhet.
+Az adatbázis-kezelést ebben az esetben is a MongoDB-vel történik. Az adatbázis lehet ugyanazon a szerveren telepítve, mint a backend, de külön szerveren vagy felhőalapú szolgáltatásként is működhet.
 
 \Section{Használati útmutató}
 Első lépésként felhasználói fiók létrehozása szükséges. A regisztráció során a felhasználónak meg kell adnia egy egyedi, még nem használatban lévő felhasználónevet és egy legalább nyolc karakterből álló jelszót, ezt követően igénybe veheti a weboldal szolgáltatásait.
@@ -115,7 +115,7 @@ A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a követ
 \item Az xs:list szerkezetek feldolgozása korlátozott: az alkalmazás az egyszerű beépített típusok esetében képes kezelni a listaelemeket, azonban egyedi típus megadása esetén az azokhoz tartozó korlátozásokat nem érvényesíti.
 \item Az xs:union használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, viszont nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
 \item Az xs:choice szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. E-miatt nem biztosított, hogy a generált XML-dokumentum megfeleljen az eredeti séma által meghatározott feltételeknek.
-\item Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem feltétlenül jelennek meg a generált űrlapon.
+\item Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem fognak megjelenni a generált űrlapon.
 \end{itemize}
 
 \begin{figure}[h]
@@ -125,7 +125,7 @@ A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a követ
 \label{fig:urlapKitolt}
 \end{figure}
 
-A beküldött adatok a megfelelő séma adatlapján található kitöltött űrlapok menüpontban tekinthetők meg. Itt a felhasználó áttekintheti az adott sémához tartozó beküldéseket. A beküldött űrlapok listájában megjelennek a kapcsolódó információk, például a beküldés időpontja és a beküldő felhasználó neve, amennyiben az rendelkezésre áll (lásd a \ref{fig:kitoltottUrlapok} ábrát) .
+A beküldött adatok a megfelelő séma adatlapján található kitöltött űrlapok menüpontban érhetőek el. Itt a felhasználó áttekintheti az adott sémához tartozó beküldéseket. A beküldött űrlapok listájában megjelennek a kapcsolódó információk, például a beküldés időpontja és a beküldő felhasználó neve, amennyiben az rendelkezésre áll (lásd a \ref{fig:kitoltottUrlapok} ábrát).
 
 Minden beküldött űrlaphoz tartozik egy XML-dokumentum, amely az űrlap kitöltése során megadott adatokat tartalmazza. A dokumentum letöltésével az adatok az alkalmazástól függetlenül is felhasználhatók, illetve további feldolgozásra átadhatók.
 
@@ -140,7 +140,7 @@ Minden beküldött űrlaphoz tartozik egy XML-dokumentum, amely az űrlap kitöl
 
 \section{Automatizált tesztelés lehetősége}
 
-A webalkalmazások fejlesztése alatt fontos szempont a felhasználói felület megfelelő működésének ellenőrzése. A manuális tesztelés mellett erre automatizált tesztelési módszerek is alkalmazhatók, amelyek segítségével előre meghatározott felhasználói műveletek és azok eredményei ismételhető módon vizsgálhatók. Az automatizált tesztelés célja annak ellenőrzése, hogy az alkalmazás különböző funkciói a meghatározott követelményeknek megfelelően működnek-e.
+A webalkalmazások fejlesztése alatt fontos szempont a felhasználói felület megfelelő működésének ellenőrzése. A manuális, kézi tesztelés mellett akár automatizált tesztelési módszerek is alkalmazhatók, amelyek segítségével előre megadott felhasználói műveletek és azok eredményei ismételhető módon vizsgálhatók. Az automatizált teszteléssel ellenőrizhető, hogy az alkalmazás különböző funkciói a meghatározott követelményeknek megfelelően működnek-e.
 
 Az automatizált felületi tesztelés során egy erre a célra szolgáló tesztelőeszköz a felhasználó lehetséges viselkedését szimulálja. Ezek közé tartozik például egy oldal megnyitása, egy beviteli mező kitöltése, egy gomb megnyomása vagy egy másik oldalra történő navigáció. A tesztelőeszköz ezután ellenőrzi, hogy az applikáció a megadott módon reagált-e az adott műveletre. Ennek segítségével nemcsak az egyes felületi elemek működése vizsgálható, hanem összetettebb felhasználói folyamatok is tesztelhetők.
 
@@ -148,7 +148,7 @@ Az automatizált weboldal tesztelés megvalósítására több eszköz is rendel
 
 Egy másik lehetőség a Puppeteer\cite{puppeteer}, ami egy JavaScript-alapú könyvtár a webalkalmazások automatizálására. Lehetővé teszi weboldalak megnyitását, a felületi elemek kezelését, a billentyűzet- és egéresemények szimulálását, és ezen felül az összetettebb felhasználói folyamatok automatizált tesztelését. Alapértelmezés szerint grafikus felület nélkül, headless módban is lehetséges a futtatása.
 
-A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, és a dinamikus űrlapok generálására és kitöltésére. Különösen fontos területet jelenthet az űrlapok validációjának ellenőrzése, hiszen az alkalmazásnak alapvető feladata, hogy az XSD-sémában meghatározott korlátozások és követelmények a generált űrlapokon is megfeleljenek.
+A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, vagy például a dinamikus űrlapok generálására és kitöltésére. Kiemelt területet jelenthet az űrlapok validációjának ellenőrzése, mivel hogy az alkalmazásnak alapvető feladata, hogy az XSD-sémában meghatározott korlátozások és követelmények a generált űrlapokon is megfeleljenek.
 
 \section{Tesztforgatókönyvek és tesztesetek}
 
