@@ -2,7 +2,7 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'form/:id',
+    path: 'formeditor/:id',
     renderMode: RenderMode.Client
   },
   {

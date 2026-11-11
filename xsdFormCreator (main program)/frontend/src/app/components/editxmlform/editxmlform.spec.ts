@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Xmlform } from './xmlform';
+import { Editxmlform } from './editxmlform';
 
-describe('Xmlform', () => {
-  let component: Xmlform;
-  let fixture: ComponentFixture<Xmlform>;
+describe('Editxmlform', () => {
+  let component: Editxmlform;
+  let fixture: ComponentFixture<Editxmlform>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Xmlform]
+      imports: [Editxmlform]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Xmlform);
+    fixture = TestBed.createComponent(Editxmlform);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

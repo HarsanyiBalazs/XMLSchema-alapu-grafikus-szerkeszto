@@ -10,11 +10,7 @@
 
       <input id="name" type="text" formControlName="name">
 
-      <div *ngIf="
-        showValidationErrors &&
-        (registrationForm.get('name')?.invalid ||
-         serverErrors['name'])
-      " class="validation-errors">
+      <div *ngIf="showValidationErrors && registrationForm.get('name')?.invalid " class="validation-errors">
 
         <p *ngIf="registrationForm.get('name')?.hasError('required')">
           A felhasználónév megadása kötelező.
@@ -24,10 +20,6 @@
           A felhasználónévnek legalább
           {{ registrationForm.get('name')?.getError('minlength')?.requiredLength }}
           karakter hosszúnak kell lennie.
-        </p>
-
-        <p *ngIf="serverErrors['name']">
-          {{ serverErrors['name'] }}
         </p>
 
       </div>
@@ -40,10 +32,7 @@
 
       <input id="password" type="password" formControlName="password">
 
-      <div *ngIf="
-        showValidationErrors &&
-        (registrationForm.get('password')?.invalid ||
-         serverErrors['password'])" class="validation-errors">
+      <div *ngIf="showValidationErrors && registrationForm.get('password')?.invalid" class="validation-errors">
 
         <p *ngIf="registrationForm.get('password')?.hasError('required')">
           A jelszó megadása kötelező.
@@ -55,11 +44,11 @@
           karakter hosszúnak kell lennie.
         </p>
 
-        <p *ngIf="serverErrors['password']">
-          {{ serverErrors['password'] }}
-        </p>
 
       </div>
+    </div>
+    <div *ngIf="serverErrors" class="validation-errors">
+      <p>{{ serverErrors }}</p>
     </div>
 
     <button type="submit">Fiók létrehozása</button>

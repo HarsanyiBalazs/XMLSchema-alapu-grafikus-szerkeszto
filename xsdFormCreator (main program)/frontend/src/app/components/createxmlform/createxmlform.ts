@@ -26,7 +26,7 @@ export class Createxmlform implements OnInit{
   sendSchema(){
     this.projectService.post(this.xmlSchemaForm.value).subscribe(
       data =>{
-        this.router.navigate(['/form/' + data._id]);
+        this.router.navigate(['/formeditor/' + data._id]);
       },
       error =>{
         console.log(error.error);

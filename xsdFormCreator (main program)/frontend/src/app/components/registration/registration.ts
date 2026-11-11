@@ -19,7 +19,7 @@ export class Registration implements OnInit {
 
   registrationForm !: FormGroup;
   showValidationErrors = false;
-  serverErrors: { [key: string]: string } = {};
+  serverErrors = "";
 
   ngOnInit(): void{
 
@@ -32,7 +32,7 @@ export class Registration implements OnInit {
 
   sendRegistration(){
     this.showValidationErrors = true;
-    this.serverErrors = {};
+    this.serverErrors = "";
     
     this.registrationForm.markAllAsTouched();
     this.registrationForm.updateValueAndValidity();
@@ -50,10 +50,8 @@ export class Registration implements OnInit {
           }
         },
         error => {
-          console.log('error', error.error.errors);
-          this.serverErrors = error.error?.errors ?? {};
-          /*this.nameError!.textContent = error.error.errors.name;
-          this.passwordError!.textContent = error.error.errors.password;*/
+          console.log('error', error.error?.message);
+          this.serverErrors = error.error?.message ?? {};
         }
       );
   };

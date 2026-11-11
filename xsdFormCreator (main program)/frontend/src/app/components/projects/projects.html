@@ -1,6 +1,6 @@
 <h2>Sémák</h2>
 
-<a [routerLink]="'/form'" class="upload-button">Új séma feltöltése</a>
+<a [routerLink]="'/formmaker'" class="upload-button">Új séma feltöltése</a>
 
 <div class="table-container">
     <table *ngIf="projects?.length; else noProjects">
@@ -27,7 +27,7 @@
 
           <td class="actions">
             <button
-              [routerLink]="['/form', project._id]"
+              [routerLink]="['/formeditor', project._id]"
               class="edit-button">
               Séma szerkesztése
             </button>

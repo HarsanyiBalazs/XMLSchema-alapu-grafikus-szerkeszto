@@ -3,9 +3,9 @@ import {Login} from './components/login/login';
 import { Frontpage } from './components/frontpage/frontpage';
 import { Projects } from './components/projects/projects';
 import { Registration } from './components/registration/registration';
-import { Xmlform } from './components/xmlform/xmlform';
+import { Editxmlform } from './components/editxmlform/editxmlform';
 import { Createxmlform } from './components/createxmlform/createxmlform';
-import { Submittedprojects } from './components/submittedprojects/submittedprojects';
+import { Submittedxml } from './components/submittedxml/submittedxml';
 import { Fillxmlform } from './components/fillxmlform/fillxmlform';
 
 export const routes: Routes = [
@@ -26,16 +26,16 @@ export const routes: Routes = [
         component:Registration 
     },
     {
-        path: "form/:id",
-        component:Xmlform
+        path: "formeditor/:id",
+        component:Editxmlform
     },
     {
-        path: "form",
+        path: "formmaker",
         component:Createxmlform
     },
     {
         path: "filledxml/:id",
-        component:Submittedprojects
+        component:Submittedxml
     },
     {
         path: "fillform/:id",

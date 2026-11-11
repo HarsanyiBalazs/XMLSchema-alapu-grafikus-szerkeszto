@@ -5,25 +5,6 @@ const jwt = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 require('dotenv').config();
 
-const handleErrors = (err) => {
-    console.log(err.message, err.code);
-    let errors = { name: "", password: "" };
-
-    //duplicate error code
-    if (err.code === 11000) {
-        errors.name = 'Ez a felhasználónév már foglalt.';
-        return errors;
-    }
-
-    //validation errors
-    if (err.message.includes('user validation failed')) {
-        Object.values(err.errors).forEach(({ properties }) => {
-            errors[properties.path] = properties.message;
-        })
-    }
-
-    return errors;
-};
 
 const maximumAge = 3 * 24 * 60 * 60;
 
@@ -50,7 +31,7 @@ router.post('/signup', async (req, res) => {
 
         if (!newUser.password || newUser.password.length < 8) {
             return res.status(400).json({
-                message: "Password must be at least 8 characters long"
+                message: "A jelszónak legalább 8 karakterhosszúnak kell lennie"
             });
         }
 
@@ -62,8 +43,14 @@ router.post('/signup', async (req, res) => {
         res.status(201).json({ user: savedUser._id });
     }
     catch (error) {
-        const errors = handleErrors(error);
-        res.status(400).json({ errors });
+
+        //duplicate error code
+        if (error.code === 11000) {
+            res.status(400).json({ message: 'Ez a felhasználónév már foglalt.' }); 
+        }else{
+            res.status(400).json({ message: 'Nem sikerült a regisztráció.' }); 
+        }
+
     }
 });
 
@@ -115,18 +102,18 @@ router.get('/user', async (req, res) => {
             jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
                 if (err) {
                     console.log(err.message);
-                    res.status(200).json({ user: null });
+                    res.status(200).json({ loggedIn: false });
                 } else {
-                    res.status(200).json({ user: decodedToken.id });
+                    res.status(200).json({ loggedIn: true });
                 }
             });
         } else {
-            res.status(200).json({ user: null });
+            res.status(200).json({ loggedIn: false });
         }
 
     }
     catch (error) {
-        res.status(200).json({ user: null });
+        res.status(200).json({ loggedIn: false });
     }
 });
 

@@ -8,15 +8,13 @@ import { Project } from '../../models/projects.model';
 import { FormSchema, FormControlSchema, FormGroupSchema, FormArraySchema } from '../../models/formSchema.model';
 import {XMLParser} from "fast-xml-parser";
 
-import { error } from 'console';
-
 @Component({
-  selector: 'app-xmlform',
+  selector: 'app-editxmlform',
   imports: [ReactiveFormsModule,CommonModule],
-  templateUrl: './xmlform.html',
-  styleUrl: './xmlform.css',
+  templateUrl: './editxmlform.html',
+  styleUrl: './editxmlform.css',
 })
-export class Xmlform {
+export class Editxmlform {
   private projectService = inject(ProjectsService);
   private activatedRouter = inject(ActivatedRoute);
   private formGenerator = inject(FormGenerator);
@@ -196,5 +194,4 @@ export class Xmlform {
     else 
       { control.setValue(option); }
   }
-  
 }

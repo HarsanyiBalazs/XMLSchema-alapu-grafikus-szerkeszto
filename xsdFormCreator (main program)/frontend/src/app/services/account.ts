@@ -39,8 +39,8 @@ export class AccountService {
     });
   };
 
-  getUser():Observable<any>{
-    return this.http.get<{ user?: User }>(this.api + '/user',{
+  getUser():Observable<{ loggedIn: boolean }>{
+    return this.http.get<{ loggedIn: boolean }>(this.api + '/user',{
       withCredentials: true
     });
   };
@@ -49,8 +49,7 @@ export class AccountService {
   loadUser(): void {
     this.getUser().subscribe({
       next: (data) => {
-        const isLogged = !!data?.user;
-        this.loggedIn.next(isLogged);
+        this.loggedIn.next(data.loggedIn);
       },
       error: () => {
         this.loggedIn.next(false);

@@ -3,14 +3,15 @@ import { FilledFormsService } from '../../services/filled-forms';
 import { ActivatedRoute } from '@angular/router';
 import { FilledForms } from '../../models/filledForms.model';
 import { CommonModule } from '@angular/common';
+
 @Component({
-  selector: 'app-submittedprojects',
+  selector: 'app-submittedxml',
   imports: [CommonModule],
-  templateUrl: './submittedprojects.html',
-  styleUrl: './submittedprojects.css',
+  templateUrl: './submittedxml.html',
+  styleUrl: './submittedxml.css',
 })
-export class Submittedprojects implements OnInit {
-  private filledFormsService = inject(FilledFormsService);
+export class Submittedxml implements OnInit{
+private filledFormsService = inject(FilledFormsService);
   private activatedRouter = inject(ActivatedRoute);
   private changeDetector = inject(ChangeDetectorRef);
 
