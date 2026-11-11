@@ -11,21 +11,21 @@ A program backend és frontend függőségei külön-külön megtalálhatóak a 
 \subsection{Szerveroldali függőségek}
 
 \begin{itemize}
-\item Express.js a HTTP-kéréseket, valamint szerveroldali útvonalak és végpontok kezelését felelős.
-\item A mongoose kapcsolatot biztosít az adatbázissal, valamint segíti az adatok strukturálását, validálását és lekérdezését.
-\item A Bcrypt a felhasználókói jelszavak hash-elését szolgálja, a biztonságos adatbázis tárolás érdekében.
-\item JsonWebToken egy URL-biztos szabvány, amivel információkat lehet biztonságos módon továbbítani. Felhasználók hitelesítésre és jogosultságkezelésére használatos.
-\item A cookie-parser HTTP-kérésekkel érkező sütiket dolgozza fel.
-\item A Cors a különböző eredetű kliensoldali kérések engedélyezését szabályozza.
-\item A dotenv egy könnyűsúlyú szoftvermodul, ami a környezeti változókat egy helyi .env fájlból az alkalmazás futási környezetébe tölti be. 
+\item Express.js(5.2.1) a HTTP-kéréseket, valamint szerveroldali útvonalak és végpontok kezelését felelős.
+\item A Mongoose(9.3.1) kapcsolatot biztosít az adatbázissal, valamint segíti az adatok strukturálását, validálását és lekérdezését.
+\item A Bcrypt(6.0.0) a felhasználókói jelszavak hash-elését szolgálja, a biztonságos adatbázis tárolás érdekében.
+\item JsonWebToken(9.0.3) egy URL-biztos szabvány, amivel információkat lehet biztonságos módon továbbítani. Felhasználók hitelesítésre és jogosultságkezelésére használatos.
+\item A cookie-parser(1.4.7) HTTP-kérésekkel érkező sütiket dolgozza fel.
+\item A Cors(2.8.6) a különböző eredetű kliensoldali kérések engedélyezését szabályozza.
+\item A dotenv(17.4.1) egy könnyűsúlyú szoftvermodul, ami a környezeti változókat egy helyi .env fájlból az alkalmazás futási környezetébe tölti be. 
 \end{itemize}
 
 \subsection{Kliensoldali függőségek}
 
 \begin{itemize}
-\item Az Angular egy kliensoldali keretrendszer, ami majdnem minden szükséges eszközt tartalmaz, legyen az navigáció, űrlapkezelést vagy adatlekérés.
-\item Az RxJS az aszinkron műveletek, adatfolyamok kezelésére és eseményalapú program készítésére használt könyvtár.
-\item A fast-xml-parser az XML dokumentumok és sémák feldogozására használt könyvtár.
+\item Az Angular(21.1.0) egy kliensoldali keretrendszer, ami majdnem minden szükséges eszközt tartalmaz, legyen az navigáció, űrlapkezelést vagy adatlekérés.
+\item Az RxJS(7.8.0) az aszinkron műveletek, adatfolyamok kezelésére és eseményalapú program készítésére használt könyvtár.
+\item A fast-xml-parser(5.11.2) az XML dokumentumok és sémák feldogozására használt könyvtár.
 \end{itemize}
 
 \section{Telepítés és használat}
