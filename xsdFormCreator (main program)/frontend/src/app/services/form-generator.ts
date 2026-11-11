@@ -251,11 +251,12 @@ export class FormGenerator {
     for (const property of textProperties) {
 
       const textValue = appinfo?.[property];
-      if (textValue !== undefined && textValue !== null) {
+      if (textValue !== undefined && textValue !== null && typeof textValue !== 'object') {
         ui[property] = String(textValue).trim()
       }
     }
 
+    // rows,cols,size doesnt work, because of the css
     const numberProperties = [
       'max',
       'maxlength',

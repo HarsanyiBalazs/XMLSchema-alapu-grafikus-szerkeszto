@@ -66,7 +66,7 @@ router.patch('/patch/:id',checkUser ,async (req,res) =>{
         const updatedProject = await Project.findOneAndUpdate(
             { _id : id },
             { $set : project},
-            { new: true }
+            { returnDocument: 'after' }
         );
         res.status(200).json(updatedProject);
     }

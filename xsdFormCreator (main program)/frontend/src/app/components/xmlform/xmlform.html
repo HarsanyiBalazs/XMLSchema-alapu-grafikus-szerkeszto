@@ -227,7 +227,7 @@
 
         <label *ngFor="let opt of schema.options">
 
-          <input type="radio" [formControl]="asControl(control)" [value]="opt" />
+          <input type="radio" [formControl]="asControl(control)" [name]="getRadioGroupName(control)" [value]="opt" />
 
           {{ opt }}
 

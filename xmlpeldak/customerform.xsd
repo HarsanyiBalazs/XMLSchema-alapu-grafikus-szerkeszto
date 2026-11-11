@@ -4,22 +4,16 @@
     <xs:element name="form">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="overall_satisfaction">
+                <xs:element name="overall_satisfaction" type="xs:integer">
                     <xs:annotation>
                         <xs:appinfo>
-                            <xs:type>radio</xs:type>
-                            <xs:description>How would you rate your overall satisfaction with our company?</xs:description>
+                            <xs:type>range</xs:type>
+                            <xs:description>How would you rate your overall satisfaction with our company on a 1-5 range?</xs:description>
+                            <xs:min>0</xs:min>
+                            <xs:max>10</xs:max>
+                            <xs:step>2</xs:step>
                         </xs:appinfo>
                     </xs:annotation>
-                    <xs:simpleType>
-                        <xs:restriction base="xs:integer">
-                            <xs:enumeration value="1"></xs:enumeration>
-                            <xs:enumeration value="2"></xs:enumeration>
-                            <xs:enumeration value="3"></xs:enumeration>
-                            <xs:enumeration value="4"></xs:enumeration>
-                            <xs:enumeration value="5"></xs:enumeration>
-                        </xs:restriction>
-                    </xs:simpleType>
                 </xs:element>
                 <xs:element name="future">
                     <xs:annotation>
@@ -67,6 +61,8 @@
                     <xs:annotation>
                         <xs:appinfo>
                             <xs:description>You agree to our data retention policies</xs:description>
+                            <xs:maxlength>5</xs:maxlength>
+                            <xs:placeholder>true</xs:placeholder>
                         </xs:appinfo>
                     </xs:annotation>
                 </xs:element>

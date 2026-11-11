@@ -1,14 +1,34 @@
 \Chapter{Tesztelés}
 
-\Section{Telepítés és használat}
+A fejezet bemutatja, hogy mi szükséges a program futásához használt környezet kialakításához. Bemutatja a telepítés eljárását, a konfigurálás lépéseit, és az alkalmazás használatához leírást add. A futtatáson kívül opciókat add tesztelési lehetőségekre, és a megtett teszteseteket  felvázolja.
 
-Az alkalmazás futtatásához az alábbi szoftverek és eszközök szükségesek:
+\section{A program függőségei}
+
+A program futtatásához elsőként Node.js telepítése szükséges. A Node.js szoftver add futási környezetet a szerveroldal működéséhez, és a hozzá tartozó npm végzi a függőségek kezelését. A MongoDB az alkalmazás adatainak tárolására szolgáló adatbázis-kezelő rendszer, aminek a használatához le kell tölteni, vagy egy már meglévő kapcsolati sztringre van szükség külső szerveren történő futtatásához.
+
+A program backend és frontend függőségei külön-külön megtalálhatóak a package.js fájlokban.
+
+\subsection{Szerveroldali függőségek}
+
 \begin{itemize}
-\item Node.js: A backend futtatásához és a JavaScript-függőségek kezeléséhez szükséges
-\item npm: A Node.js csomagkezelője, amellyel a projekt függőségei telepíthetők.
-\item Angular CLI: A frontend fejlesztői kiszolgálásához és buildeléséhez szükséges.
-\item MongoDB: Az alkalmazás adatainak tárolására szolgáló adatbázis-kezelő rendszer.
+\item Express.js a HTTP-kéréseket, valamint szerveroldali útvonalak és végpontok kezelését felelős.
+\item A mongoose kapcsolatot biztosít az adatbázissal, valamint segíti az adatok strukturálását, validálását és lekérdezését.
+\item A Bcrypt a felhasználókói jelszavak hash-elését szolgálja, a biztonságos adatbázis tárolás érdekében.
+\item JsonWebToken egy URL-biztos szabvány, amivel információkat lehet biztonságos módon továbbítani. Felhasználók hitelesítésre és jogosultságkezelésére használatos.
+\item A cookie-parser HTTP-kérésekkel érkező sütiket dolgozza fel.
+\item A Cors a különböző eredetű kliensoldali kérések engedélyezését szabályozza.
+\item A dotenv egy könnyűsúlyú szoftvermodul, ami a környezeti változókat egy helyi .env fájlból az alkalmazás futási környezetébe tölti be. 
 \end{itemize}
+
+\subsection{Kliensoldali függőségek}
+
+\begin{itemize}
+\item Az Angular egy kliensoldali keretrendszer, ami majdnem minden szükséges eszközt tartalmaz, legyen az navigáció, űrlapkezelést vagy adatlekérés.
+\item Az RxJS az aszinkron műveletek, adatfolyamok kezelésére és eseményalapú program készítésére használt könyvtár.
+\item A fast-xml-parser az XML dokumentumok és sémák feldogozására használt könyvtár.
+\end{itemize}
+
+\section{Telepítés és használat}
 
 A program telepítése és konfigurálása több részből áll.
 \begin{enumerate}
@@ -22,7 +42,7 @@ A konfigurációban az alábbi módon szereplnek a változó-érték párok.
 \begin{verbatim} 
 FRONTEND_URL = http://localhost:4200
 \end{verbatim}
-Az öt benne szereplő érték: a felhasználó ellenőrzést biztosító kulcs ACCESS\_TOKEN\_SECRET, az adatbázis címe DATABASE\_URL, a kliensoldal címe FRONTEND\_URL, a saját portjának a címe PORT, és annak az igazságértéke, hogy fordított proxy használatban van-e az alkalmazás futtatásához TRUST\_PROXY.
+Az öt benne szereplő érték: a felhasználó hitelesítésért felelős JWT-tokenek titkos kulcsa ACCESS\_TOKEN\_SECRET, az adatbázis kapcsolati címe DATABASE\_URL, a kliensoldal elérési címe FRONTEND\_URL, a saját portjának a címe PORT, és annak a beállítása, hogy fordított proxy használatban van-e az alkalmazás futtatásához TRUST\_PROXY.
 
 A fejlesztői környezet futatásához két külön terminálablak megnyitása szükséges.
 
