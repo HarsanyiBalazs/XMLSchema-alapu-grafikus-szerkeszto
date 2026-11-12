@@ -62,6 +62,15 @@ router.patch('/patch/:id',checkUser ,async (req,res) =>{
     try{
         const id = req.params.id;
         const project = req.body;
+        // nem létezik
+        if (!project) {
+            return res.status(404).json({message: "project not found"});
+        }
+        //más felhasználó
+        if (project.user.toString() !== req.userID.toString()) {
+            return res.status(403).json({message: "unauthorized user"});
+        }
+
         project.updatedAt = Date.now();
         const updatedProject = await Project.findOneAndUpdate(
             { _id : id },
@@ -83,7 +92,7 @@ router.delete('/:id',checkUser ,async (req,res) =>{
         if (!project) {
             return res.status(404).json({ message: "project not found" });
         }
-        if(project.user == req.userID){
+        if(project.user.toString() == req.userID.toString()){
             let deletedProject = await Project.deleteOne({_id : id})
             res.status(200).json(deletedProject);
         }else{

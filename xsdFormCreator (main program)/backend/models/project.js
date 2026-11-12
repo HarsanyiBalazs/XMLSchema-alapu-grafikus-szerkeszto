@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const projectSchema = mongoose.Schema(
     {
         name:{
-            type: String
+            type: String,
+            required: true,
         },
         schema:{
             type: String,
+            required: true,
         },
         user:{
             type: String,

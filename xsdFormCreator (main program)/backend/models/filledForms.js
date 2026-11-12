@@ -4,6 +4,7 @@ const filledFormsSchema = mongoose.Schema(
     {
         schema:{
             type: String,
+            required: true,
         },
         form:{
             type: String,

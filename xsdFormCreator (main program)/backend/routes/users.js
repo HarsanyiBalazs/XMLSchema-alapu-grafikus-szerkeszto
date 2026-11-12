@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const bycrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 require('dotenv').config();
 
 
-const maximumAge = 3 * 24 * 60 * 60;
+const maximumAge = 3 * 24 * 60 * 60; //3 nap
 
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
@@ -16,12 +16,11 @@ const createToken = (id) => {
 
 const cookieOptions = {
     httpOnly: true,
-    maxAge: maximumAge * 1000,
+    maxAge: maximumAge * 1000, //in milliseconds so have to multiply by 1000 to be the same as the token
     secure: true,
     sameSite: "lax",
     path: "/",
 };
-
 
 //Post signup
 
@@ -35,8 +34,8 @@ router.post('/signup', async (req, res) => {
             });
         }
 
-        const salt = await bycrypt.genSalt();
-        newUser.password = await bycrypt.hash(newUser.password, salt);
+        const salt = await bcrypt.genSalt();
+        newUser.password = await bcrypt.hash(newUser.password, salt);
         const savedUser = await newUser.save();
         const token = await createToken(savedUser._id);
         await res.cookie("jwt", token, cookieOptions);

@@ -42,6 +42,10 @@ router.post('/public', async (req,res) =>{
                     newForm.formSubmitter = user.name;
                     const savedForm = await newForm.save();
                     res.status(200).json(savedForm);
+                }else{
+                    newForm.formSubmitter = "Vendég";
+                    const savedForm = await newForm.save();
+                    res.status(200).json(savedForm);
                 }
             })
         }else{;

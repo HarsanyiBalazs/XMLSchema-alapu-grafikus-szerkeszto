@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
-const bycrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
  
 const UserSchema = mongoose.Schema(
     {
         name:{
             type: String,
-            required: [true,'Please enter a username'],
-            minlength: [4,'Minimum username length is 4'],
+            required: true,
+            minlength: 4,
             unique: true,   
             lowercase:true
         },
         password:{
             type: String,
-            required: [true,'Please enter a password'],
-            minlength: [8,'Minimum password length is 8']
+            required: true,
+            minlength: 8,
         },
         createdAt:{
             type: Date,
@@ -27,9 +27,9 @@ const UserSchema = mongoose.Schema(
 );
 
 UserSchema.statics.login = async function(name,password){
-    const user = await this.findOne({name:name});
+    const user = await this.findOne({name:name.toLowerCase()});
     if (user){
-        const auth = await bycrypt.compare(password,user.password);
+        const auth = await bcrypt.compare(password,user.password);
         if (auth){
             return user;
         }else{
