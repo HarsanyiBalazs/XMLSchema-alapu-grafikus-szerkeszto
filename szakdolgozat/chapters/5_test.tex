@@ -35,16 +35,16 @@ A program telepítése és konfigurálása több részből áll.
 \item A projekt letöltése vagy klónozása után meg kell nyitni a frontend és a backend mappáját.
 \item Mindkét mappában telepíteni kell a szükséges függőségeket az npm install parancs segítségével.
 \item Telepíteni és elindítani kell a MongoDB adatbázis-kezelő rendszert.
-\item A backend konfigurációjában, a .ENV fájlban szereplő értékeket érdemes megváltoztatni a futási környezettől függően. Amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni. 
+\item A backend konfigurációjában, a .env fájlban szereplő értékeket érdemes megváltoztatni a futási környezettől függően. Amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni. 
 \end{enumerate}
 
-A konfigurációban az alábbi módon szereplnek a változó-érték párok.
+A konfigurációban az alábbi módon szerepelnek a változó-érték párok.
 \begin{verbatim} 
 FRONTEND_URL = http://localhost:4200
 \end{verbatim}
-Az öt benne szereplő érték: a felhasználó hitelesítésért felelős JWT-tokenek titkos kulcsa ACCESS\_TOKEN\_SECRET, az adatbázis kapcsolati címe DATABASE\_URL, a kliensoldal elérési címe FRONTEND\_URL, a saját portjának a címe PORT, és annak a beállítása, hogy fordított proxy használatban van-e az alkalmazás futtatásához TRUST\_PROXY.
+Az öt benne szereplő érték: a felhasználó hitelesítésért felelős JWT tokenek titkos kulcsa \texttt{ACCESS\_TOKEN\_SECRET}, az adatbázis kapcsolati címe \texttt{DATABASE\_URL}, a kliensoldal elérési címe \texttt{FRONTEND\_URL}, a saját portjának a címe \texttt{PORT}, és annak a beállítása, hogy fordított proxy használatban van-e az alkalmazás futtatásához \texttt{TRUST\_PROXY}.
 
-A fejlesztői környezet futatásához két külön terminálablak megnyitása szükséges.
+A fejlesztői környezet futtatásához két külön terminálablak megnyitása szükséges.
 
 Backend indítása:
 \begin{verbatim}
@@ -64,8 +64,8 @@ A kliensoldal ezt követően általában a http://localhost:4200 címen érhető
 
 Élő környezetben az alkalmazás futtatása eltér a fejlesztői környezetben alkalmazott módszertől és további teendőkre van szükség.
 \begin{enumerate}
-\item A backend konfigurációjában (.ENV fájlban) a fordított proxy és hosting platrformok használatához a TRUST\_PROXY=TRUE kell állítani, és át kell állítani a frontend címét.
-\item A frontend/src/enviroments mappában az environment.production.ts fájlban át kell állítani az apiURL, hogy a megfelelő címre mutasson.
+\item A backend konfigurációjában (.env fájlban) a fordított proxy és hosting platrformok használatához a\texttt{TRUST\_PROXY=TRUE} kell állítani, és át kell állítani a frontend címét.
+\item A frontend/src/enviroments mappában az environment.production.ts fájlban át kell állítani az \texttt{apiURL}, hogy a megfelelő címre mutasson.
 \end{enumerate}
 
 A backend éles környezetben is Node.js segítségével fut. A szerver elindítható a npm start paranccsal, azonban célszerű valamilyen folyamatkezelő eszközt (például a PM2-t) használni. Ez lehetővé teszi a backend folyamatos működésének biztosítását, az esetleges hibák utáni újraindítást és a naplófájlok kezelését.
@@ -80,7 +80,7 @@ A parancs létrehozza a frontend futtatásához szükséges statikus fájlokat, 
 
 Az adatbázis-kezelést ebben az esetben is a MongoDB-vel történik. Az adatbázis lehet ugyanazon a szerveren telepítve, mint a backend, de külön szerveren vagy felhőalapú szolgáltatásként is működhet.
 
-\Section{Használati útmutató}
+\section{Használati útmutató}
 Első lépésként felhasználói fiók létrehozása szükséges. A regisztráció során a felhasználónak meg kell adnia egy egyedi, még nem használatban lévő felhasználónevet és egy legalább nyolc karakterből álló jelszót, ezt követően igénybe veheti a weboldal szolgáltatásait.
 
 Ha a felhasználó már rendelkezik saját fiókkal, akkor a bejelentkezés (lásd a \ref{fig:bejelentkezes}. ábrát) után érheti el az alkalmazás funkcióit.
@@ -102,7 +102,7 @@ A Sémák menüpontban (lásd a \ref{fig:semaLista} ábrát) a felhasználó meg
 \label{fig:semaLista}
 \end{figure}
 
-Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma feltöltése gombra kattintva. A felhasználónak elsőként meg kell adnia a létrehozandó űrlap nevét, majd hozzá kell rendelnie az űrlap szerkezetét meghatározó XML-sémát. A séma megadása kétféleképpen történhet: a felhasználó közvetlenül beillesztheti vagy begépelheti az XSD-kódot a szöveges mezőbe, illetve feltölthet egy korábban elkészített XSD-fájlt (lásd a \ref{fig:semaFeltolt}. ábrát). Ezt követően a séma feltöltés gombbal menthető az új séma és a felhasználó megkapja a linket amin az űrlap elérhető.
+Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma feltöltése gombra kattintva. A felhasználónak elsőként meg kell adnia a létrehozandó űrlap nevét, majd hozzá kell rendelnie az űrlap szerkezetét meghatározó XML sémát. A séma megadása kétféleképpen történhet: a felhasználó közvetlenül beillesztheti vagy begépelheti az XSD kódot a szöveges mezőbe, illetve feltölthet egy korábban elkészített XSD fájlt (lásd a \ref{fig:semaFeltolt}. ábrát). Ezt követően a séma feltöltés gombbal menthető az új séma és a felhasználó megkapja a linket amin az űrlap elérhető.
 
 \begin{figure}[h]
 \centering
@@ -110,11 +110,11 @@ Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma felt�
 \caption{A séma feltöltésének oldal.}
 \label{fig:semaFeltolt}
 \end{figure}
-A lementett sémákat feltöltés után a séma szerkesztése gombra kattintva lehetséges módosítani. Ezen felületen meg lehet változtatni a megadott nevet, az XSD-kódot, megtekinthető az űrlap linkje, és helyben legenerálható az űrlap. Az itt megtalálható űrlap kitöltés után nem lesz elmentve, hanem egy XML kódot készít, ezzel a felhasználó biztosíthatja, hogy megfelelő eredményeket kapjon.
+A lementett sémákat feltöltés után a séma szerkesztése gombra kattintva lehetséges módosítani. Ezen felületen meg lehet változtatni a megadott nevet, az XSD kódot, megtekinthető az űrlap linkje, és helyben legenerálható az űrlap. Az itt megtalálható űrlap kitöltés után nem lesz elmentve, hanem egy XML kódot készít, ezzel a felhasználó biztosíthatja, hogy megfelelő eredményeket kapjon.
 
-A létrehozott sémákhoz az alkalmazás külön elérési hivatkozást biztosít. Ezen keresztül a felhasználók megnyithatják az adott XML-séma alapján automatikusan generált űrlapot (lásd a \ref{fig:urlapKitolt}. ábrát). Az űrlap megjelenése és felépítése a hozzá rendelt XSD-sémától függ. A séma határozza meg az űrlap elemeit, azok típusát, kötelező vagy opcionális jellegét, valamint az értékkorlátozásokat. Az alkalmazás a séma feldolgozása során a meghatározott elemekhez megfelelő beviteli mezőket rendel. Egyszerű szöveges értékek esetén szövegmezők, számértékek esetén numerikus beviteli mezők, felsorolások esetén legördülő listát jelenhetnek meg.
+A létrehozott sémákhoz az alkalmazás külön elérési hivatkozást biztosít. Ezen keresztül a felhasználók megnyithatják az adott XML séma alapján automatikusan generált űrlapot (lásd a \ref{fig:urlapKitolt}. ábrát). Az űrlap megjelenése és felépítése a hozzá rendelt XSD sémától függ. A séma határozza meg az űrlap elemeit, azok típusát, kötelező vagy opcionális jellegét, valamint az értékkorlátozásokat. Az alkalmazás a séma feldolgozása során a meghatározott elemekhez megfelelő beviteli mezőket rendel. Egyszerű szöveges értékek esetén szövegmezők, számértékek esetén numerikus beviteli mezők, felsorolások esetén legördülő listát jelenhetnek meg.
 
-Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD-sémában további információkat adjon meg a generált űrlap megjelenésével kapcsolatban. Erre az xs:annotation és xs:appinfo szerkezetek használhatók. Az elemhez tartozó űrlapkomponens típusa az xs:appinfo részen belül adható meg. A lenti példában a radio érték hatására a mező legördülő lista helyett rádiógombokként jelenik meg. Az űrlap bemeneti felületeihez leírás is rendelhető az xs:description segítségével. Ebben adható meg, hogy milyen választ vár el a felhasználótól, és hogy milyen formai követelményeknek kell megfelelnie a megadott értéknek. 
+Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD sémában további információkat adjon meg a generált űrlap megjelenésével kapcsolatban. Erre az \texttt{xs:annotation} és \texttt{xs:appinfo} szerkezetek használhatók. Az elemhez tartozó űrlapkomponens típusa az \texttt{xs:appinfo} részen belül adható meg. A lenti példában a radio érték hatására a mező legördülő lista helyett rádiógombokként jelenik meg. Az űrlap bemeneti felületeihez leírás is rendelhető az xs:description segítségével. Ebben adható meg, hogy milyen választ vár el a felhasználótól, és hogy milyen formai követelményeknek kell megfelelnie a megadott értéknek. 
 \begin{java}
 <xs:element name="speed" type="speedType">
  <xs:annotation>
@@ -126,16 +126,16 @@ Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD-sém
  </xs:annotation>
 </xs:element>
 \end{java}
-Az következő bemeneti elemeket támogatja a program amik az xs:appinfo-n belül megadhattóak: date, select, radio, checkbox, number, range, text, textarea, password, email.
+Az következő bemeneti elemeket támogatja a program amik az \texttt{xs:appinfo}-n belül megadhattóak: date, select, radio, checkbox, number, range, text, textarea, password, email.
 
-Az alkalmazás jelenleg nem támogatja az XSD-szabvány egyes szerkezeteinek teljes körű feldolgozását. Ezek használata esetén megeshet, hogy a generált űrlap nem képes az összes séma által meghatározott feltétel érvényesítésére, ezért a létrehozott XML-dokumentum nem fog megfelelni az eredeti sémának.
+Az alkalmazás jelenleg nem támogatja az XSD szabvány egyes szerkezeteinek teljes körű feldolgozását. Ezek használata esetén megeshet, hogy a generált űrlap nem képes az összes séma által meghatározott feltétel érvényesítésére, ezért a létrehozott XML dokumentum nem fog megfelelni az eredeti sémának.
 
 A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a következők:
 \begin{itemize}
-\item Az xs:list szerkezetek feldolgozása korlátozott: az alkalmazás az egyszerű beépített típusok esetében képes kezelni a listaelemeket, azonban egyedi típus megadása esetén az azokhoz tartozó korlátozásokat nem érvényesíti.
-\item Az xs:union használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, viszont nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
-\item Az xs:choice szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. E-miatt nem biztosított, hogy a generált XML-dokumentum megfeleljen az eredeti séma által meghatározott feltételeknek.
-\item Az xs:extension segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem fognak megjelenni a generált űrlapon.
+\item Az \texttt{xs:list} szerkezetek feldolgozása korlátozott: az alkalmazás az egyszerű beépített típusok esetében képes kezelni a listaelemeket, azonban egyedi típus megadása esetén az azokhoz tartozó korlátozásokat nem érvényesíti.
+\item Az \texttt{xs:union} használata esetén az alkalmazás egyszerű szöveges beviteli mezőt jelenít meg, viszont nem végzi el az egyes tagtípusoknak megfelelő értékellenőrzést.
+\item Az \texttt{xs:choice} szerkezeteket az alkalmazás nem kezeli különálló választási lehetőségként, hanem a többi komplex elemhez hasonlóan dolgozza fel. E-miatt nem biztosított, hogy a generált XML dokumentum megfeleljen az eredeti séma által meghatározott feltételeknek.
+\item Az \texttt{xs:extension} segítségével megadott típusbővítéseket az alkalmazás nem dolgozza fel, ezért az örökölt szerkezeti elemek és korlátozások nem fognak megjelenni a generált űrlapon.
 \end{itemize}
 
 \begin{figure}[h]
@@ -147,7 +147,7 @@ A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a követ
 
 A beküldött adatok a megfelelő séma adatlapján található kitöltött űrlapok menüpontban érhetőek el. Itt a felhasználó áttekintheti az adott sémához tartozó beküldéseket. A beküldött űrlapok listájában megjelennek a kapcsolódó információk, például a beküldés időpontja és a beküldő felhasználó neve, amennyiben az rendelkezésre áll (lásd a \ref{fig:kitoltottUrlapok} ábrát).
 
-Minden beküldött űrlaphoz tartozik egy XML-dokumentum, amely az űrlap kitöltése során megadott adatokat tartalmazza. A dokumentum letöltésével az adatok az alkalmazástól függetlenül is felhasználhatók, illetve további feldolgozásra átadhatók.
+Minden beküldött űrlaphoz tartozik egy XML dokumentum, amely az űrlap kitöltése során megadott adatokat tartalmazza. A dokumentum letöltésével az adatok az alkalmazástól függetlenül is felhasználhatók, illetve további feldolgozásra átadhatók.
 
 \begin{figure}[h]
 \centering
@@ -166,7 +166,7 @@ Az automatizált weboldal tesztelés megvalósítására több eszköz is rendel
 
 Egy másik lehetőség a Puppeteer\cite{puppeteer}, ami egy JavaScript-alapú könyvtár a webalkalmazások automatizálására. Lehetővé teszi weboldalak megnyitását, a felületi elemek kezelését, a billentyűzet- és egéresemények szimulálását, és ezen felül az összetettebb felhasználói folyamatok automatizált tesztelését. Alapértelmezés szerint grafikus felület nélkül, headless módban is lehetséges a futtatása.
 
-A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML-sémák feltöltésére és mentésére, vagy például a dinamikus űrlapok generálására és kitöltésére. Kiemelt területet jelenthet az űrlapok validációjának ellenőrzése, mivel hogy az alkalmazásnak alapvető feladata, hogy az XSD-sémában meghatározott korlátozások és követelmények a generált űrlapokon is megfeleljenek.
+A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML sémák feltöltésére és mentésére, vagy például a dinamikus űrlapok generálására és kitöltésére. Kiemelt területet jelenthet az űrlapok validációjának ellenőrzése, mivel hogy az alkalmazásnak alapvető feladata, hogy az XSD sémában meghatározott korlátozások és követelmények a generált űrlapokon is megfeleljenek.
 
 \section{Tesztforgatókönyvek és tesztesetek}
 
@@ -191,19 +191,19 @@ Nem jogosultan válasz elérés & A felhasználó megnyit egy nem saját sémáh
 \end{tabular}
 \end{table}
 
-\subsection{XML-séma feltöltésének és feldolgozásának ellenőrzése}
-Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML-sémákat, és képes-e feldolgozni azok tartalmát.
+\subsection{XSD feltöltésének és feldolgozásának ellenőrzése}
+Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML sémákat, és képes-e feldolgozni azok tartalmát.
 \begin{table}[h]
 \centering
-\caption{XML-séma feltöltés tesztforgatókönyve}
+\caption{XML séma feltöltés tesztforgatókönyve}
 \label{tab:tesztf2}
 \begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|p{0.4\textwidth}|}
 \hline
 Teszteset & Végrehajtás & Elvárt eredmény \\
 \hline
-Séma feltöltése fájlból & Egy XSD-fájl kiválasztása és feltöltése & A fájl tartalma bekerül a séma szerkesztőmezőjébe, majd menthető. \\
+Séma feltöltése fájlból & Egy XSD fájl kiválasztása és feltöltése & A fájl tartalma bekerül a séma szerkesztőmezőjébe, majd menthető. \\
 \hline
-Séma megadása szövegesen & Egy XSD-séma közvetlen beírása vagy beillesztése a szerkesztőmezőbe & A megadott szöveg menthető. \\
+Séma megadása szövegesen & Egy XSD séma közvetlen beírása vagy beillesztése a szerkesztőmezőbe & A megadott szöveg menthető. \\
 \hline
 Séma módosítása & 	Egy korábban megadott séma tartalmának megváltoztatása & A módosított séma sikeresen mentésre kerül. \\
 \hline
@@ -213,7 +213,7 @@ Séma feldolgozása & Egy feldolgozható szerkezetű XSD megadása és az űrlap
 \end{table}
 
 \subsection{Űrlap generálásának és validációjának ellenőrzése}
-Annak ellenőrzése, hogy megfelelőek-e az XML-séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat.
+Annak ellenőrzése, hogy megfelelőek-e az XML séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat.
 \begin{table}[h]
 \centering
 \caption{Űrlap kitöltés tesztforgatókönyve}

@@ -3,7 +3,7 @@
 
     <div class="form-field">
       <label for="name">Séma név</label>
-      <input id="name" type="text" formControlName="name" placeholder="Enter a schema name">
+      <input id="name" type="text" formControlName="name" placeholder="Adjon meg egy séma nevet">
 
       @if (xmlSchemaForm.get('name')?.invalid &&
       xmlSchemaForm.get('name')?.touched) {
@@ -23,7 +23,7 @@
 
     <div class="form-field">
       <label for="schema">Séma tartalma</label>
-      <textarea id="schema" formControlName="schema" rows="20" placeholder="Paste or write your XSD schema here...">
+      <textarea id="schema" formControlName="schema" rows="20" placeholder="A séma tartalma ide kerül">
     </textarea>
 
       @if (xmlSchemaForm.get('schema')?.invalid &&
