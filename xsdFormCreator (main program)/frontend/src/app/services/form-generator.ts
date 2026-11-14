@@ -687,10 +687,7 @@ export class FormGenerator {
   buildControl(schema: FormControlSchema): FormControl {
     const validators = this.mapValidators(schema);
 
-    const initialValue =
-      schema.defaultValue ??
-      schema.ui?.value ??
-      null;
+    const initialValue =schema.ui?.value ?? null;
 
 
     return new FormControl(
@@ -707,7 +704,7 @@ export class FormGenerator {
       group[key] = this.buildForm(schema.controls[key]);
     }
 
-    // attributes (optional)
+    // attributes
     if (schema.attributes) {
       for (const key in schema.attributes) {
         group[`@${key}`] = this.buildForm(schema.attributes[key]);

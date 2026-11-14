@@ -22,9 +22,9 @@
   <div *ngIf="schema.type === 'group'" [formGroup]="asGroup(control)" class="form-group"
     [style.margin-left.px]="level * 25">
 
-    <!-- GROUP LABEL -->
-    <h3 *ngIf="schema.label || schema.name">
-      {{ schema.label || schema.name }}
+    <!-- GROUP NAME -->
+    <h3 *ngIf="schema.name">
+      {{ schema.name }}
     </h3>
 
     <p *ngIf="schema.description" class="group-description">{{ schema.description }}</p>
@@ -119,7 +119,7 @@
   <div *ngIf="schema.type !== 'group' && schema.type !== 'array'" class="form-field">
 
     <label>
-      {{ schema.label || schema.name }}
+      {{ schema.name }}
       <span *ngIf="schema.required" class="required-marker">*</span>
     </label>
 

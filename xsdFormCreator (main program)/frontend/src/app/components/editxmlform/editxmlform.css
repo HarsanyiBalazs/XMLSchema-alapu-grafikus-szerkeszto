@@ -22,10 +22,6 @@
     margin-bottom: 20px;
 }
 
-.form-field label {
-    font-weight: bold;
-}
-
 .form-field input,
 .form-field textarea {
     width: 100%;

@@ -112,9 +112,9 @@ Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma felt�
 \end{figure}
 A lementett sémákat feltöltés után a séma szerkesztése gombra kattintva lehetséges módosítani. Ezen felületen meg lehet változtatni a megadott nevet, az XSD kódot, megtekinthető az űrlap linkje, és helyben legenerálható az űrlap. Az itt megtalálható űrlap kitöltés után nem lesz elmentve, hanem egy XML kódot készít, ezzel a felhasználó biztosíthatja, hogy megfelelő eredményeket kapjon.
 
-A létrehozott sémákhoz az alkalmazás külön elérési hivatkozást biztosít. Ezen keresztül a felhasználók megnyithatják az adott XML séma alapján automatikusan generált űrlapot (lásd a \ref{fig:urlapKitolt}. ábrát). Az űrlap megjelenése és felépítése a hozzá rendelt XSD sémától függ. A séma határozza meg az űrlap elemeit, azok típusát, kötelező vagy opcionális jellegét, valamint az értékkorlátozásokat. Az alkalmazás a séma feldolgozása során a meghatározott elemekhez megfelelő beviteli mezőket rendel. Egyszerű szöveges értékek esetén szövegmezők, számértékek esetén numerikus beviteli mezők, felsorolások esetén legördülő listát jelenhetnek meg.
+A létrehozott sémákhoz az alkalmazás külön elérési hivatkozást biztosít. Ezen keresztül a felhasználók megnyithatják az adott XML séma alapján automatikusan generált űrlapot (lásd a \ref{fig:urlapKitolt}. ábrát). Az űrlap megjelenése és felépítése a hozzá rendelt XSD sémától függ. A séma határozza meg az űrlap elemeit, azok típusát, kötelező vagy opcionális jellegét, valamint az értékkorlátozásokat. Az alkalmazás a séma feldolgozása során a meghatározott elemekhez megfelelő beviteli mezőket rendel. Egyszerű szöveges értékek esetén szövegmezők, számértékek esetén numerikus beviteli mezők, dátum esetén dátum mezőt, felsorolások esetén legördülő listát jelenhetnek meg.
 
-Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD sémában további információkat adjon meg a generált űrlap megjelenésével kapcsolatban. Erre az \texttt{xs:annotation} és \texttt{xs:appinfo} szerkezetek használhatók. Az elemhez tartozó űrlapkomponens típusa az \texttt{xs:appinfo} részen belül adható meg. A lenti példában a radio érték hatására a mező legördülő lista helyett rádiógombokként jelenik meg. Az űrlap bemeneti felületeihez leírás is rendelhető az xs:description segítségével. Ebben adható meg, hogy milyen választ vár el a felhasználótól, és hogy milyen formai követelményeknek kell megfelelnie a megadott értéknek. 
+Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD sémában további információkat adjon meg a generált űrlap megjelenésével kapcsolatban. Erre az \texttt{xs:annotation} és \texttt{xs:appinfo} szerkezetek használhatók. Az elemhez tartozó űrlapkomponens típusa az \texttt{xs:appinfo} részen belül adható meg. A lenti példában a radio érték hatására a mező legördülő lista helyett rádiógombokként jelenik meg. Az űrlap bemeneti felületeihez leírás is rendelhető az \texttt{xs:description} segítségével. Ebben adható meg, hogy milyen választ vár el a felhasználótól, és hogy milyen formai követelményeknek kell megfelelnie a megadott értéknek. 
 \begin{java}
 <xs:element name="speed" type="speedType">
  <xs:annotation>
@@ -126,7 +126,7 @@ Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD sém
  </xs:annotation>
 </xs:element>
 \end{java}
-Az következő bemeneti elemeket támogatja a program amik az \texttt{xs:appinfo}-n belül megadhattóak: date, select, radio, checkbox, number, range, text, textarea, password, email.
+Az következő bemeneti elemeket támogatja a program amik az \texttt{xs:appinfo}-n belül megadhattóak: date, select, radio, checkbox, number, range, text, textarea, password, email. Ezeken felül egyes attribútumok megadását is támogatja a type és description-höz hasonló módon: placeholder, value, max, min, maxlength, minlength, pattern, step. Ezekkel segíteni lehet a felhasználót a séma kitöltésében, vagy olyan megszorításokat adni, amik nem változtatnak a séma validáción.
 
 Az alkalmazás jelenleg nem támogatja az XSD szabvány egyes szerkezeteinek teljes körű feldolgozását. Ezek használata esetén megeshet, hogy a generált űrlap nem képes az összes séma által meghatározott feltétel érvényesítésére, ezért a létrehozott XML dokumentum nem fog megfelelni az eredeti sémának.
 
@@ -144,6 +144,8 @@ A jelenleg korlátozottan vagy egyáltalán nem támogatott szerkezetek a követ
 \caption{Egy generált űrlap.}
 \label{fig:urlapKitolt}
 \end{figure}
+
+\clearpage
 
 A beküldött adatok a megfelelő séma adatlapján található kitöltött űrlapok menüpontban érhetőek el. Itt a felhasználó áttekintheti az adott sémához tartozó beküldéseket. A beküldött űrlapok listájában megjelennek a kapcsolódó információk, például a beküldés időpontja és a beküldő felhasználó neve, amennyiben az rendelkezésre áll (lásd a \ref{fig:kitoltottUrlapok} ábrát).
 

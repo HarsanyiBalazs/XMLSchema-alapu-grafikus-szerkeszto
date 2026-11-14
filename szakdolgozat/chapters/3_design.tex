@@ -103,7 +103,14 @@ A program használati folyamata a \ref{fig:folyamat}. ábrán látható.
 
 \section{Program architektúrája és a felhasznált technológiák}
 
-A program elkészítésére a MEAN stack szoftvertechnológiai csomagot választottam. Ennek a szoftvercsoportnak részei a MongoDB \cite{mongodb} adatbázis kezelő rendszer, a Node.js \cite{node} javascript futattó környezet,az Express.js \cite{express} egy minimalista szerveroldali webapplikációs keretrendszer, és az angular \cite{angular} kliensoldali keretrendszer. Ezek együttesen lefedik a webapplikáció kliensoldal felületének kialakítását, a szerveroldali műveletek végrehajtását és a szükséges adatok tárolását. A különböző technológiák kiválasztásánál szempont volt az egységes fejlesztési környezet, a webalkalmazás igényeinek igazodó funkcionalitás, és a szükség szerinti bővíthetőség.
+A program elkészítésére a MEAN stack (MongoDB, Express.js, Angular, Node.js, lásd a \ref{fig:meanelemek}. ábra) szoftvertechnológiai csomagot választottam. Ennek a szoftvercsoportnak részei a MongoDB \cite{mongodb} adatbázis kezelő rendszer, a Node.js \cite{node} javascript futattó környezet,az Express.js \cite{express} egy minimalista szerveroldali webapplikációs keretrendszer, és az angular \cite{angular} kliensoldali keretrendszer. Ezek együttesen lefedik a webapplikáció kliensoldal felületének kialakítását, a szerveroldali műveletek végrehajtását és a szükséges adatok tárolását. A különböző technológiák kiválasztásánál szempont volt az egységes fejlesztési környezet, a webalkalmazás igényeinek igazodó funkcionalitás, és a szükség szerinti bővíthetőség.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{images/mean.png}
+\caption{A MEAN stack elemei.}
+\label{fig:meanelemek}
+\end{figure}
 
 A MEAN stack meghatározó jellemzője, hogy mind a négy fő technológiája a JavaScript programozási nyelvre alapszik. Ez lehetségessé teszi, hogy kliensoldali és szerveroldali fejlesztés összehangolható módon történjen. Az Angular Typescriptet használ, ami a JavaScript típusokkal kibővített kiterjesztése, amíg Node.js lehetővé teszi a JavaScript szerveroldali futását, és a különböző függvénykönyvtárak zökkenőmentes telepítését. A program architekturális felépítése a \ref{fig:architekt}. ábrán látható.
 

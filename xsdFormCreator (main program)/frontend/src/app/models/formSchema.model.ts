@@ -1,11 +1,18 @@
  // Base shared properties
 export interface BaseSchema {
-  label?: string;
   required?: boolean;
-  defaultValue?: any;
   name?: string;
   description?: string;
+}
 
+
+// Leaf node (single input)
+export interface FormControlSchema extends BaseSchema {
+  type: 'string' | 'number' | 'date';
+  xsdType?: string;
+  options?: string[]; // for enums (dropdowns)
+
+  //xs:restrictions
   validators?: {
     min?: number;
     max?: number;
@@ -14,11 +21,25 @@ export interface BaseSchema {
     pattern?: string;
   };
 
+
+  //xs:list
+  listItemType?: string; // the type of the list
+  listItemOptions?: string[]; //for enums
+  listMinItems?: number;
+  listMaxItems?: number;
+  listLength?: number;
+  listItemValidators?: {
+    min?: number;
+    max?: number;
+    minLength?: number;
+    maxLength?: number;
+    pattern?: string;
+  };
+
+  // HTML input properties
   ui?: {
     widget?: 'text' | 'textarea' | 'select' | 'checkbox' | 'date'| 'radio'| 'number'| 'range'| 'password'| 'email';
     placeholder?: string;
-
-    // HTML input properties
     max?: number;
     maxlength?: number;
     min?: number;
@@ -29,31 +50,6 @@ export interface BaseSchema {
     value?: string;
     rows?: number;
     cols?: number;
-  };
-
-  //disabled?: boolean;
-  //readonly?: boolean;
-}
-
-
-// Leaf node (single input)
-export interface FormControlSchema extends BaseSchema {
-  type: 'string' | 'number' | 'date';
-  xsdType?: string;
-  options?: string[]; // for enums (dropdowns)
-
-  //xs:list
-  listItemType?: string; // the type of the list
-  listItemOptions?: string[];
-  listMinItems?: number;
-  listMaxItems?: number;
-  listLength?: number;
-  listItemValidators?: {
-    min?: number;
-    max?: number;
-    minLength?: number;
-    maxLength?: number;
-    pattern?: string;
   };
 }
 
