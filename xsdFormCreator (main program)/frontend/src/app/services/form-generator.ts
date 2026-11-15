@@ -1072,11 +1072,12 @@ export class FormGenerator {
 
   //Checks for the attributes belongting to a group
   serializeAttributes(schema: FormGroupSchema, value: any): string {
+    let result = '';
+
     if (!schema.attributes) {
-      return '';
+      return result;
     }
 
-    let result = '';
 
     for (const [name, attributeSchema] of Object.entries(schema.attributes)) {
       const attributeValue = value?.[`@${name}`];

@@ -23,7 +23,7 @@ A szerver konfigurációjához a dotenv(17.4.1) csomagot alkalmaztam. Ez lehető
 \begin{itemize}
 \item a \texttt{ACCESS\_TOKEN\_SECRET} aminek értéke a felhasználó hitelesítésében használt tokenek titkos kulcsa,
 \item a \texttt{DATABASE\_URL} aminek értéke az adatbázis kapcsolati karakterlánca, fejlesztői környezetben ez \texttt{mongodb://localhost:27017/XmlFormMaker} jelent,
-\item a frontend címe \texttt{FRONTEND\_URL}, aminek fejlesztői környezetben az értéke \texttt{http://localhost:4200}
+\item a frontend címe \texttt{FRONTEND\_URL}, aminek fejlesztői környezetben az értéke \\ \texttt{http://localhost:4200}
 \item a saját portja \texttt{Port}, amin a bejövő kéréseket figyeli, értéke \texttt{3000},
 \item végül a \texttt{TRUST\_PROXY}, ami beállítja, hogy egy fordított proxy-n keresztül jönnek-e a kérések, aminek értéke \texttt{FALSE}
 \end{itemize} 
@@ -203,7 +203,7 @@ A kitöltött űrlapok törlése a \texttt{/filledForms/:id} végponton kereszt�
 
 \section{Kliensoldal megvalósítása}
 
-A kliensoldali alkalmazás az Angular(21.1.0) keretrendszerrel készítettem, ami a TypeScript nyelvre épülő webalkalmazások fejlesztését teszi lehetővé. Egy Angular applikáció komponensekből épül fel, amelyben a felhasználói felület különálló, egymástól elkülönített részekből elkészítve.
+A kliensoldali alkalmazás az Angular(21.1.0) keretrendszerrel készítettem, ami a \\ TypeScript nyelvre épülő webalkalmazások fejlesztését teszi lehetővé. Egy Angular applikáció komponensekből épül fel, amelyben a felhasználói felület különálló, egymástól elkülönített részekből elkészítve.
 
 A kliensoldal feladata a felhasználói felület megjelenítése, a felhasználói műveletek kezelése, valamint a szerverrel történő kapcsolattartás. A applikációban a kliensoldal felelős az XSD sémák feldolgozásáért, a dinamikus űrlapok előállításáért, és az űrlapokból való XML dokumentumok előállításáért is. Ezeknek az eléréséhez az Angluar(21.1.0) mellet, a rxjs(7.8.0) (Reactive Extensions for JavaScript) és a fast-xml-parser(5.11.2) függőségeket alkalmaztam.
 
@@ -242,11 +242,11 @@ A HTTP kommunikáció megvalósításához egy másik lehetőség lett volna a F
 
 Az adatbázissal való egyszerűbb kommunikációhoz három, a gyűjteményekhez igazoló osztályt definiáltam meg, amelyekben csak változók szerepelnek. A User osztályban a \texttt{name}, \texttt{password}, és \texttt{\_id} változók szerepelnek. A Project osztályban a \texttt{name}, \texttt{schema}, \texttt{\_id}, \texttt{user}, \texttt{createdAt}, \texttt{updatedAt} változókat definiáltam. A FilledForms osztályban \texttt{form}, \texttt{schema}, \texttt{\_id}, \texttt{formCreator}, \texttt{createdAt}, \texttt{formSubmitter} változók vannak. 
 
-\subsection{Service fájlok szerver kommunikációhoz}
+\subsection{Szolgáltatási fájlok szerver kommunikációhoz}
 
 Az alkalmazásban a szerverrel történő kommunikációt három szolgáltatás valósítja meg. Ezek az Angular Dependency Injection mechanizmusával az alkalmazás különböző komponenseiben is elérhetőek. Mindhárom szolgáltatás a HttpClient segítségével küldi el a szervernek a kéréseket, amelyek eredményét Observable formájában adja vissza.
 
-A szolgáltatások által küldött kérések a környezeti beállításokban meghatározott szervercímet használják, ezért a kliensoldali alkalmazás különböző futtatási környezetekben is a megfelelő szerverhez tud kapcsolódni. A kérésekben szerepel a \texttt{withCredentials: true} beállítás is, amely lehetővé teszi a hitelesítéshez használt sütik továbbítását a szerver felé.
+A szolgáltatások által küldött kérések a környezeti beállításokban meghatározott szervercímet használják, ezért a kliensoldali alkalmazás különböző futtatási környezetekben is a megfelelő szerverhez tud kapcsolódni. A kérésekben szerepel a \\ \texttt{withCredentials: true} beállítás is, amely lehetővé teszi a hitelesítéshez használt sütik továbbítását a szerver felé.
 
 A felhasználói fiókok kezeléséért az AccountService felelős. Ez a szolgáltatás biztosítja a regisztrációt a \texttt{postSignup()} metódussal, bejelentkezést a \texttt{postLogin()} metódussal, kijelentkezést a \texttt{postLogout()} függvénnyel, és a felhasználó aktuális bejelentkezési állapotának lekérdezését a \texttt{getUser()} metódussal. A bejelentkezési állapot nyilvántartására a \texttt{private loggedIn = new BehaviorSubject<boolean>(false)} változó szolgál. Az értékét a szervertől érkező válasz alapján frissíti a \texttt{loadUser()} metódussal, amit a konstruktorban hív meg, ezen felül a kliens frissítheti az állapotát a \texttt{setLoginState()} függvénnyel, és elérheti az értékét az \texttt{isLoggedIn()} használatával. 
 
@@ -256,9 +256,26 @@ A beküldött XML dokumentumok kezelése  FilledFormsService-ben történik. Seg
 
 \section{A különböző komponensek}
 
+A webalkalmazás kilenc komponensből épül fel, ebből nyolc alkot oldalt külön URL-en.
+
+A header komponens a minden oldalon található navigációs sávot adja meg. A komponenshez implementáltam az OnInit interfészt, amivel meglehet adni egy \texttt{ngOnInit()} metódust, amiben lévő utasítások a komponens keletkezésekor lefutnak. Itt elsőnek leellenőrzi, hogy van-e felhasználó bejelentkezve. A komponensben található a \texttt{logOut()} metódus, ami egy kérést küld a szervernek a kijelentkezéshez, majd átirányít a bejelentkezés oldalára a felhasználót. A HTML sémájában egy táblázatban van megformázva a navigációs sáv amiben a kezdőoldal, sémák, bejelentkezés, és regisztráció linkje, valamint a kijelentkezés gombja szerepel. Ezek a bejelentkezés állapától függően vannak megjelenítve.
+
+A frontpage komponens a kezdőoldalt testesíti meg. Ennek a HTML sémájában egy leírás van, amiben a webalkalmazás használatához tartozó alapvető információk vannak.
+
+A registration és login komponensek a regisztrációért és bejelentkezését felelősek. Mindkettőben egy űrlap van felhasználónévvel és jelszóval, és az űrlaphoz tartozó Angular vezérlővel, ami a validációért felelős. Ha nem megfelelő hosszúságú adatokat adnak meg a vezérlő jelez és hibát ír ki. Ha nem megfelelőek az adatok a szerver szerint, nem megfelelő a felhasználónév és jelszó kombináció, illetve foglalt a felhasználónév, akkor azt is jelzi az oldal. Sikeres esetben a validációt megkapja a felhasználó, és használhatja az oldalt.
+
+A projects komponens felelős a meglévő sémák kiírásáért. A komponens első betöltésekor lekéri a szerverről a sémák adatait, hogy megjelenítse azokat. Az \texttt{onDeleteClick()} metódus a séma törléséhez használt, elsőnek megkérdezi a felhasználótól, hogy biztos törölni szeretné-e a sémát, és ha igen akkor kérést küld a szervernek. A HttpClient-tel történő kapcsolattartás miatt a szerver azonnal küldi a megváltozott adatokat a kliensnek, ami ezeket jeleníti meg. A HTML sémájában megtalálható a link az új séma feltöltéséhez, egy táblázat, amiben a séma neve, a sémához tartozó változtatási és beküldött űrlapok linkjei, és a törlés gomb szerepel. Ha még nem kapta meg az adatokat vagy nincsenek adatok, akkor a töltést, illetve a nem talált sémákat írja ki. Ezek az Angular *ngFor, *ngIf és *ngSwitch direktíváin keresztül értem el, amikkel meg lehet határozni dinamikus módon, a változók alapján, hogy mi jelenjen meg az oldalon.
+
+A submittedxml komponensen keresztül érhetőek el a beküldött űrlapok. Itt a projects komponenshez hasonló módon lekéri az adatokat a szerverről, majd azokat egy táblázatban *ngFor segítségével kiírja. Ezeket lehet törölni, vagy egy másik gombbal le lehet tölteni. Ez esetben  a \texttt{downloadXml()} metódus lesz meghívva, ebben egy Blob (Binary Large Object) objektumot a letöltendő adattal, egy a Blob-ra hivatkozó URL-t, és egy linket hozz létre. A link \texttt{href} tulajdonságában a létrehozott URL, és a \texttt{download} tulajdonságában a letöltendő fájl nevét adtam meg. Ez után a \texttt{click()} metódussal megnyílik a link, ezzel megkezdve a letöltést, végül egy idő után megszünteti a létrehozott URL-t.
+
+A createxmlform komponensben lehetséges új séma létrehozása. A HTML-ben egy űrlap szerepel, amiben a séma nevét, és a XSD sémát kell megadni szövegesen, vagy fájl megadásával. A fájl megadásakor a \texttt{onFileSelected()} metódus fut le, amiben leellenőrzi a fájl formátumát, beállítja, hogy beolvasáskor az űrlap vezérlővel a szöveges mező értékébe a fájl tartalma szerepeljen, végül a 
+\texttt{reader.readAsText()} metódussal eléri a fájl tartalmát. Beküldéskor leellenőrzi, hogy ki lettek-e töltve a megfelelő adatok, és ha igen egy kérésben elküldi őket a szervernek, majd átirányítja a felhasználót a séma szerkesztésének oldalára.
+
+Az editxmlform komponens a séma szerkesztésére szolgál. Ebben a komponensben elsőnek a \texttt{activatedRouter.paramMap.subscribe()} metódussal megkapja a séma azonosítóját az útvonal paramétereiből, alkot egy űrlap vezérlőt, végül lekéri az azonosítóval a séma adatait, amit az űrlap vezérlővel beleilleszt a beviteli mezőkbe. A HTML első részében egy űrlap szerepel, amiben a séma adatai vannak. Az adatok megváltoztatása után a feltöltés gombra kattintva meghívódik a \texttt{updateSchema()} metódus, ami egy PATCH kérést küld a szervernek a séma megváltoztatásához. Ezeken felül található itt az űrlap linkje és egy űrlap generáló gomb. A gombra kattintva megjelenik a kitölthető űrlap, aminek kitöltésével megtekinthető a vele készített XML dokumentum. Az űrlap dinamikus generálásáról a szakdolgozat következő részében lehet olvasni.
+
 \section{Űrlap komponens és űrlapgeneráló szolgáltatás}
 
-A felhasználók által kitöltendő űrlap komponense a fillxmlform, ami a \texttt{fillform/:id} URL-en nyitható meg. Az űrlap megalkotásához a form-generator szolgáltatásban vannak a metódusok főbb része, azok amelyek nem vannak direkt kapcsolatban a komponens HTML sémájával. Ezeken kívűl a fast-xml-parser(5.11.2) könyvtár segített a séma feldolgozásában.
+A felhasználók által kitöltendő űrlap komponense a fillxmlform. Az űrlap megalkotásához a form-generator szolgáltatásban vannak a metódusok főbb része, azok amelyek nem vannak direkt kapcsolatban a komponens HTML sémájával. Ezeken kívűl a fast-xml-parser(5.11.2) könyvtár segített a séma feldolgozásában.
 
 A fast-xml-parser XML dokumentumok feldolgozására és előállítására szolgál. Lehetséges vele XML dokumentum JavaScript objektumba alakítása, illetve fordított irányban JSON-ből XML dokumentumok létrehozása. Emellett rendelkezik az XML szintaktikai ellenőrzésére szolgáló funkcióval is. A könyvtár további előnye, hogy külső, C vagy C++ alapú függőségek nélkül működik, ezen kívül Node.js és böngésző környezetben is használható. A feldolgozásnál lehet többek között az attribútumok, névterek és különböző XML elemek kezelésének testreszabására is. A "fast-xml-parser vs xml2js vs xml-js vs libxmljs vs xml2json" /cite{parserCompare} cikk alapján a fast-xml-parser bizonyult a projekt követelményeinek leginkább megfelelő megoldásnak, ezért az alkalmazásban ennek használata mellett döntöttem.
 
@@ -268,11 +285,13 @@ const parser = new XMLParser({
               ignoreAttributes: false,
               attributeNamePrefix : "@_",
               removeNSPrefix: true,
-              isArray: (name:any) => ['element', 'attribute', 'enumeration'].includes(name)
+              isArray: (name:any) => 
+              ['element','attribute','enumeration']
+              .includes(name)
 });
 const jObj = parser.parse(this.activeProject.schema);
 \end{java}
-Az \texttt{ignoreAttributes: false} beállítja, hogy megtartsa az attribútumokat. Az \texttt{attributeNamePrefix : "@\_"} megadja, hogy az attribútumok neve elé "@\_" karaktereket illessze, megkülönböztetésként. A \texttt{removeNSPrefix: true} eltávolítja a névtérprefixeket. Végül a \texttt{isArray: (name:any) => ['element', 'attribute','enumeration'].includes(name)} beállítja, hogy minden elem tömbbe kerüljön, ami tömbbe kerülhet, hogy ne kelljen mindkét lehetőséggel foglalkozni.
+Az \texttt{ignoreAttributes: false} beállítja, hogy megtartsa az attribútumokat. Az \\ \texttt{attributeNamePrefix : "@\_"} megadja, hogy az attribútumok neve elé "@\_" karaktereket illessze, megkülönböztetésként. A \texttt{removeNSPrefix: true} eltávolítja a névtérprefixeket. Végül a \texttt{isArray: (name:any) => ...} beállítja, hogy minden elem tömbbe kerüljön, ami tömbbe kerülhet, hogy ne kelljen mindkét lehetőséggel foglalkozni.
 
 Miután megvan a JSON-né formált XML séma, a form-generator-ban található \texttt{parseXsd()} metódus egy általam definiált FormSchema típust készít. Erre azért van szükség, hogy csökkentsen a séma komplexitásán, hiszen például egy elem típusa definiálva lehet az attribútumában, a több különböző gyerekének egyikében, vagy akár a \texttt{ref} attribútum használatával vagy egyéni típus definiálásával valahol máshol a dokumentumban. Mindez egyszerre kiolvasható lenne az űrlap kialakításának megalkotásakor, de a több lépésre bontásával egyszerűbb az implementációja és könnyebben fenntartható az alkalmazás.
 
@@ -284,43 +303,43 @@ A \texttt{parseXsd()} metódus feladata, hogy megtalálja az első komplex eleme
 
 Itt elsőnek lementi a számosság attribútumait, ha léteznek, más esetben egy-egy lesz beállítva. Ez után megnézi, hogy egy referencia-e, ha igen az esetben megkeresi, és a valódi elemen dolgozik tovább a program. A név lementése után eldönti róla a program, hogy komplex vagy egyszerű elem, vagy a gyerekeleme vagy az egyénileg definiált típusa által, ha az előbbi meghívja rá \texttt{parseComplexType()} metódust, ha az utóbbi akkor a \texttt{parseSimpleType()} metódust hívja meg. Ha egy primitív egyszerű típus, akkor csak a \texttt{mapPrimitive()} függvényt hívja meg rá, ami elmenti az XSD típust, és besorolja karakterláncnak, számnak vagy dátumnak. Miután kezelve lett a típusa, az esetleges \texttt{annotation} és \texttt{appinfo} elemek belüli adatokat nézi meg. Ezek közé tartozik a leírás, a különböző \texttt{input} attribútumok és az adatbeviteli mező típusa. Az adatbeviteli mezőnék külön megnézi, hogy lehetséges-e a használata, hiszen például egy csúszka nehezen értelmezhető dátum megadásához. Ha ez az elem, amit eddig a program feldolgozott többször is szerepelhet, akkor egy tömb elemének veszi, majd visszaküldi.
 A \texttt{parseComplexType()}-ban megkeresi a benne található elemek nevét, majd meghívja rájuk a \texttt{parseElement()} függvényt, ennek a visszatérési értékeit a \texttt{controls}-változójába menti. Az attribútumainál egyszerűen lementi a nevét, meghívja rá \texttt{mapPrimitive()} függvényt, és lekéri a kötelezőségi attribútumát. Mindezek után visszatér az értékével.
-A \texttt{parseSimpleType()} függvény elsőnek megnézi, hogy unió típusú-e az elem, ebben az esetben egyszerű szövegként lesz kezelve és visszatér értékével. A lista esetén megnézi, hogy mi a típusa, és ha egy elnevezett típus aminek a leírása máshol található, akkor egyszerű szövegként tér vissza. Ha egy primitív típus, akkor lementi a benne található megszorításokkal együtt. Ha megszorítások által létrehozott típusról van szó, akkor elsőnek lementi a típusát, ha enumeráció lementi a lehetséges bemeneteket és legördülő listának állítja a mezőt, majd lementi a további megszorításokat és visszaadja az értéket.
+A \texttt{parseSimpleType()} függvény elsőnek megnézi, hogy unió típusú-e az elem, ebben az esetben egyszerű szövegként lesz kezelve és visszatér értékével. A lista esetén megnézi, hogy mi a típusa, és ha egy elnevezett típus aminek a leírása máshol található, akkor egyszerű szövegként tér vissza. Ha egy primitív típus, akkor lementi a benne található megszorításokkal együtt. Ha megszorítások által létrehozott típusról van szó, akkor elsőnek lementi a típusát, ha enumeráció esetén lementi a lehetséges bemeneteket és legördülő listának állítja a mezőt, majd lementi a további megszorításokat és visszaadja az értéket.
 
 \subsection{Űrlapvezérlő létrehozása}
 
-Miután megvan a FormSchema típus, akkor még a program nem áll készen az űrlap létrehozására. A dinamikus űrlapok létrehozásáért és az azokhoz tartozó ellenőrzések beállításáért egy külön szolgáltatás felelős. Ennek feladata, hogy a FormSchema alapján létrehozza az Angular Reactive Forms által biztosított űrlapvezérlőket, és hozzárendelje hozzájuk a megfelelő validátorokat.
+Miután megvan a FormSchema típus, akkor még a program nem áll készen az űrlap létrehozására. A dinamikus űrlapok létrehozásáért és az azokhoz tartozó ellenőrzések beállításáért egy külön szolgáltatás felelős. Ennek feladata, hogy a FormSchema alapján létrehozza az Angular Reactive Forms által biztosított űrlapvezérlőket, és hozzárendeli hozzájuk a megfelelő validátorokat.
 
-A vezérlő felépítését a form-generator szolgáltatásban található \texttt{buildForm()} metódus végzi. Itt megnézi a megkapott sémarész típusát és ez szerint meghívja a \texttt{buildGroup()}, \texttt{buildArray()} vagy \texttt{buildControl()} metódust.
+A vezérlő felépítését a form-generator szolgáltatásban található \texttt{buildForm()} metódus végzi. Itt megnézi a megkapott sémarész típusát és ez szerint meghívja a \\ \texttt{buildGroup()}, \texttt{buildArray()} vagy \texttt{buildControl()} metódust.
 
 A \texttt{buildGroup()} metódusban az összes gyerekelemre és attribútumra meghívja a \texttt{buildForm()} metódust, majd az eredménnyel visszatér egy új FormGroup objektumot alkotva.
 
 A \texttt{buildArray()} függvényben egy FormArray objektumot alkot, majd a minimum elemszám alapján meghívja a benne lévő elemre \texttt{buildForm()} metódust, végül visszaadja a FormArray objektumot.
 
-A \texttt{buildControl()} metódus elsőnek a \texttt{mapValidators()} függvénnyel leképezi a szükséges validációs szabályokat, ha van érték megadva elmenti, majd ezeket az értékeket egy FormControl objektumban adja vissza.
+A \texttt{buildControl()} metódus elsőnek a \texttt{mapValidators()} függvénnyel leképezi a szükséges validációs szabályokat, ha van alapérték megadva elmenti, majd ezeket az értékeket egy FormControl objektumban adja vissza.
 
-A \texttt{mapValidators()} metódus a különböző egyszerű validációs szabályokat, majd a lista esetében állítja be a validációt. Itt a lista mező értékét a szóközök mentén szétválasztja, és egy tömbe helyezi. Ez után megnézi, hogy a megfelelő mennyiségű tömb elem van-e, majd külön-külön ellenőrzi az elemeket a validáció szerint. A validációs szabályok között a \texttt{isValidXsdValue()} függvény is szerepel, amiben az érték az eredeti XSD típusa alapján egy regex-szel van összehasonlítva, ezzel tesztelve a formátumát.
+A \texttt{mapValidators()} metódus a különböző egyszerű validációs szabályokat, majd a lista esetében állítja be a validációt. Itt a lista mező értékét a szóközök mentén szétválasztja, és egy tömbbe helyezi. Ez után megnézi, hogy a megfelelő mennyiségű tömb elem van-e, majd külön-külön ellenőrzi az elemeket a validáció szerint. A validációs szabályok között a \texttt{isValidXsdValue()} függvény is szerepel, amiben az érték az eredeti XSD típusa alapján egy regex-szel van összehasonlítva, ezzel tesztelve a formátumát.
 
 \subsection{Űrlap}
 
 Az űrlap generálásához a komponensen belül több további metódus van. Az \texttt{asGroup()}, \texttt{asArray()}, \texttt{asControl()} metódusok egyszerűen visszaadják a beléjük helyezett AbstractControl típusú elemet, amiből az űrlapvezérlő elemek származnak. Ez nem változtatja meg a típusukat, csak jelzik a program számára azt.
-A \texttt{getControl()} egy csoport űrlapvezérlőben lévő elem vezérlőjét éri el és adja vissza. A \texttt{getAttributeControl()} ugyanezt csinálja attribútumokkal.
-A \texttt{getRadioGroupName()} függvény a rádió gomboknak ad nevet. Megnézi, hogy van-e már nevük, ha nincs add egy új nevet. Erre azért van szükség, mert ha nincs megadva a nevük, akkor a vezérlő az azonos értékekből álló rádiógomb mezőket egy mezőnek tekintheti, így ha egyben választasz egy értéket, ez mindegyikben meg fog egyezni.
+A \texttt{getControl()} egy csoport űrlapvezérlőjében lévő elem vezérlőjét éri el és adja vissza. A \texttt{getAttributeControl()} ugyanezt csinálja attribútumokkal.
+A \texttt{getRadioGroupName()} függvény a rádiógomboknak ad nevet. Megnézi, hogy van-e már nevük, ha nincs add egy új nevet. Erre azért van szükség, mert ha nincs megadva a nevük, akkor a vezérlő az azonos értékekből álló rádiógomb mezőket egy mezőnek tekintheti, így ha egyben értékválasztás történik, ez mindegyikben meg fog egyezni.
 
 A \texttt{trackByKey()} és \texttt{trackByAttribute()} függvények az Angular listakezeléséhez használtak. Az *ngFor-ral megjelenített elemekhez egyedi azonosítót rendelnek, amely alapján az Angular képes felismerni az egyes listaelemeket azok frissítésekor. Az első függvény az űrlapvezérlők kulcsát, a második pedig az attribútumok nevét használja azonosítóként. Ezért az űrlap írása közben az Angular nem fog minden elemet újrarenderelni, ezzel levenni a fókuszt a bemeneti mezőről.
 
 A \texttt{getSimpleControls()} kigyűjti az egyszerű űrlapvezérlőket azzal, hogy a bemenő értékeket kulcs-érték párokká alakítja, majd kiszűri belőle a csoportokat és tömböket. A \texttt{getArrayControls()} és a \texttt{getComplexControls()} függvények hasonló képen, a tömbök és csoportokat adják vissza. Ez a sémában arra van használva, hogy egy csoporton belül elsőnek a attribútumok és egyszerű mezők, majd a tömbök, és végül a csoportok legyenek megjelenítve.
 
-A \texttt{selectCheckboxOption()} metódus ha a kiválasztott érték megegyezik a kapott lehetőséggel, a vezérlő értékét null értékre állítja, ellenkező esetben a vezérlő értékévé teszi az adott lehetőséget. Ezzel azt érve el, hogy gyakorlatilag rádió gombként funkcionáljon.
+A \texttt{selectCheckboxOption()} metódus ha a kiválasztott érték megegyezik a kapott lehetőséggel, a vezérlő értékét null értékre állítja, ellenkező esetben a vezérlő értékévé teszi az adott lehetőséget. Ezzel azt érve el, hogy gyakorlatilag rádiógombként funkcionáljon.
 
-Az \texttt{addItem()} metódus leellenőrzi az elemszám nem érte el a maximumot, és ha nem, akkor hozzáadd egy az elemhez tartozó vezérlőt. A \texttt{removeItem()} függvény leellenőrzi az elemszám a minimum felett van, és ha igen, akkor eltávolítja az elemhez tartozó vezérlőt.
+Az \texttt{addItem()} metódus leellenőrzi azt, hogy az elemszám nem érte el a maximumot, és ha nem, akkor hozzáadd egy az elemhez tartozó vezérlőt. A \texttt{removeItem()} függvény leellenőrzi azt, hogy az elemszám a minimum felett van, és ha igen, akkor eltávolítja az elemhez tartozó vezérlőt.
 
-A űrlap egy rekurzív Angular sablonban van felépítve. A HTML-ben a \texttt{ng-container} címkében jelenik meg.
+A űrlap egy rekurzív Angular sablonban van felépítve. A HTML-ben a \\ \texttt{ng-container} címkében jelenik meg.
 
 \begin{java}
 <form *ngIf="form && !isSubmitted" [formGroup]="form">
-	<ng-container *ngTemplateOutlet="renderField; 
-		context: { schema: schema, control: form ,level: 0}">
-	</ng-container>
+  <ng-container *ngTemplateOutlet="renderField; 
+    context: { schema: schema, control: form ,level: 0}">
+  </ng-container>
 </form>
 \end{java}
 Az űrlap csak akkor jelenik meg, ha az űrlapvezérlő sikeresen létrejött a form változóban, de még nem lett elküldve. A \texttt{[formGroup]="form"} összekapcsolja űrlapot az Angular Reactive Forms, űrlapvezérlő rendszerével. Az \texttt{ngTemplateOutlet} segítségével meghívja a később definiált \texttt{renderField} sablont. A context objektum három adatot ad át neki:
@@ -333,23 +352,55 @@ Az űrlap csak akkor jelenik meg, ha az űrlapvezérlő sikeresen létrejött a 
 A sablon maga a \texttt{ng-template} címkében van benne. Ebben benne van a neve, ami \texttt{renderField}, és context-ben megadott adatok amik "let-" változókban vannak.
 
 \subsubsection{A csoport megjelenítése}
-Ha a séma elem csoport típusú, akkor hozzárendelődik a megfelelő objektum. Itt elsőnek  az attribútumokat jeleníti meg.
+Ha a FormSchema elem csoport típusú, akkor a vezérlőhöz hozzárendelődik a megfelelő objektum \texttt{[formGroup]="asGroup(control)"}. Itt elsőnek  az attribútumokat jeleníti meg.
 
 \begin{java}
 <div *ngIf="schema.attributes">
-	<div *ngFor="let attr of (schema.attributes | keyvalue);
-		trackBy:trackByAttribute">
-        <ng-container *ngTemplateOutlet="renderField;
-        	context: {
-            	schema: attr.value,
-            	control: getAttributeControl(control, attr.key),
-            	level: level + 1
-            }">
-        </ng-container>
-	</div>
+  <div *ngFor="let attr of (schema.attributes | keyvalue);
+    trackBy:trackByAttribute">
+      <ng-container *ngTemplateOutlet="renderField;
+        context: {
+          schema:attr.value,
+          control:getAttributeControl(control, attr.key),
+          level:level + 1
+        }">
+    </ng-container>
+  </div>
 </div>
 \end{java}
-Itt az ngFor ciklussal bejárja az attribútom \texttt{keyvalue} pipe segítségével készített kulcs-érték párjait. Az \texttt{attr.key} az attribútum neve, és az \texttt{attr.value} pedig a hozzá tartozó séma. A \texttt{getAttributeControl()} függvény megkeresi a csoporthoz tartozó attribútumvezérlőt, majd a sablon ismét meghívja önmagát az attribútum megjelenítéséhez.
-Az egyszerű elemek is hasonlóan néznek ki, kiválasztódnak, annyi különbséggel, hogy a mező neve kulcs helyett \texttt{entry[0]}, \texttt{entry[1]}-ban vannak az értékek, és \texttt{getControl()} keresi meg az adott helyre a vezérlőt. A tömbök és a csoportok megjelenítése hasonló módon történik. A \texttt{getArrayControls()} és a \texttt{getComplexControls()} függvények az adott csoporthoz tartozó vezérlőket típus szerint szétválasztják. Mindkét esetben ugyanaz a renderField sablon jelenik meg.
+Itt az *ngFor ciklussal bejárja az attribútom \texttt{keyvalue} pipe segítségével készített kulcs-érték párjait. Az \texttt{attr.key} az attribútum neve, és az \texttt{attr.value} pedig a hozzá tartozó séma. A \texttt{getAttributeControl()} függvény megkeresi a csoporthoz tartozó attribútumvezérlőt, majd a sablon ismét meghívja önmagát az attribútum beviteli mezőjének megjelenítéséhez.
+Az egyszerű elemek is hasonlóan néznek ki, kiválasztódnak, annyi különbséggel, hogy a mező neve kulcs helyett \texttt{entry[0]}-ban van megadva, és \texttt{entry[1]}-ban vannak az értékek, majd \texttt{getControl()} keresi meg az adott helyre a vezérlőt. A tömbök és a csoportok megjelenítése hasonló módon történik. A \texttt{getArrayControls()} és a \texttt{getComplexControls()} függvények az adott csoporthoz tartozó vezérlőket típus szerint szétválasztják. Minden esetben ugyanaz a renderField sablon jelenik meg.
 
 \subsubsection{Tömbök megjelenítése}
+
+Ha a FormSchema tömb típusú, akkor a vezérlő elemeit járja be egy *ngFor ciklusban. A cikluson belül lesz újra megjelenítve a renderField sablon minden elemre, és egy gomb a \texttt{removeItem()} metódussal, amivel a vezérlőt, és ezzel az elemet lehet eltávolítani. A cikluson kívül található az a gomb aminek megnyomásával az \texttt{addItem} függvény kerül meghívásra, bővítve vele a vezérlőt.
+
+\subsubsection{Beviteli mezők}
+
+Ha nem egy csoport vagy tömb típusú, akkor egy beviteli mező jelenik meg. Ez a *ngSwitch segítségével, a \texttt{schema.ui?.widget}-ben található adattal választja ki, ha valamilyen hiba folytán üres lenne, akkor egyszerű szöveges mezőt hozz létre. A beviteli mezőkhöz hozzárendeli a vezérlőt, majd a FormSchema-ban található attribútumokat, ha azok léteznek. A rádiógomb, legördülő lista és jelölő doboz esetében a lehetséges opciókat egy *ngFor ciklussal jeleníti meg.
+
+A lehetséges hibák *ngIf-fel jelölt címkékben vannak kiírva, amik csak akkor látszódnak ha a vezérlőt a megadott hibát adják vissza.
+
+Miután a felhasználó kitöltötte az űrlapot annak az eredményét egy gombbal tudja beküldeni, ami a generateSubmission() függvényt hívja meg.
+
+\subsection{Az űrlap beküldése}
+
+Abban az esetben, ha minden rendben van a kitöltött űrlappal, akkor a \texttt{generateXml()} metódus fogja a vezérlő értékei segítségével, a FormSchema típusú változó alapján összeállítani az XML dokumentumot. It a FormSchema-ra azért van szükség, mert a komplex elemek csoportjaiban nem feltétlenül vannak megfelelő sorrendben az elemek. 
+
+A {generateXML()} metódus elsőnek ellenőrzi, hogy a gyökérelem csoport-e és, hogy van-e neve. Ez után meghívja a \texttt{serializeAttributes()} és a \texttt{serializeChildren()} függvényeket, majd visszaadja azokat az XML dokumentum címkéi és saját neve közé zárva:
+
+\begin{java}
+return (
+	'<?xml version="1.0" encoding="UTF-8"?>\n' +
+	`<${schema.name}${attributes}>\n` + 
+	children + `</\${schema.name}>`
+)
+\end{java}
+
+A \texttt{serializeAttributes()} metódus elsőnek megnézi, hogy létezik.e az elemnek attribútuma, ha nem visszatér egy üres karakterlánccal. Más esetekben bejárja az attribútumokat, ha egy opcionális attribútumban nincs érték, azokat kihagyja. Végül lecseréli az XML által különlegesnek vett szimbólumokat, és visszaadja a értékeket egy XML szerkezetű karakterláncban.
+
+A \texttt{serializeChildren()} metódus meghívja a \texttt{serializeElement()} függvényt az összes gyerekelemre, majd visszaadja az. Itt elkezdi követni a behúzás mélységét is, a XML dokumentum formázásához.
+
+A \texttt{serializeElement()} metódus elsőnek megnézi milyen típusú az elem. Tömb esetében végigmegy a benne szereplő elemekre, és meghívja rájuk a \texttt{serializeElement()} metódust egyesével. Csoport esetében meghívja rá a a \texttt{serializeAttributes()} és a \texttt{serializeChildren()} függvényeket, majd az értékekhez megfelelő címkék közt visszaküldi a karakterláncot. Az egyszerű elem esetén meghívja rá a \texttt{serializeControl()} metódust, amiben lecserélésre kerülnek a XML szimbólumok, és egyes XSD típusokhoz korrigálást is végez az értékeken, majd az így megkapott értékekkel visszatér a megfelelő karakterlánccal.
+
+Miután lefut az XML dokumentum generálása, akkor a megfelelő adatokkal együtt átküldi az a szerverre, amit később a XSD sémát feltöltő felhasználó érhet el.

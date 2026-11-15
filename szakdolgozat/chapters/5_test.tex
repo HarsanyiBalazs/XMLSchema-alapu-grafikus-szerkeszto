@@ -2,7 +2,7 @@
 
 A fejezet bemutatja, hogy mi szükséges a program futásához használt környezet kialakításához. Bemutatja a telepítés eljárását, a konfigurálás lépéseit, és az alkalmazás használatához leírást add. A futtatáson kívül opciókat add tesztelési lehetőségekre, és a megtett teszteseteket  felvázolja.
 
-\section{A program függőségei}
+\section{A program függőségei}\label{sec:dependencies}
 
 A program futtatásához elsőként Node.js telepítése szükséges. A Node.js szoftver add futási környezetet a szerveroldal működéséhez, és a hozzá tartozó npm végzi a függőségek kezelését. A MongoDB az alkalmazás adatainak tárolására szolgáló adatbázis-kezelő rendszer, aminek a használatához le kell tölteni, vagy egy már meglévő kapcsolati sztringre van szükség külső szerveren történő futtatásához.
 
@@ -28,7 +28,7 @@ A program backend és frontend függőségei külön-külön megtalálhatóak a 
 \item A fast-xml-parser(5.11.2) az XML dokumentumok és sémák feldogozására használt könyvtár.
 \end{itemize}
 
-\section{Telepítés és használat}
+\section{Telepítés és használat}\label{sec:install}
 
 A program telepítése és konfigurálása több részből áll.
 \begin{enumerate}
@@ -120,7 +120,7 @@ Az alkalmazás lehetőséget biztosít arra is, hogy a felhasználó az XSD sém
  <xs:annotation>
   <xs:appinfo>
    <xs:type>radio</xs:type>
-   <xs:description>How fast would you rate the speed of delivery
+   <xs:description>How highly would you rate the delivery
    <xs:description>
   </xs:appinfo>
  </xs:annotation>
