@@ -61,7 +61,7 @@ async function main() {
     mongoose.set("strictQuery", true);
 
     app.listen(PORT, (error) => {
-        if( !error ){
+        if (!error) {
             console.log("Server listening at:", PORT)
         } else {
             console.log("An error occured", error);
