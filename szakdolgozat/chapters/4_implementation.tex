@@ -5,7 +5,7 @@ A fejezet bemutatja az elkészült program megvalósítását, illetve a külön
 \Section{Szerveroldal megvalósítása}
 
 A szerveroldali alkalmazás a Node.js által szolgáltatott környezetben, az Express.js(5.2.1) keretrendszer segítségével készítettem el. A Node.js biztosítja a JavaScript kód futását, amivel az Express.js megoldja a kliensoldalról érkező HTTP kérések kezelését és az API végpontok elérhetővé tételében segít. A szerver feladata a beérkező kérések feldolgozása, az ezekhez kapcsolódó műveletek végrehajtása, valamint a műveletek végeredményeinek kiszolgálása a kliensoldal számra. 
-Felépítésében a program fájlra és mappára tagolódik, amelyek külön feladatkörökre vannak osztva.
+Felépítésében a program több fájlra és mappára tagolódik, amelyek külön feladatkörökre vannak osztva.
 \begin{itemize}
 \item A működésének központi eleme az \texttt{app.js} fájl amely az Express alkalmazás létrehozásáért felel,
 \item a konfigurációs beállítások a helyi futáshoz a \texttt{.env} fájlban találhatóak,
