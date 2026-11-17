@@ -62,12 +62,14 @@ router.patch('/patch/:id',checkUser ,async (req,res) =>{
     try{
         const id = req.params.id;
         const project = req.body;
+
+        const projectOriginal = await Project.findOne({ _id : id });
         // nem létezik
         if (!project) {
             return res.status(404).json({message: "project not found"});
         }
         //más felhasználó
-        if (project.user.toString() !== req.userID.toString()) {
+        if (projectOriginal.user.toString() !== req.userID.toString()) {
             return res.status(403).json({message: "unauthorized user"});
         }
 
