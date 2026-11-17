@@ -1,38 +1,38 @@
 \Chapter{Megvalósítás}
 
-A fejezet bemutatja az elkészült program megvalósítását, illetve a különböző technológiákat amiket felhasználtam az írása során.
+A fejezet bemutatja az elkészült program megvalósítását, illetve a különböző technológiákat amiket felhasználtam a fejlesztése során.
 
 \section{Szerveroldal megvalósítása}
 
-A szerveroldali alkalmazás a Node.js által szolgált környezetben, az Express.js(5.2.1) keretrendszer segítségével készítettem el. A Node.js biztosítja a JavaScript kód futását, amíg az Express.js a kliensoldalról érkező HTTP kérések kezelését és az API végpontok megalkotásában segít. A szerver feladata a beérkező kérések feldolgozása, az ezekhez kapcsolódó műveletek végrehajtása, valamint a műveletek végeredményeinek kiszolgálása a kliensoldal számra. 
-Felépítésében a program az több fájlba és mappára tagolódik, amelyek külön feladatkörökre vannak osztva.
+A szerveroldali alkalmazás a Node.js által adott környezetben, az Express.js(5.2.1) keretrendszer segítségével készítettem el. A Node.js biztosítja a JavaScript kód futását, amivel az Express.js megoldja a kliensoldalról érkező HTTP kérések kezelését és az API végpontok elérhetővé tételében segít. A szerver feladata a beérkező kérések feldolgozása, az ezekhez kapcsolódó műveletek végrehajtása, valamint a műveletek végeredményeinek kiszolgálása a kliensoldal számra. 
+Felépítésében a program fájlra és mappára tagolódik, amelyek külön feladatkörökre vannak osztva.
 \begin{itemize}
-\item A működésének központi eleme az app.js fájl amely az Express alkalmazás létrehozásáért felel,
-\item a konfigurációs beállítások a helyi futáshoz a .env fájlban találhatóak,
-\item az API végpontokhoz tartozó útvonalak és a kérések feldolgozása a routes mappában szereplő fájlokba lettek kiszervezve,
-\item a middleware mappában a kérések feldolgozásához szükséges saját definiálású köztes függvények kerülnek,
-\item végül a models mappában találhatóak azon modellek, amelyek meghatározzák az adatbázisban tárolt dokumentumok szerkezetét. 
+\item A működésének központi eleme az \texttt{app.js} fájl amely az Express alkalmazás létrehozásáért felel,
+\item a konfigurációs beállítások a helyi futáshoz a \texttt{.env} fájlban találhatóak,
+\item az API végpontokhoz tartozó útvonalak és a kérések feldolgozása a \texttt{routes} mappában szereplő fájlokba lettek kiszervezve,
+\item a \texttt{middleware} mappában a kérések feldolgozásához szükséges saját definiálású köztes függvények kerülnek,
+\item végül a \texttt{models} mappában találhatóak azon modellek, amelyek meghatározzák az adatbázisban tárolt dokumentumok szerkezetét. 
 \end{itemize}
 A funkciók ilyen formában történő elkülönítésével a program felépítése áttekinthető és jól karbantartható kódot eredményez. A program a megvalósításhoz a bcrypt(6.0.0), cookie-parser(1.4.7), cors(2.8.6), dotenv(17.4.1), JWT(9.0.3) (jsonwebtoken) és mongoose(9.3.1) függőségek alkalmaztam az express.js(5.2.1) mellet.
 
-A szerver indításakor először létrejön az Express alkalmazás, majd megtörténik a konfigurálása. A konfigurálásban a saját portja, a cors, a cookie-parser és a express.json middleware-k kerülnek beállításra, majd ha a környezeti változóban megvan adva, akkor a fordított proxy alkalmazását engedélyezi. A konfigurálás után beállítja az API útvonalait az \texttt{app.use()} parancssal. A felhasználók kezeléséért a \texttt{/users}, a sémák kezeléséért a \texttt{/projects}, míg a beküldött űrlapokhoz kapcsolódó műveletekért a \texttt{/filledForms} útvonal felel. Végül kapcsolódik az adatbázishoz, és ha ez sikeresen megtörténik csak akkor kezd el figyelni a megadott portra.
+A szerver indításakor először létrejön az Express alkalmazás, majd megtörténik a konfigurálása. A konfigurálásban a saját portja, a cors, a cookie-parser és a express.json middleware-k kerülnek beállításra, majd ha a környezeti változóban megvan adva, akkor a fordított proxy alkalmazását engedélyezi. A konfigurálás után beállítja az API útvonalait az \texttt{app.use()} parancssal. A felhasználók kezeléséért a \texttt{/users}, a sémák kezeléséért a \texttt{/projects}, míg a beküldött űrlapokhoz kapcsolódó műveletekért a \texttt{/filledForms} útvonal felel. Végül kapcsolódik az adatbázishoz, és csak akkor kezd el figyelni a megadott portra ha ez sikeresen megtörténik.
 
 \subsection{Környezeti változók kezelése}
 
-A szerver konfigurációjához a dotenv(17.4.1) csomagot alkalmaztam. Ez lehetővé teszi, hogy a programhoz egy .env fájl készülhessen, amiből környezeti változókat tölthet be a program. Ezek a fájlban \texttt{VALTOZO=ERTEK} formában vannak leírva, és csak szöveges tartalom tárolására alkalmasak. A benne szereplő változók:
+A szerver konfigurációjához a dotenv(17.4.1) csomagot alkalmaztam. Ez lehetővé teszi, hogy a programhoz egy \texttt{.env} fájl készülhessen, amiből környezeti változókat tölthet be a program. Ezek a fájlban \texttt{VALTOZO=ERTEK} formában vannak leírva, és csak szöveges tartalom tárolására alkalmasak. A benne szereplő változók:
 \begin{itemize}
-\item a \texttt{ACCESS\_TOKEN\_SECRET} aminek értéke a felhasználó hitelesítésében használt tokenek titkos kulcsa,
+\item az \texttt{ACCESS\_TOKEN\_SECRET} aminek értéke a felhasználó hitelesítésében használt tokenek titkos kulcsa,
 \item a \texttt{DATABASE\_URL} aminek értéke az adatbázis kapcsolati karakterlánca, fejlesztői környezetben ez \texttt{mongodb://localhost:27017/XmlFormMaker} jelent,
-\item a frontend címe \texttt{FRONTEND\_URL}, aminek fejlesztői környezetben az értéke \\ \texttt{http://localhost:4200}
+\item a frontend címe \texttt{FRONTEND\_URL}, aminek fejlesztői környezetben az értéke \\ \texttt{http://localhost:4200},
 \item a saját portja \texttt{Port}, amin a bejövő kéréseket figyeli, értéke \texttt{3000},
-\item végül a \texttt{TRUST\_PROXY}, ami beállítja, hogy egy fordított proxy-n keresztül jönnek-e a kérések, aminek értéke \texttt{FALSE}
+\item végül a \texttt{TRUST\_PROXY}, ami beállítja, hogy egy fordított proxy-n keresztül jönnek-e a kérések, aminek értéke \texttt{FALSE}.
 \end{itemize} 
 Ezeknek a változóknak a program élesben történő futtatásához, a futtatókörnyezet alapján kell megadni az értékeket. A környezeti változók használatának előnye, hogy a konfigurációs értékeket nem szükséges közvetlenül a forráskódban megadni. A fejlesztési és éles környezet eltérő beállításokkal működhet anélkül, hogy a programkódot módosítani kellene.
 
 \subsection{Middlewarek használata}
 Az Express alkalmazáshoz a különböző kérések feldolgozásához több middleware-t használtam. Ezek olyan függvények, amelyek a kérés és a válasz közötti feldolgozási folyamatba kapcsolódnak be.
 
-A CORS(2.8.6) (Cross-Origin Resource Sharing) egy olyan middleware, amivel engedélyt lehet adni a böngésző számára, hogy egy webalkalmazásban az express mely más eredetű szerverekről kaphat kéréseket. Mivel a program szétválasztott architektúraként van megalkotva, vagyis a kliensoldal és a szerveroldal külön szerveren fut, a kettő eltérő eredetűnek számít. CORS beállítása nélkül a böngésző Same-Origin Policy szabályai megakadályoznák, hogy a kliensoldal szabadon hozzáférjen a szerver válaszaihoz.
+A CORS(2.8.6) (Cross-Origin Resource Sharing) egy olyan middleware, amivel engedélyt lehet adni a böngésző számára, hogy egy webalkalmazásban az express mely más eredetű szerverekről kaphat kéréseket. Mivel a program szétválasztott architektúraként került megvalósításra, vagyis a kliensoldal és a szerveroldal külön szerveren fut, a kettő eltérő eredetűnek számít. CORS beállítása nélkül a böngésző Same-Origin Policy szabályai megakadályoznák, hogy a kliensoldal szabadon hozzáférjen a szerver válaszaihoz.
 \begin{java}
 app.use(cors({
     origin: process.env.FRONTEND_URL,
@@ -40,11 +40,11 @@ app.use(cors({
 }));
 \end{java}
 A konfigurációban az origin beállítás határozza meg, hogy melyik kliensoldali címről érkező kérések engedélyezettek. Ennek értéke a \texttt{FRONTEND\_URL} környezeti változóban van megadva. A \texttt{credentials: true} beállítás pedig lehetővé teszi a hitelesítési sütik továbbítását a kérésekkel együtt, ami szükséges az alkalmazás JWT alapú, HTTP-only sütiben tárolt hitelesítéséhez.
-Ennek használatát kilehetne váltani az Angular alkalmazás és az API azonos eredet alatt történő kiszolgálásával vagy egy olyan middleware írásával ami beállítja a HTTP fejléceinek adatait, de ezek szükségtelen bonyolítások lennének.
+Ennek használatát ki lehetne váltani az Angular alkalmazás és az API azonos eredet alatt történő kiszolgálásával, vagy egy olyan middleware írásával ami beállítja a HTTP fejléceinek adatait, de ezek szükségtelen bonyolítások lennének.
 
 A cookie-parser(1.4.7) csomag a HTTP kérések fejlécében érkező sütik feldolgozására szolgál. Ennek segítségével a szerver egyszerűen hozzáférhet a kliensoldal által küldött sütik értékeihez. Az alkalmazásban erre a JWT token kiolvasása miatt van szükség, mivel a felhasználó hitelesítésére szolgáló token HTTP-only sütiben kerül tárolásra.
 
-Az \texttt{express.json()} middleware az Express beépített funkciója, amely lehetővé teszi a JSON formátumban érkező kéréstörzsek automatikus feldolgozását. Ennek köszönhetően a szerver az elküldött adatokat a req.body objektumon keresztül elérheti. Ezelőtt erre a célra a külön body-parser csomag volt gyakran használatban, azonban az Express most már saját megoldást biztosít erre a feladatra, így nincs erre szükség.
+Az \texttt{express.json()} middleware az Express beépített funkciója, amely lehetővé teszi a JSON formátumban érkező kéréstörzsek automatikus feldolgozását. Ennek köszönhetően a szerver az elküldött adatokat a \texttt{req.body} objektumon keresztül elérheti. Ezelőtt erre a célra a külön body-parser csomag volt gyakran használatban, azonban az Express most már saját megoldást biztosít erre a feladatra, így nincs erre szükség.
 
 \subsection{Az adatbázis-kapcsolat és a szerver indítása}
 
@@ -55,17 +55,17 @@ A Mongoose emellett támogatja egyedi metódusok definiálását is. A sémákho
 Az alkalmazásban a Mongoose segítségével három fő modell került kialakításra, amik segítségével épül fel az adatbázis: a felhasználók, a projektek és a beküldött űrlapok kezelésére szolgáló modellek. Ezek részletes felépítése, mezői és a közöttük fennálló kapcsolatok az adatbázis bemutatásánál lesznek ismertetve.
 
 A kapcsolat létrehozásához a \texttt{mongoose.connect()} metódus szolgál, amelynek a \texttt{DATABASE\_URL} környezeti változóban megadott kapcsolati karakterláncot kell átadni. A kapcsolat sikeres létrejötte után a mongoose-t beállítja, hogy csak a sémákban szereplő mezőket engedje lekérdezne, és csak ez után kezdi meg a beérkező HTTP kérések fogadását. A szerver által használt portszámot a PORT környezeti változó határozza meg, amelynek hiányában az alkalmazás alapértelmezés szerint a 3000-es portot használja.
-
+\\
 \begin{java}
 async function main() {
     await mongoose.connect(process.env.DATABASE_URL);
     mongoose.set("strictQuery", true);
 
     app.listen(PORT, (error) => {
-        if(!error){
-            console.log("Server listening at:",PORT)
-        }else{
-            console.log("An error occured",error);
+        if( !error ){
+            console.log("Server listening at:", PORT)
+        } else {
+            console.log("An error occured", error);
         }
     })
 }
@@ -79,7 +79,7 @@ A \texttt{UserSchema} modell dokumentuma hat mezőből áll. Az elsődleges kulc
 
 A \texttt{projectSchema} modell dokumentuma az adatbázisban hét mezőként jelenik meg. Az automatikusan létrehozott \texttt{\_id} és \texttt{\_\_v} mellet benne van a \texttt{name} mező amiben a séma neve van karakterláncként tárolva, míg a \texttt{schema} magát a sémát tárolja, szintén karakterlánc formájában, ezeknek a megadása kötelező. A \texttt{formCreator} egy kötelező mező, ami sémát létrehozó felhasználó azonosítóját tartalmazza, ez az idegen kulcs szerepét szolgálja lekérdezésekben. A dokumentum létrehozásának időpontját a \texttt{createdAt}, amíg az utolsó módosítás időpontját az \texttt{updatedAt} mező tartja számon. Mindkét mező dátum típusú, és értékük alapértelmezés szerint a dokumentum létrehozásakor a jelenlegi időpontra áll be.
 
-A \texttt{filledFormsSchema} modell dokumentuma hasonlóan hét mezőből áll, amiből kettő az a \texttt{\_id} és \texttt{\_\_v} mezők. A \texttt{form} mezőben a beküldött XML dokumentumot tárolja karakterlánc formájában. A \texttt{schema} és a \texttt{formCreator} mezők a séma és a sémaalkotójának azonosítóját tartalmazza karakterlánc formájában, amik idegenkulcsokként szolgálnak. A \texttt{formSubmitter} a kitöltést elvégző felhasználó nevét tárolja karakterlánc formájában, amennyiben be van jelentkezve. Végül a \texttt{createdAt} mező dátum típusban tartja nyilván a beküldés időpontját, amely alapértelmezésben a dokumentum létrehozásának időpontja.
+A \texttt{filledFormsSchema} modell dokumentuma hasonlóan hét mezőből áll, amiből kettő az a \texttt{\_id} és \texttt{\_\_v} mezők. A \texttt{form} mezőben a beküldött XML dokumentumot tárolja karakterlánc formájában. A \texttt{schema} és a \texttt{formCreator} mezők a séma és a sémaalkotójának ObjectId azonosítóját tartalmazza karakterlánc formájában, amik idegenkulcsokként szolgálnak. A \texttt{formSubmitter} a kitöltést elvégző felhasználó nevét tárolja karakterlánc formájában, amennyiben be van jelentkezve. Végül a \texttt{createdAt} mező dátum típusban tartja nyilván a beküldés időpontját, amely alapértelmezésben a dokumentum létrehozásának időpontja.
 
 A gyűjtemények közti kapcsolatot az egyes dokumentumokban tárolt azonosítók biztosítják.
 \begin{itemize}
@@ -114,11 +114,11 @@ A jelszavak biztonságáért a bcrypt(6.0.0) könyvtár felelős, ami a jelszava
 
 \subsection{Regisztráció}
 
-A regisztráció a \texttt{/users/signup} útvonalra küldött POST kéréssel történik. A szerver a kérés törzsében (req.body) megkapja meg a felhasználó által regisztrációkor megadott adatokat, amelyek alapján létrehoz egy új User példányt.
+A regisztráció a \texttt{/users/signup} útvonalra küldött POST kéréssel történik. A szerver a kérés törzsében (\texttt{req.body}) megkapja meg a felhasználó által regisztrációkor megadott adatokat, amelyek alapján létrehoz egy új \texttt{User} példányt.
 
-A jelszó mentés előtt ellenőrzi, hogy legalább nyolc karakter hosszúságú legyen. Ez után a bcrypt segítségével létrehozz egy véletlenszerű sót, amit a könyvtár a jelszó hash-elése során használ. A hash-elt jelszó kerül az adatbázisba,ezért az eredeti jelszó nem tárolódik közvetlenül.
+A jelszó mentés előtt ellenőrzi, hogy legalább nyolc karakter hosszúságú legyen. Ez után a bcrypt segítségével létrehozz egy véletlenszerű sót, amit a könyvtár a jelszó hash-elése során használ. A hash-elt jelszó kerül az adatbázisba, ezért az eredeti jelszó nem tárolódik közvetlenül.
 
-A felhasználó sikeres mentése után a szerver létrehoz egy JWT-t, amely a felhasználó adatbázisbeli dokumentumának azonosítóját tartalmazza. A token a jwt nevű egy sütiben kerül elküldésre a kliens számára.
+A felhasználó sikeres mentése után a szerver létrehoz egy JWT-t, amely a felhasználó adatbázisbeli dokumentumának azonosítóját tartalmazza. A token a \texttt{jwt} nevű sütiben kerül elküldésre a kliens számára.
 \begin{java}
 const cookieOptions = {
     httpOnly: true,
@@ -135,33 +135,33 @@ Akkor, ha a regisztráció sikeres, akkor a szerver egy 201 státuszkódot küld
 
 \subsection{Bejelentkezés}
 
-A bejelentkezés a \texttt{/users/login} útvonalra küldött POST kéréssel történik. A szerver megkapja a felhasználónevet és jelszót, majd meghívja rá a \texttt{User} modell login statikus metódusát. 
+A bejelentkezés a \texttt{/users/login} útvonalra küldött POST kéréssel történik. A szerver megkapja a felhasználónevet és jelszót, majd meghívja rá a \texttt{User} modell \texttt{login} statikus metódusát. 
 
-A metódus elsőnek megkeresi a felhasználó név alapján a megfelelő dokumentumot \texttt{this.findOne({name:name.toLowerCase()})}, majd összehasonlítja a talált dokumentum jelszavát a megadott jelszóval a bcrypt segítségével \texttt{const auth = await bcrypt.compare(password,user.password)}. Abban az esetben ha igaz értéket ad vissza akkor a metódus vissza adja az egész dokumentumot, ha nem találja a felhasználót vagy a jelszó helytelen akkor hibát dob.
+A metódus először megkeresi a felhasználó név alapján a megfelelő dokumentumot \texttt{this.findOne({name:name.toLowerCase()})}, majd összehasonlítja a talált dokumentum jelszavát a megadott jelszóval a bcrypt segítségével \texttt{const auth = await bcrypt.compare(password,user.password)}. Abban az esetben ha igaz értéket ad vissza, akkor a metódus vissza adja az egész dokumentumot, ha nem találja a felhasználót vagy a jelszó helytelen akkor hibát dob.
 
 A sikeres ellenőrzés után, a megkapott dokumentum alapján a regisztrációhoz hasonlóan  létrehozza a felhasználóhoz tartozó JWT-t, amit egy sütiben küld vissza. A bejelentkezés időpontja az adatbázisban rögzítésre kerül, majd a szerver visszajelzést küld a kliensnek.
 
 \subsection{Kijelentkezés}
 
-A kijelentkezés a \texttt{/users/logout} útvonalra küldött POST kéréssel történik. Mivel a hitelesítési token a böngésző sütijében található, a szerver a \texttt{res.clearCookie("jwt", {httpOnly: true, secure: true, sameSite: "lax", path: "/",})} metódus segítségével törli azt. A törlés során ugyanazokat a fontos süti-beállításokat alkalmazza, amelyeket a létrehozáskor is használt.
+A kijelentkezés a \texttt{/users/logout} útvonalra küldött POST kéréssel történik. Mivel a hitelesítési token a böngésző sütijében található, a szerver a \texttt{res.clearCookie("jwt", {httpOnly: true, secure: true, sameSite: "lax", path: "/"})} metódus segítségével törli azt. A törlés során ugyanazokat a fontos süti-beállításokat alkalmazza, amelyeket a létrehozáskor is használt.
 
 A művelet sikeressége esetén a szerver visszajelzést küld a kliensnek.
 
 \subsection{Bejelentkezési állapot ellenőrzése}
 
-A \texttt{/users/user} útvonal GET kéréssel hívható meg, és annak ellenőrzésére szolgál, hogy a felhasználó rendelkezik érvényes hitelesítési tokennel. A szerver a cookie-parser segítségével hozzáfér a kérésben érkező jwt sütihez, majd a JWT könyvtár \texttt{verify()} metódusával ellenőrzi annak érvényességét.
+A \texttt{/users/user} útvonal GET kéréssel hívható meg, és annak ellenőrzésére szolgál, hogy a felhasználó rendelkezik érvényes hitelesítési tokennel. A szerver a cookie-parser segítségével hozzáfér a kérésben érkező \texttt{jwt} sütihez, majd a JWT könyvtár \texttt{verify()} metódusával ellenőrzi annak érvényességét.
 
 Az ellenőrzés során a szerver a token aláírását és érvényességi idejét is vizsgálja. Akkor, ha a token érvényes, a válasz jelzi, hogy a felhasználó be van jelentkezve. Hiányzó, lejárt vagy érvénytelen token esetén a szerver a bejelentkezés hiányát jelzi.
 
 \subsection{Felhasználó hitelesítés ellenőrzése}
 
-Bár nem ebben a fájlban van definiálva, egy köztes szoftver tartozik még a hitelesítés témájához. A checkUser metódus feladata, hogy ellenőrizze a beérkező HTTP kérésekhez tartozó JWT érvényességét, és ezzel biztosítsa, hogy bizonyos API végpontokat csak bejelentkezett felhasználók érhessenek el, illetve megadja a végpontnak a felhasználó azonosítóját. Hasonlóképen a bejelentkezési állapot ellenőrzéséhez szerver megkapja a jwt sütit majd a titkosítókulcs segítségével ellenőrzi annak érvényességét, ha ez sikeresen végbemegy, akkor a sütiből kiolvasott azonosítót elmenti \texttt{req.userID = decodedToken.id}, majd a \texttt{next()} meghívásával továbbengedi a kérést a következő middleware-nek vagy az útvonalhoz tartozó vezérlőfüggvénynek.
+Bár nem ebben a fájlban van definiálva, egy köztes szoftver tartozik még a hitelesítés témájához. A \texttt{checkUser} metódus feladata, hogy ellenőrizze a beérkező HTTP kérésekhez tartozó JWT érvényességét, és ezzel biztosítsa, hogy bizonyos API végpontokat csak bejelentkezett felhasználók érhessenek el, illetve megadja a végpontnak a felhasználó azonosítóját. Hasonlóképen a bejelentkezési állapot ellenőrzéséhez szerver megkapja a \texttt{jwt} sütit, majd a titkosítókulcs segítségével ellenőrzi annak érvényességét, ha ez sikeresen végbemegy, akkor a sütiből kiolvasott azonosítót elmenti \texttt{req.userID = decodedToken.id}, majd a \texttt{next()} meghívásával továbbengedi a kérést a következő middleware-nek vagy az útvonalhoz tartozó vezérlőfüggvénynek.
 
-A middleware így lehetővé teszi, hogy a hitelesítés ellenőrzését ne kelljen minden egyes védett API végpontban külön megvalósítani. Ehelyett az adott útvonalakhoz hozzárendelhető a checkUser függvény, ami még az útvonal feldolgozása előtt ellenőrzi a felhasználó bejelentkezési állapotát.
+A middleware így lehetővé teszi, hogy a hitelesítés ellenőrzését ne kelljen minden egyes védett API végpontban külön megvalósítani. Ehelyett az adott útvonalakhoz hozzárendelhető a \texttt{checkUser} függvény, ami még az útvonal feldolgozása előtt ellenőrzi a felhasználó bejelentkezési állapotát.
 
 \section{Sémák és XML dokumentumok kezelése a szerveren}
 
-A további két fontos útvonal a \texttt{/projects} és a \texttt{filledForms} útvonalak. Az előbbi a felhasználók által létrehozott sémák adatait szolgálja, amíg az utóbbi a kitöltött űrlapokból összeállított XML-dokumentumokat kezeli.
+A további két fontos útvonal a \texttt{/projects} és a \texttt{/filledForms} útvonalak. Az előbbi a felhasználók által létrehozott sémák adatait szolgálja, amíg az utóbbi a kitöltött űrlapokból összeállított XML-dokumentumokat kezeli.
 
 Mindkét modul a korábban bemutatott Mongoose modelleket használja az adatbázis műveletek végrehajtásához. Emellett több végpontban is a korábban ismertetett checkUser middleware is alkalmazásra kerül, amely biztosítja, hogy az adott műveleteket csak érvényes hitelesítési tokennel rendelkező felhasználók vehessék igénybe. 
 
@@ -169,82 +169,82 @@ Mindkét modul a korábban bemutatott Mongoose modelleket használja az adatbáz
 
 \subsubsection{Sémák lekérdezése}
 
-A felhasználóhoz tartozó sémák lekérdezése a \texttt{/projects/user} útvonalra küldött  GET kéréssel történik. A végpont a checkUser middleware-t használja, ezért a szerver először ellenőrzi a felhasználó hitelesítését. Ez után a \texttt{Project.find()} metódus segítségével lekérdezi azokat a dokumentumokat, amelyek user mezője megegyezik a bejelentkezett felhasználó azonosítójával. Ha a felhasználó nem rendelkezik sémával, akkor a szerver üres tömböt küld vissza.
+A felhasználóhoz tartozó sémák lekérdezése a \texttt{/projects/user} útvonalra küldött  GET kéréssel történik. A végpont a \texttt{checkUser} middleware-t használja, ezért a szerver először ellenőrzi a felhasználó hitelesítését. Ez után a \texttt{Project.find()} metódus segítségével lekérdezi azokat a dokumentumokat, amelyek user mezője megegyezik a bejelentkezett felhasználó azonosítójával. Ha a felhasználó nem rendelkezik sémával, akkor a szerver üres tömböt küld vissza.
 
 \subsubsection{Adott séma lekérdezése}
 
-Az adott séma azonosító alapján is lekérdezhető a \texttt{/projects/:id} végponton keresztül. Ez megint egy GET kéréssel érhető el, a szerver a kérés paraméteréből kiolvassa az azonosítót, majd a \texttt{Project.findOne()} metódussal megkeresi a hozzá tartozó dokumentumot. Ez a végpont nem szükséges bejelentkezést, mert az űrlapkitöltő oldalnak is szüksége van a séma adatainak lekérdezésére, ami nyilvánosan elérhető.
+Az adott séma azonosító alapján is lekérdezhető a \texttt{/projects/:id} végponton keresztül. Ez megint egy GET kéréssel érhető el, a szerver a kérés paraméteréből kiolvassa az azonosítót, majd a \texttt{Project.findOne()} metódussal megkeresi a hozzá tartozó dokumentumot. A végpont eléréséhez nem szükséges a bejelentkezés, mert az űrlapkitöltő oldalnak is szüksége van a séma adatainak lekérdezésére, ami nyilvánosan elérhető.
 
 \subsubsection{Új séma létrehozása}
 
-Egy új séma létrehozása a \texttt{/projects} útvonalra küldött POST kérés által történik. A felhasználó checkUser ellenőrzése után egy új Projekt példányt hozz létre, amiben a felhasználó által küldött adatok vannak, majd a program hozzárendeli a hitelesítésből származó felhasználó azonosítóját. Végül a \texttt{save()} metódus elmenti az új dokumentumot az adatbázisba.
+Egy új séma létrehozása a \texttt{/projects} útvonalra küldött POST kérés által történik. A felhasználó checkUser ellenőrzése után egy új \texttt{Project} példányt hozz létre, amiben a felhasználó által küldött adatok vannak, majd a program hozzárendeli a hitelesítésből származó felhasználó azonosítóját. Végül a \texttt{save()} metódus elmenti az új dokumentumot az adatbázisba.
 
 \subsubsection{Séma módosítása}
 
-A már meglévő séma dokumentumokat a \texttt{/projects/patch/:id} végpontonra küldött PATCH kéréssel történik. A szerver ellenőrzi a felhasználó hitelesítését, hogy létezik-e a séma, és hogy a kéréstől származó felhasználó a tulajdonosa. Ezek után a módosítás időpontját az \texttt{updatedAt} mezőben rögzíti. Végül a \texttt{await Project.findOneAndUpdate()} metódussal elvégzi a szükséges változtatásokat.
+A már meglévő séma dokumentumokat a \texttt{/projects/patch/:id} végpontonra küldött PATCH kéréssel történik. A szerver ellenőrzi a felhasználó hitelesítését, hogy létezik-e a séma, és hogy a kéréstől származó felhasználó a tulajdonosa. Ezek után a módosítás időpontját az \texttt{updatedAt} mezőben rögzíti. Végül az \texttt{await Project.findOneAndUpdate()} metódussal elvégzi a szükséges változtatásokat.
 
 \subsubsection{Séma törlése}
 
-Egy séma törléséhez az \texttt{/project/deledet/:id} útvonalra küldött DELETE parancssal történik a séma módosításához azonos ellenőrzések után a \texttt{await Project.deleteOne()} metódussal történik.
+Egy séma törlése az \texttt{/project/deledet/:id} útvonalra küldött DELETE parancssal történik a séma módosításához azonos ellenőrzések után a \texttt{await Project.deleteOne()} metódussal történik.
 
 \subsection{XML dokumentumok kezelése}
 
 \subsubsection{Séma válaszdokumentumainak lekérése}
 
-Egy adott sémához tartozó kitöltött dokumentumok a \texttt{/filledForms/:schema} végponton keresztül kérdezhetők le GET kéréssel. A szerver a felhasználó hitelesítését ellenőrzi, majd a \texttt{await FilledForms.find()} metódussal megkeresi az összes sémához tartozó dokumentumot. Amennyiben nem talál egyet se, akkor egy üres tömböt küld vissza, viszont ha talál dokumentumokat, akkor ellenőrzi, hogy a felhasználóhoz tartoznak-e ezek a dokumentum. Ha sikeres az ellenőrzés átküldi a dokumentumokat.
+Egy adott sémához tartozó kitöltött dokumentumok a \texttt{/filledForms/:schema} végponton keresztül kérdezhetők le GET kéréssel. A szerver a felhasználó hitelesítését ellenőrzi, majd az \texttt{await FilledForms.find()} metódussal megkeresi az összes sémához tartozó dokumentumot. Amennyiben nem talál egyet se, akkor egy üres tömböt küld vissza, viszont ha talál dokumentumokat, akkor ellenőrzi, hogy a felhasználóhoz tartoznak-e ezek a dokumentum. Ha sikeres az ellenőrzés átküldi a dokumentumokat.
 
 \subsubsection{Kitöltött dokumentumok beküldése} 
 
-Az űrlapok beküldése a \texttt{/filledForms/public} végpontra küldött POST kéréssel történik. Ez a végpont nem használja a checkUser middleware-t, mert a megosztott űrlapok bejelentkezés nélkül is kitölthetők. A szerver a kérés törzs alapján létrehoz egy új FilledForms példányt, majd megvizsgálja, hogy a kérés tartalmazza-e jwt nevű sütit. Ha igen, akkor ellenőrzi hitelesíti tokent, és ha a token érvényes, a szerver a benne tárolt felhasználói azonosító alapján megkeresi a felhasználót, és a dokumentum formSubmitter mezőjében rögzíti annak felhasználónevét. Ha nem érkezik token, a beküldő neve a „Vendég” értéket kapja. Ezt követően a \texttt{save()} metódus elmenti a kitöltött űrlapot az adatbázisba.
+Az űrlapok beküldése a \texttt{/filledForms/public} végpontra küldött POST kéréssel történik. Ez a végpont nem használja a \texttt{checkUser} middleware-t, mert a megosztott űrlapok bejelentkezés nélkül is kitölthetők. A szerver a kérés törzs alapján létrehoz egy új \texttt{FilledForms} példányt, majd megvizsgálja, hogy a kérés tartalmazza a \texttt{jwt} nevű sütit. Ha igen, akkor ellenőrzi hitelesíti tokent, és ha a token érvényes, a szerver a benne tárolt felhasználói azonosító alapján megkeresi a felhasználót, és a dokumentum \texttt{formSubmitter} mezőjében rögzíti annak felhasználónevét. Ha nem érkezik token, a beküldő neve a „Vendég” értéket kapja. Ezt követően a \texttt{save()} metódus elmenti a kitöltött űrlapot az adatbázisba.
 
 \subsubsection{Válaszdokumentum törlése}
 
-A kitöltött űrlapok törlése a \texttt{/filledForms/:id} végponton keresztül, DELETE kéréssel történik. A végpont a checkUser middleware-t használja, megnézi, hogy létezik-e a dokumentum ,és ellenőrzi, hogy a felhasználó-e a tulajdonosa. A sikeres ellenőrzések után törli a dokumentumot.
+A kitöltött űrlapok törlése a \texttt{/filledForms/:id} végponton keresztül, DELETE kéréssel történik. A végpont a checkUser middleware-t használja, megnézi, hogy létezik-e a dokumentum, és ellenőrzi, hogy a felhasználó-e a tulajdonosa. A sikeres ellenőrzések után törli a dokumentumot.
 
 \section{Kliensoldal megvalósítása}
 
 A kliensoldali alkalmazás az Angular(21.1.0) keretrendszerrel készítettem, ami a \\ TypeScript nyelvre épülő webalkalmazások fejlesztését teszi lehetővé. Egy Angular applikáció komponensekből épül fel, amelyben a felhasználói felület különálló, egymástól elkülönített részekből elkészítve.
 
-A kliensoldal feladata a felhasználói felület megjelenítése, a felhasználói műveletek kezelése, valamint a szerverrel történő kapcsolattartás. A applikációban a kliensoldal felelős az XSD sémák feldolgozásáért, a dinamikus űrlapok előállításáért, és az űrlapokból való XML dokumentumok előállításáért is. Ezeknek az eléréséhez az Angluar(21.1.0) mellet, a rxjs(7.8.0) (Reactive Extensions for JavaScript) és a fast-xml-parser(5.11.2) függőségeket alkalmaztam.
+A kliensoldal feladata a felhasználói felület megjelenítése, a felhasználói műveletek kezelése, valamint a szerverrel történő kapcsolattartás. Az applikációban a kliensoldal felelős az XSD sémák feldolgozásáért, a dinamikus űrlapok előállításáért, és az űrlapokból való XML dokumentumok előállításáért is. Ezeknek az eléréséhez az Angluar(21.1.0) mellet, a rxjs(7.8.0) (Reactive Extensions for JavaScript) és a fast-xml-parser(5.11.2) függőségeket alkalmaztam.
 
 A felépítése a szerveroldalhoz hasonlóan több mappába van felosztva.
 \begin{itemize}
-\item A src/app tartalmazza a program fő részeit, az oldal app.ts és app.html logikai és megjelenési fájljaitól, a különböző almappákig,
-\item a components almappában találhatóak a különböző részek, amikből az oldalak felépülnek,
-\item a service almappában vannak a metódusok, amikkel a szerverrel kommunikál, vagy akár több komponensben is felhasznál
-\item a models almappában találhatóak a különböző osztályok és interfészek,
-\item a src/enviroments mappában a szerver környezeti beállításai vannak mentve.
+\item A \texttt{src/app} tartalmazza a program fő részeit, az oldal \texttt{app.ts} és \texttt{app.html} logikai és megjelenési fájljaitól, a különböző almappákig,
+\item a \texttt{components} almappában találhatóak a különböző részek, amikből az oldalak felépülnek,
+\item a \texttt{service} almappában vannak a metódusok, amikkel a szerverrel kommunikál, vagy akár több komponensben is felhasznál
+\item a \texttt{models} almappában találhatóak a különböző osztályok és interfészek,
+\item a \texttt{src/enviroments} mappában a szerver környezeti beállításai vannak mentve.
 \end{itemize}
 
-Az alkalmazás indításakor a \texttt{main.ts} fájl belépési pontként szolgál, amely elindítja az Angular alkalmazást. Szerveroldali megjelenítés használata esetén a \texttt{main.server.ts} biztosítja az ehhez szükséges indítási folyamatot. Az alkalmazás gyökérkomponense az app.ts fájl, amelyhez az app.html sablon tartozik, amiben a felhasználói felületet határoztam meg. Az utóbbi fájlban következő két sor szerepel:
+Az alkalmazás indításakor a \texttt{main.ts} fájl belépési pontként szolgál, amely elindítja az Angular alkalmazást. Szerveroldali megjelenítés használata esetén a \texttt{main.server.ts} biztosítja az ehhez szükséges indítási folyamatot. Az alkalmazás gyökérkomponense az \texttt{app.ts} fájl, amelyhez az \texttt{app.html} sablon tartozik, amiben a felhasználói felületet határoztam meg. Az utóbbi fájlban következő két sor szerepel:
 \begin{java}
 <app-header/>
 <router-outlet/>
 \end{java}
 
-Az alkalmazás minden komponenséhez tartozik egy szelektor, amivel más komponensek sablonjaiban hivatkozni lehet rá. Ennek a szelektornak az elhelyezésével lehet megadni, hogy hol jelenjenek meg. A fenti pélában az \texttt{app-header} a header komponens, a navigációs sáv szelektora. Mivel az app.html fájl a gyökérkomponens sablonjába, ezért a belehelyezésével azt értem el, hogy minden oldalon megjelenjen.
+Az alkalmazás minden komponenséhez tartozik egy szelektor, amivel más komponensek sablonjaiban hivatkozni lehet rá. Ennek a szelektornak az elhelyezésével lehet megadni, hogy hol jelenjenek meg. A fenti pélában az \texttt{app-header} a header komponens, a navigációs sáv szelektora. Mivel az \texttt{app.html} fájl a gyökérkomponens sablonjába, ezért a belehelyezésével azt értem el, hogy minden oldalon megjelenjen.
 
-A \texttt{router-outlet} egy jelölő a sablonban, ahova az Angular Router dinamikusan tölti be és megjeleníti az aktuális URL-hez tartozó komponenst. Az URL egy komponenshez rendelése az app.routes.ts fájlban történik. Itt a \texttt{component} tulajdonságban kell megadni a megjelenítendő komponenst, és a \texttt{path} tulajdonságban kell megadni a URL útvonalat, aminek megnyitásakor a Router betölti a komponenst a \texttt{router-outlet}-be. A kettősponttal kezdődő részek változó paramétereket jelölnek az URL-ben, amelyek segítségével ugyanaz a komponens különböző azonosítókkal másképpen jelenik meg. Az alkalmazásban például, ezért képes ugyanaz az oldal különböző azonosítójú űrlapokat betölteni.
+A \texttt{router-outlet} egy jelölő a sablonban, ahova az Angular Router dinamikusan tölti be és megjeleníti az aktuális URL-hez tartozó komponenst. Az URL egy komponenshez rendelése az \texttt{app.routes.ts} fájlban történik. Itt a \texttt{component} tulajdonságban kell megadni a megjelenítendő komponenst, és a \texttt{path} tulajdonságban kell megadni a URL útvonalat, aminek megnyitásakor a Router betölti a komponenst a \texttt{router-outlet}-be. A kettősponttal kezdődő részek változó paramétereket jelölnek az URL-ben, amelyek segítségével ugyanaz a komponens különböző azonosítókkal másképpen jelenik meg. Az alkalmazásban például, ezért képes ugyanaz az oldal különböző azonosítójú űrlapokat betölteni.
 
-A kettő környezeti beállítást megadó fájl van, a environment.ts, amiben a fejlesztői tesztszerverhez tartozó adatok vannak megadva, és a environment.production.ts, amiben az élő szerverhez kapcsolódó adatok vannak. Mindkét fájlban egy objektum szerepel, amelyben két adat van megadva, a \texttt{production} boolean, ami fejlesztői módban futást jelzi, és a szerveroldal portja az {apiUrl}. Az angular.json fájlban állítottam be, hogy a program fordításakor, a \texttt{ng build} parancs után a \texttt{--configuration production} paraméter megadásával az éles konfigurációs fájlokra váltson a program.
+A kettő környezeti beállítást megadó fájl van, a environment.ts, amiben a fejlesztői tesztszerverhez tartozó adatok vannak megadva, és a environment.production.ts, amiben az élő szerverhez kapcsolódó adatok vannak. Mindkét fájlban egy objektum szerepel, amelyben két adat van megadva, a \texttt{production} boolean, ami fejlesztői módban futást jelzi, és a szerveroldal portja az \texttt{apiUrl}. Az \texttt{angular.json} fájlban állítottam be, hogy a program fordításakor, a \texttt{ng build} parancs után a \texttt{--configuration production} paraméter megadásával az éles konfigurációs fájlokra váltson a program.
 
 \section{Kapcsolattartás a szerverrel}
 
-A szerverrel történő kommunikációhoz a program az Angular beépített HttpClient szolgáltatását és a RxJS könyvtárat használja. Az RxJS aszinkron adatfolyamok kezelését teszi lehetővé, ez a könyvtár különösen fontos, mivel kérések eredményeinek feldolgozásakor a HttpClient által visszaadott értékek a RxJS-ből származó, Observable típusúak.
+A szerverrel történő kommunikációhoz a program az Angular beépített HttpClient szolgáltatását és a RxJS könyvtárat használja. Az RxJS aszinkron adatfolyamok kezelését teszi lehetővé, ez a könyvtár különösen fontos, mivel kérések eredményeinek feldolgozásakor a HttpClient által visszaadott értékek a RxJS-ből származó, \texttt{Observable} típusúak.
 
-Az Observable egy olyan objektum, amely időben érkező adatok sorozatát adja. Lehetővé teszi aszinkron műveletek eredményeinek kezelését anélkül, hogy azok befejeződésére a programnak várakoznia kellene. Az Observable önmagában nem tudja elindítani a hozzá kapcsolódó műveletet, ehhez fel kell rá iratkozni. Ezt a \texttt{subscribe()} metódussal lehet, ami lehetővé teszi az adatfolyamból érkező értékek fogadását, ennek a visszatérési értéke egy Subscription objektumban kapja meg a rendszer.
+Az \texttt{Observable} egy olyan objektum, amely időben érkező adatok sorozatát adja. Lehetővé teszi aszinkron műveletek eredményeinek kezelését anélkül, hogy azok befejeződésére a programnak várakoznia kellene. Az \texttt{Observable} önmagában nem tudja elindítani a hozzá kapcsolódó műveletet, ehhez fel kell rá iratkozni. Ezt a \texttt{subscribe()} metódussal lehet, ami lehetővé teszi az adatfolyamból érkező értékek fogadását, ennek a visszatérési értéke egy \texttt{Subscription} objektumban kapja meg a rendszer.
 
-Az RxJS egy másik fontos eleme a BehaviorSubject. Az egyszerű Observable-lel ellentétben tudja tárolni az aktuális értékét, és az újonnan feliratkozók számára azonnal továbbítja azt. Ez akkor hasznos, ha az alkalmazás különböző részeinek hozzá kell férniük egy közös állapothoz, vagy értesülniük kell a változásáról.
+Az RxJS egy másik fontos eleme a \texttt{BehaviorSubject}. Az egyszerű \texttt{Observable}-lel ellentétben tudja tárolni az aktuális értékét, és az újonnan feliratkozók számára azonnal továbbítja azt. Ez akkor hasznos, ha az alkalmazás különböző részeinek hozzá kell férniük egy közös állapothoz, vagy értesülniük kell a változásáról.
 
 A HttpClient az egy Angular által biztosított szolgáltatás, amely HTTP kérések küldésére és a szerver válaszainak feldolgozására használható. Megvalósíthatók vele a különböző HTTP műveletek: a GET, POST, PATCH, PUT és DELETE kérések. Ezek az adatok lekérdezésére, létrehozására, módosítására és törlésére szolgálnak. A HttpClient előnye, hogy az Angular környezetébe beépítve működik, és az RxJS segítségével képes biztosítani a kérések eredményeinek aszinkron kezelését.
 
 A HTTP kommunikáció megvalósításához egy másik lehetőség lett volna a Fetch API használata. Ez egy beépített JavaScript funkció, amely a legelterjedtebb opció a HTTP kérések küldésére. Előnye, hogy nem kötődik egyetlen keretrendszerhez sem, ezért különböző JavaScript projektekben alkalmazható. Ezzel szemben a HttpClient és az RxJS könnyebben illeszkedik az Angular alkalmazások adatkezelési szükségeihez.
 
-Az adatbázissal való egyszerűbb kommunikációhoz három, a gyűjteményekhez igazoló osztályt definiáltam meg, amelyekben csak változók szerepelnek. A User osztályban a \texttt{name}, \texttt{password}, és \texttt{\_id} változók szerepelnek. A Project osztályban a \texttt{name}, \texttt{schema}, \texttt{\_id}, \texttt{user}, \texttt{createdAt}, \texttt{updatedAt} változókat definiáltam. A FilledForms osztályban \texttt{form}, \texttt{schema}, \texttt{\_id}, \texttt{formCreator}, \texttt{createdAt}, \texttt{formSubmitter} változók vannak. 
+Az adatbázissal való egyszerűbb kommunikációhoz három, a gyűjteményekhez igazoló osztályt definiáltam meg, amelyekben csak változók szerepelnek. A \texttt{User} osztályban a \texttt{name}, \texttt{password}, és \texttt{\_id} változók szerepelnek. A \texttt{Project} osztályban a \texttt{name}, \texttt{schema}, \texttt{\_id}, \texttt{user}, \texttt{createdAt}, \texttt{updatedAt} változókat definiáltam. A \texttt{FilledForms} osztályban \texttt{form}, \texttt{schema}, \texttt{\_id}, \texttt{formCreator}, \texttt{createdAt}, \texttt{formSubmitter} változók vannak. 
 
 \subsection{Szolgáltatási fájlok szerver kommunikációhoz}
 
-Az alkalmazásban a szerverrel történő kommunikációt három szolgáltatás valósítja meg. Ezek az Angular Dependency Injection mechanizmusával az alkalmazás különböző komponenseiben is elérhetőek. Mindhárom szolgáltatás a HttpClient segítségével küldi el a szervernek a kéréseket, amelyek eredményét Observable formájában adja vissza.
+Az alkalmazásban a szerverrel történő kommunikációt három szolgáltatás valósítja meg. Ezek az Angular Dependency Injection mechanizmusával az alkalmazás különböző komponenseiben is elérhetőek. Mindhárom szolgáltatás a HttpClient segítségével küldi el a szervernek a kéréseket, amelyek eredményét \texttt{Observable} formájában adja vissza.
 
 A szolgáltatások által küldött kérések a környezeti beállításokban meghatározott szervercímet használják, ezért a kliensoldali alkalmazás különböző futtatási környezetekben is a megfelelő szerverhez tud kapcsolódni. A kérésekben szerepel a \\ \texttt{withCredentials: true} beállítás is, amely lehetővé teszi a hitelesítéshez használt sütik továbbítását a szerver felé.
 
@@ -258,42 +258,42 @@ A beküldött XML dokumentumok kezelése  FilledFormsService-ben történik. Seg
 
 A webalkalmazás kilenc komponensből épül fel, ebből nyolc alkot oldalt külön URL-en.
 
-A header komponens a minden oldalon található navigációs sávot adja meg. A komponenshez implementáltam az OnInit interfészt, amivel meglehet adni egy \texttt{ngOnInit()} metódust, amiben lévő utasítások a komponens keletkezésekor lefutnak. Itt elsőnek leellenőrzi, hogy van-e felhasználó bejelentkezve. A komponensben található a \texttt{logOut()} metódus, ami egy kérést küld a szervernek a kijelentkezéshez, majd átirányít a bejelentkezés oldalára a felhasználót. A HTML sémájában egy táblázatban van megformázva a navigációs sáv amiben a kezdőoldal, sémák, bejelentkezés, és regisztráció linkje, valamint a kijelentkezés gombja szerepel. Ezek a bejelentkezés állapától függően vannak megjelenítve.
+A \texttt{header} komponens a minden oldalon található navigációs sávot adja meg. A komponenshez implementáltam az \texttt{OnInit} interfészt, amivel meglehet adni egy \texttt{ngOnInit()} metódust, amiben lévő utasítások a komponens keletkezésekor lefutnak. Itt elsőnek leellenőrzi, hogy van-e felhasználó bejelentkezve. A komponensben található a \texttt{logOut()} metódus, ami egy kérést küld a szervernek a kijelentkezéshez, majd átirányít a bejelentkezés oldalára a felhasználót. A HTML sémájában egy táblázatban van megformázva a navigációs sáv amiben a kezdőoldal, sémák, bejelentkezés, és regisztráció linkje, valamint a kijelentkezés gombja szerepel. Ezek a bejelentkezés állapától függően vannak megjelenítve.
 
-A frontpage komponens a kezdőoldalt testesíti meg. Ennek a HTML sémájában egy leírás van, amiben a webalkalmazás használatához tartozó alapvető információk vannak.
+A \texttt{frontpage} komponens a kezdőoldalt testesíti meg. Ennek a HTML sémájában egy leírás van, amiben a webalkalmazás használatához tartozó alapvető információk vannak.
 
-A registration és login komponensek a regisztrációért és bejelentkezését felelősek. Mindkettőben egy űrlap van felhasználónévvel és jelszóval, és az űrlaphoz tartozó Angular vezérlővel, ami a validációért felelős. Ha nem megfelelő hosszúságú adatokat adnak meg a vezérlő jelez és hibát ír ki. Ha nem megfelelőek az adatok a szerver szerint, nem megfelelő a felhasználónév és jelszó kombináció, illetve foglalt a felhasználónév, akkor azt is jelzi az oldal. Sikeres esetben a validációt megkapja a felhasználó, és használhatja az oldalt.
+A \texttt{registration} és \texttt{login} komponensek a regisztrációért és bejelentkezését felelősek. Mindkettőben egy űrlap van felhasználónévvel és jelszóval, és az űrlaphoz tartozó Angular vezérlővel, ami a validációért felelős. Ha nem megfelelő hosszúságú adatokat adnak meg a vezérlő jelez és hibát ír ki. Ha nem megfelelőek az adatok a szerver szerint, nem megfelelő a felhasználónév és jelszó kombináció, illetve foglalt a felhasználónév, akkor azt is jelzi az oldal. Sikeres esetben a validációt megkapja a felhasználó, és használhatja az oldalt.
 
-A projects komponens felelős a meglévő sémák kiírásáért. A komponens első betöltésekor lekéri a szerverről a sémák adatait, hogy megjelenítse azokat. Az \texttt{onDeleteClick()} metódus a séma törléséhez használt, elsőnek megkérdezi a felhasználótól, hogy biztos törölni szeretné-e a sémát, és ha igen akkor kérést küld a szervernek. A HttpClient-tel történő kapcsolattartás miatt a szerver azonnal küldi a megváltozott adatokat a kliensnek, ami ezeket jeleníti meg. A HTML sémájában megtalálható a link az új séma feltöltéséhez, egy táblázat, amiben a séma neve, a sémához tartozó változtatási és beküldött űrlapok linkjei, és a törlés gomb szerepel. Ha még nem kapta meg az adatokat vagy nincsenek adatok, akkor a töltést, illetve a nem talált sémákat írja ki. Ezek az Angular *ngFor, *ngIf és *ngSwitch direktíváin keresztül értem el, amikkel meg lehet határozni dinamikus módon, a változók alapján, hogy mi jelenjen meg az oldalon.
+A \texttt{projects} komponens felelős a meglévő sémák kiírásáért. A komponens első betöltésekor lekéri a szerverről a sémák adatait, hogy megjelenítse azokat. Az \texttt{onDeleteClick()} metódus a séma törléséhez használt, elsőnek megkérdezi a felhasználótól, hogy biztos törölni szeretné-e a sémát, és ha igen akkor kérést küld a szervernek. A HttpClient-tel történő kapcsolattartás miatt a szerver azonnal küldi a megváltozott adatokat a kliensnek, ami ezeket jeleníti meg. A HTML sémájában megtalálható a link az új séma feltöltéséhez, egy táblázat, amiben a séma neve, a sémához tartozó változtatási és beküldött űrlapok linkjei, és a törlés gomb szerepel. Ha még nem kapta meg az adatokat vagy nincsenek adatok, akkor a töltést, illetve a nem talált sémákat írja ki. Ezek az Angular \texttt{*ngFor}, \texttt{*ngIf} és \texttt{*ngSwitch} direktíváin keresztül értem el, amikkel meg lehet határozni dinamikus módon, a változók alapján, hogy mi jelenjen meg az oldalon.
 
-A submittedxml komponensen keresztül érhetőek el a beküldött űrlapok. Itt a projects komponenshez hasonló módon lekéri az adatokat a szerverről, majd azokat egy táblázatban *ngFor segítségével kiírja. Ezeket lehet törölni, vagy egy másik gombbal le lehet tölteni. Ez esetben  a \texttt{downloadXml()} metódus lesz meghívva, ebben egy Blob (Binary Large Object) objektumot a letöltendő adattal, egy a Blob-ra hivatkozó URL-t, és egy linket hozz létre. A link \texttt{href} tulajdonságában a létrehozott URL, és a \texttt{download} tulajdonságában a letöltendő fájl nevét adtam meg. Ez után a \texttt{click()} metódussal megnyílik a link, ezzel megkezdve a letöltést, végül egy idő után megszünteti a létrehozott URL-t.
+A \texttt{submittedxml} komponensen keresztül érhetőek el a beküldött űrlapok. Itt a projects komponenshez hasonló módon lekéri az adatokat a szerverről, majd azokat egy táblázatban \texttt{*ngFor} segítségével kiírja. Ezeket lehet törölni, vagy egy másik gombbal le lehet tölteni. Ez esetben  a \texttt{downloadXml()} metódus lesz meghívva, ebben egy Blob (Binary Large Object) objektumot a letöltendő adattal, egy a Blob-ra hivatkozó URL-t, és egy linket hozz létre. A link \texttt{href} tulajdonságában a létrehozott URL, és a \texttt{download} tulajdonságában a letöltendő fájl nevét adtam meg. Ez után a \texttt{click()} metódussal megnyílik a link, ezzel megkezdve a letöltést, végül egy idő után megszünteti a létrehozott URL-t.
 
-A createxmlform komponensben lehetséges új séma létrehozása. A HTML-ben egy űrlap szerepel, amiben a séma nevét, és a XSD sémát kell megadni szövegesen, vagy fájl megadásával. A fájl megadásakor a \texttt{onFileSelected()} metódus fut le, amiben leellenőrzi a fájl formátumát, beállítja, hogy beolvasáskor az űrlap vezérlővel a szöveges mező értékébe a fájl tartalma szerepeljen, végül a 
+A \texttt{createxmlform} komponensben lehetséges új séma létrehozása. A HTML-ben egy űrlap szerepel, amiben a séma nevét, és a XSD sémát kell megadni szövegesen, vagy fájl megadásával. A fájl megadásakor a \texttt{onFileSelected()} metódus fut le, amiben leellenőrzi a fájl formátumát, beállítja, hogy beolvasáskor az űrlap vezérlővel a szöveges mező értékébe a fájl tartalma szerepeljen, végül a 
 \texttt{reader.readAsText()} metódussal eléri a fájl tartalmát. Beküldéskor leellenőrzi, hogy ki lettek-e töltve a megfelelő adatok, és ha igen egy kérésben elküldi őket a szervernek, majd átirányítja a felhasználót a séma szerkesztésének oldalára.
 
-Az editxmlform komponens a séma szerkesztésére szolgál. Ebben a komponensben elsőnek a \texttt{activatedRouter.paramMap.subscribe()} metódussal megkapja a séma azonosítóját az útvonal paramétereiből, alkot egy űrlap vezérlőt, végül lekéri az azonosítóval a séma adatait, amit az űrlap vezérlővel beleilleszt a beviteli mezőkbe. A HTML első részében egy űrlap szerepel, amiben a séma adatai vannak. Az adatok megváltoztatása után a feltöltés gombra kattintva meghívódik a \texttt{updateSchema()} metódus, ami egy PATCH kérést küld a szervernek a séma megváltoztatásához. Ezeken felül található itt az űrlap linkje és egy űrlap generáló gomb. A gombra kattintva megjelenik a kitölthető űrlap, aminek kitöltésével megtekinthető a vele készített XML dokumentum. Az űrlap dinamikus generálásáról a szakdolgozat következő részében lehet olvasni.
+Az \texttt{editxmlform} komponens a séma szerkesztésére szolgál. Ebben a komponensben elsőnek a \texttt{activatedRouter.paramMap.subscribe()} metódussal megkapja a séma azonosítóját az útvonal paramétereiből, alkot egy űrlap vezérlőt, végül lekéri az azonosítóval a séma adatait, amit az űrlap vezérlővel beleilleszt a beviteli mezőkbe. A HTML első részében egy űrlap szerepel, amiben a séma adatai vannak. Az adatok megváltoztatása után a feltöltés gombra kattintva meghívódik a \texttt{updateSchema()} metódus, ami egy PATCH kérést küld a szervernek a séma megváltoztatásához. Ezeken felül található itt az űrlap linkje és egy űrlap generáló gomb. A gombra kattintva megjelenik a kitölthető űrlap, aminek kitöltésével megtekinthető a vele készített XML dokumentum. Az űrlap dinamikus generálásáról a szakdolgozat következő részében lehet olvasni.
 
 \section{Űrlap komponens és űrlapgeneráló szolgáltatás}
 
-A felhasználók által kitöltendő űrlap komponense a fillxmlform. Az űrlap megalkotásához a form-generator szolgáltatásban vannak a metódusok főbb része, azok amelyek nem vannak direkt kapcsolatban a komponens HTML sémájával. Ezeken kívűl a fast-xml-parser(5.11.2) könyvtár segített a séma feldolgozásában.
+A felhasználók által kitöltendő űrlap komponense a \texttt{fillxmlform}. Az űrlap megalkotásához a form-generator szolgáltatásban vannak a metódusok főbb része, azok amelyek nem vannak direkt kapcsolatban a komponens HTML sémájával. Ezeken kívűl a fast-xml-parser(5.11.2) könyvtár segített a séma feldolgozásában.
 
-A fast-xml-parser XML dokumentumok feldolgozására és előállítására szolgál. Lehetséges vele XML dokumentum JavaScript objektumba alakítása, illetve fordított irányban JSON-ből XML dokumentumok létrehozása. Emellett rendelkezik az XML szintaktikai ellenőrzésére szolgáló funkcióval is. A könyvtár további előnye, hogy külső, C vagy C++ alapú függőségek nélkül működik, ezen kívül Node.js és böngésző környezetben is használható. A feldolgozásnál lehet többek között az attribútumok, névterek és különböző XML elemek kezelésének testreszabására is. A "fast-xml-parser vs xml2js vs xml-js vs libxmljs vs xml2json" /cite{parserCompare} cikk alapján a fast-xml-parser bizonyult a projekt követelményeinek leginkább megfelelő megoldásnak, ezért az alkalmazásban ennek használata mellett döntöttem.
+A fast-xml-parser XML dokumentumok feldolgozására és előállítására szolgál. Lehetséges vele XML dokumentum JavaScript objektumba alakítása, illetve fordított irányban JSON-ből XML dokumentumok létrehozása. Emellett rendelkezik az XML szintaktikai ellenőrzésére szolgáló funkcióval is. A könyvtár további előnye, hogy külső, C vagy C++ alapú függőségek nélkül működik, ezen kívül Node.js és böngésző környezetben is használható. A feldolgozásnál lehet többek között az attribútumok, névterek és különböző XML elemek kezelésének testreszabására is. A "fast-xml-parser vs xml2js vs xml-js vs libxmljs vs xml2json" \cite{parserCompare} cikk alapján a fast-xml-parser bizonyult a projekt követelményeinek leginkább megfelelő megoldásnak, ezért az alkalmazásban ennek használata mellett döntöttem.
 
 Elsőnek az URL azonosító alapján egy kérést küld a szervernek a szükséges XSD eléréséhez. Ha sikeresen megkapta a séma adatokat, akkor fast-xml-parser függőség alkot egy parser-t amit meghív rá, ami JSON formátummá alakítja, így könnyebben feldolgozhatóvá téve TypeScript-en.
 \begin{java}
 const parser = new XMLParser({
-              ignoreAttributes: false,
-              attributeNamePrefix : "@_",
-              removeNSPrefix: true,
-              isArray: (name:any) => 
-              ['element','attribute','enumeration']
-              .includes(name)
+	ignoreAttributes: false,
+	attributeNamePrefix : "@_",
+	removeNSPrefix: true,
+	isArray: (name:any) => 
+	['element','attribute','enumeration']
+	.includes(name)
 });
 const jObj = parser.parse(this.activeProject.schema);
 \end{java}
 Az \texttt{ignoreAttributes: false} beállítja, hogy megtartsa az attribútumokat. Az \\ \texttt{attributeNamePrefix : "@\_"} megadja, hogy az attribútumok neve elé "@\_" karaktereket illessze, megkülönböztetésként. A \texttt{removeNSPrefix: true} eltávolítja a névtérprefixeket. Végül a \texttt{isArray: (name:any) => ...} beállítja, hogy minden elem tömbbe kerüljön, ami tömbbe kerülhet, hogy ne kelljen mindkét lehetőséggel foglalkozni.
 
-Miután megvan a JSON-né formált XML séma, a form-generator-ban található \texttt{parseXsd()} metódus egy általam definiált FormSchema típust készít. Erre azért van szükség, hogy csökkentsen a séma komplexitásán, hiszen például egy elem típusa definiálva lehet az attribútumában, a több különböző gyerekének egyikében, vagy akár a \texttt{ref} attribútum használatával vagy egyéni típus definiálásával valahol máshol a dokumentumban. Mindez egyszerre kiolvasható lenne az űrlap kialakításának megalkotásakor, de a több lépésre bontásával egyszerűbb az implementációja és könnyebben fenntartható az alkalmazás.
+Miután megvan a JSON-né formált XML séma, a form-generator-ban található \texttt{parseXsd()} metódus egy általam definiált \texttt{FormSchema} típust készít. Erre azért van szükség, hogy csökkentsen a séma komplexitásán, hiszen például egy elem típusa definiálva lehet az attribútumában, a több különböző gyerekének egyikében, vagy akár a \texttt{ref} attribútum használatával vagy egyéni típus definiálásával valahol máshol a dokumentumban. Mindez egyszerre kiolvasható lenne az űrlap kialakításának megalkotásakor, de a több lépésre bontásával egyszerűbb az implementációja és könnyebben fenntartható az alkalmazás.
 
 \subsection{A séma átalakítása}
 
@@ -307,17 +307,17 @@ A \texttt{parseSimpleType()} függvény elsőnek megnézi, hogy unió típusú-e
 
 \subsection{Űrlapvezérlő létrehozása}
 
-Miután megvan a FormSchema típus, akkor még a program nem áll készen az űrlap létrehozására. A dinamikus űrlapok létrehozásáért és az azokhoz tartozó ellenőrzések beállításáért egy külön szolgáltatás felelős. Ennek feladata, hogy a FormSchema alapján létrehozza az Angular Reactive Forms által biztosított űrlapvezérlőket, és hozzárendeli hozzájuk a megfelelő validátorokat.
+Miután megvan a \texttt{FormSchema} típus, akkor még a program nem áll készen az űrlap létrehozására. A dinamikus űrlapok létrehozásáért és az azokhoz tartozó ellenőrzések beállításáért egy külön szolgáltatás felelős. Ennek feladata, hogy a \texttt{FormSchema} alapján létrehozza az Angular Reactive Forms által biztosított űrlapvezérlőket, és hozzárendeli hozzájuk a megfelelő validátorokat.
 
 A vezérlő felépítését a form-generator szolgáltatásban található \texttt{buildForm()} metódus végzi. Itt megnézi a megkapott sémarész típusát és ez szerint meghívja a \\ \texttt{buildGroup()}, \texttt{buildArray()} vagy \texttt{buildControl()} metódust.
 
 A \texttt{buildGroup()} metódusban az összes gyerekelemre és attribútumra meghívja a \texttt{buildForm()} metódust, majd az eredménnyel visszatér egy új FormGroup objektumot alkotva.
 
-A \texttt{buildArray()} függvényben egy FormArray objektumot alkot, majd a minimum elemszám alapján meghívja a benne lévő elemre \texttt{buildForm()} metódust, végül visszaadja a FormArray objektumot.
+A \texttt{buildArray()} függvényben egy \texttt{FormArray} objektumot alkot, majd a minimum elemszám alapján meghívja a benne lévő elemre \texttt{buildForm()} metódust, végül visszaadja a \texttt{FormArray} objektumot.
 
-A \texttt{buildControl()} metódus elsőnek a \texttt{mapValidators()} függvénnyel leképezi a szükséges validációs szabályokat, ha van alapérték megadva elmenti, majd ezeket az értékeket egy FormControl objektumban adja vissza.
+A \texttt{buildControl()} metódus elsőnek a \texttt{mapValidators()} függvénnyel leképezi a szükséges validációs szabályokat, ha van alapérték megadva elmenti, majd ezeket az értékeket egy \texttt{FormControl} objektumban adja vissza.
 
-A \texttt{mapValidators()} metódus a különböző egyszerű validációs szabályokat, majd a lista esetében állítja be a validációt. Itt a lista mező értékét a szóközök mentén szétválasztja, és egy tömbbe helyezi. Ez után megnézi, hogy a megfelelő mennyiségű tömb elem van-e, majd külön-külön ellenőrzi az elemeket a validáció szerint. A validációs szabályok között a \texttt{isValidXsdValue()} függvény is szerepel, amiben az érték az eredeti XSD típusa alapján egy regex-szel van összehasonlítva, ezzel tesztelve a formátumát.
+A \texttt{mapValidators()} metódus a különböző egyszerű validációs szabályokat, majd a lista esetében állítja be a validációt. Itt a lista mező értékét a szóközök mentén szétválasztja, és egy tömbbe helyezi. Ez után megnézi, hogy a megfelelő mennyiségű tömb elem van-e, majd külön-külön ellenőrzi az elemeket a validáció szerint. A validációs szabályok között a \texttt{isValidXsdValue()} függvény is szerepel, amiben az érték az eredeti XSD típusa alapján egy reguláris kifejezéssel kerül összehasonlításra, ezzel tesztelve a formátumát.
 
 \subsection{Űrlap}
 
@@ -368,26 +368,26 @@ Ha a FormSchema elem csoport típusú, akkor a vezérlőhöz hozzárendelődik a
   </div>
 </div>
 \end{java}
-Itt az *ngFor ciklussal bejárja az attribútom \texttt{keyvalue} pipe segítségével készített kulcs-érték párjait. Az \texttt{attr.key} az attribútum neve, és az \texttt{attr.value} pedig a hozzá tartozó séma. A \texttt{getAttributeControl()} függvény megkeresi a csoporthoz tartozó attribútumvezérlőt, majd a sablon ismét meghívja önmagát az attribútum beviteli mezőjének megjelenítéséhez.
+Itt az \texttt{*ngFor} ciklussal bejárja az attribútom \texttt{keyvalue} pipe segítségével készített kulcs-érték párjait. Az \texttt{attr.key} az attribútum neve, és az \texttt{attr.value} pedig a hozzá tartozó séma. A \texttt{getAttributeControl()} függvény megkeresi a csoporthoz tartozó attribútumvezérlőt, majd a sablon ismét meghívja önmagát az attribútum beviteli mezőjének megjelenítéséhez.
 Az egyszerű elemek is hasonlóan néznek ki, kiválasztódnak, annyi különbséggel, hogy a mező neve kulcs helyett \texttt{entry[0]}-ban van megadva, és \texttt{entry[1]}-ban vannak az értékek, majd \texttt{getControl()} keresi meg az adott helyre a vezérlőt. A tömbök és a csoportok megjelenítése hasonló módon történik. A \texttt{getArrayControls()} és a \texttt{getComplexControls()} függvények az adott csoporthoz tartozó vezérlőket típus szerint szétválasztják. Minden esetben ugyanaz a renderField sablon jelenik meg.
 
 \subsubsection{Tömbök megjelenítése}
 
-Ha a FormSchema tömb típusú, akkor a vezérlő elemeit járja be egy *ngFor ciklusban. A cikluson belül lesz újra megjelenítve a renderField sablon minden elemre, és egy gomb a \texttt{removeItem()} metódussal, amivel a vezérlőt, és ezzel az elemet lehet eltávolítani. A cikluson kívül található az a gomb aminek megnyomásával az \texttt{addItem} függvény kerül meghívásra, bővítve vele a vezérlőt.
+Ha a FormSchema tömb típusú, akkor a vezérlő elemeit járja be egy \texttt{*ngFor} ciklusban. A cikluson belül lesz újra megjelenítve a renderField sablon minden elemre, és egy gomb a \texttt{removeItem()} metódussal, amivel a vezérlőt, és ezzel az elemet lehet eltávolítani. A cikluson kívül található az a gomb aminek megnyomásával az \texttt{addItem} függvény kerül meghívásra, bővítve vele a vezérlőt.
 
 \subsubsection{Beviteli mezők}
 
-Ha nem egy csoport vagy tömb típusú, akkor egy beviteli mező jelenik meg. Ez a *ngSwitch segítségével, a \texttt{schema.ui?.widget}-ben található adattal választja ki, ha valamilyen hiba folytán üres lenne, akkor egyszerű szöveges mezőt hozz létre. A beviteli mezőkhöz hozzárendeli a vezérlőt, majd a FormSchema-ban található attribútumokat, ha azok léteznek. A rádiógomb, legördülő lista és jelölő doboz esetében a lehetséges opciókat egy *ngFor ciklussal jeleníti meg.
+Ha nem egy csoport vagy tömb típusú, akkor egy beviteli mező jelenik meg. Ez a \texttt{*ngSwitch} segítségével, a \texttt{schema.ui?.widget}-ben található adattal választja ki, ha valamilyen hiba folytán üres lenne, akkor egyszerű szöveges mezőt hozz létre. A beviteli mezőkhöz hozzárendeli a vezérlőt, majd a FormSchema-ban található attribútumokat, ha azok léteznek. A rádiógomb, legördülő lista és jelölő doboz esetében a lehetséges opciókat egy \texttt{*ngFor} ciklussal jeleníti meg.
 
-A lehetséges hibák *ngIf-fel jelölt címkékben vannak kiírva, amik csak akkor látszódnak ha a vezérlőt a megadott hibát adják vissza.
+A lehetséges hibák \texttt{*ngIf}-fel jelölt címkékben vannak kiírva, amik csak akkor látszódnak ha a vezérlőt a megadott hibát adják vissza.
 
-Miután a felhasználó kitöltötte az űrlapot annak az eredményét egy gombbal tudja beküldeni, ami a generateSubmission() függvényt hívja meg.
+Miután a felhasználó kitöltötte az űrlapot annak az eredményét egy gombbal tudja beküldeni, ami a \texttt{generateSubmission()} függvényt hívja meg.
 
 \subsection{Az űrlap beküldése}
 
 Abban az esetben, ha minden rendben van a kitöltött űrlappal, akkor a \texttt{generateXml()} metódus fogja a vezérlő értékei segítségével, a FormSchema típusú változó alapján összeállítani az XML dokumentumot. It a FormSchema-ra azért van szükség, mert a komplex elemek csoportjaiban nem feltétlenül vannak megfelelő sorrendben az elemek. 
 
-A {generateXML()} metódus elsőnek ellenőrzi, hogy a gyökérelem csoport-e és, hogy van-e neve. Ez után meghívja a \texttt{serializeAttributes()} és a \texttt{serializeChildren()} függvényeket, majd visszaadja azokat az XML dokumentum címkéi és saját neve közé zárva:
+A \texttt{generateXML()} metódus elsőnek ellenőrzi, hogy a gyökérelem csoport-e és, hogy van-e neve. Ez után meghívja a \texttt{serializeAttributes()} és a \texttt{serializeChildren()} függvényeket, majd visszaadja azokat az XML dokumentum címkéi és saját neve közé zárva:
 
 \begin{java}
 return (

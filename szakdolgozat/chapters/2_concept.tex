@@ -1,6 +1,6 @@
 \Chapter{Koncepció}
 
-Ebben a fejezetbe bemutatásra kerülnek a dolgozat megértéséhez szükséges fogalmak és technológiák. Ennek keretében le az XML és XML sémák működése, és az űrlapok, illetve űrlapalkotó és kitöltő alkalmazások vannak felvázolva.
+Ebben a fejezetben bemutatásra kerülnek a dolgozat megértéséhez szükséges fogalmak és technológiák. Ennek keretében le az XML és XML sémák működése, és az űrlapok, illetve űrlapalkotó és kitöltő alkalmazások vannak felvázolva.
 
 \section{Mi az XML}
 
@@ -16,7 +16,7 @@ Az XML sémák olyan opcionális leírások vagy fájlok, amellyel szabályozni 
 
 Az XML sémák azért lényegesek, mert garantálják az XML-fájlok egységes felépítését és könnyű feldolgozhatóságát. A séma meghatározza a dokumentum szerkezetét, így biztosítva, hogy a program helyesen tudja értelmezni, és minimalizálva a futás közbeni hibák kockázatát. Emellett a validálás segítségével gyorsan és egyszerűen kiszűrhetők a dokumentumban előforduló hibák.
 
-Az első sémanyelv, a DTD (document type definition) \cite{dtd} már valamilyen formában az XML megjelenése előtt is jelen volt, mivel az SGML nyelvcsalád általános használatához volt kifejlesztve, így csak a meglévő nyelvet kellet átdolgozni. A DTD definiálható saját fájlban, de akár az XML dokumentumban is.
+Az első sémanyelv, a DTD (Document Type Definition) \cite{dtd} már valamilyen formában az XML megjelenése előtt is jelen volt, mivel az SGML nyelvcsalád általános használatához volt kifejlesztve, így csak a meglévő nyelvet kellet átdolgozni. A DTD definiálható saját fájlban, de akár az XML dokumentumban is.
 
 A DTD alkalmas megadni az elemeket, azoknak a tartalmát, számosságát, sorrendjét, az attribútumokat, és ezeken felül entitásokkal hivatkozásokat lehet készíteni. Bár az alapvetők megtalálhatóak, a nyelvnek nagy hiányosságai vannak. Kevés az adattípusok száma és nem képes újabb, komplexebb típusokat definiálni, így nem lehet megkötéseket tenni a szövegértékeknek. A névterek kezelésére sem képes, így a több forrásból származó XML állományok kezelésében problémás. További hátránya, hogy a szintaxisa eltér az XML-től, így más XML-dokumentum kezelő eszközökkel nem használható. Mindezek miatt viszonylag hamar megjelentek az újabb, fejlettebb sémanyelvek, amelyek fokozatosan kiszorították a DTD használatát.
 

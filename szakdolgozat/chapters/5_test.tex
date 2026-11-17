@@ -1,12 +1,12 @@
 \Chapter{Tesztelés}
 
-A fejezet bemutatja, hogy mi szükséges a program futásához használt környezet kialakításához. Bemutatja a telepítés eljárását, a konfigurálás lépéseit, és az alkalmazás használatához leírást add. A futtatáson kívül opciókat add tesztelési lehetőségekre, és a megtett teszteseteket  felvázolja.
+A fejezet bemutatja, hogy mi szükséges a program futásához használt környezet kialakításához. Bemutatja a telepítés eljárását, a konfigurálás lépéseit, és az alkalmazás használatához leírást add. A futtatáson kívül opciókat add tesztelési lehetőségekre, és az elkészített teszteseteket  felvázolja.
 
 \section{A program függőségei}\label{sec:dependencies}
 
 A program futtatásához elsőként Node.js telepítése szükséges. A Node.js szoftver add futási környezetet a szerveroldal működéséhez, és a hozzá tartozó npm végzi a függőségek kezelését. A MongoDB az alkalmazás adatainak tárolására szolgáló adatbázis-kezelő rendszer, aminek a használatához le kell tölteni, vagy egy már meglévő kapcsolati sztringre van szükség külső szerveren történő futtatásához.
 
-A program backend és frontend függőségei külön-külön megtalálhatóak a package.js fájlokban.
+A program backend és frontend függőségei külön-külön megtalálhatóak a \texttt{package.js} fájlokban.
 
 \subsection{Szerveroldali függőségek}
 
@@ -33,9 +33,9 @@ A program backend és frontend függőségei külön-külön megtalálhatóak a 
 A program telepítése és konfigurálása több részből áll.
 \begin{enumerate}
 \item A projekt letöltése vagy klónozása után meg kell nyitni a frontend és a backend mappáját.
-\item Mindkét mappában telepíteni kell a szükséges függőségeket az npm install parancs segítségével.
+\item Mindkét mappában telepíteni kell a szükséges függőségeket az \texttt{npm install} parancs segítségével.
 \item Telepíteni és elindítani kell a MongoDB adatbázis-kezelő rendszert.
-\item A backend konfigurációjában, a .env fájlban szereplő értékeket érdemes megváltoztatni a futási környezettől függően. Amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni. 
+\item A backend konfigurációjában, a \texttt{.env} fájlban szereplő értékeket érdemes megváltoztatni a futási környezettől függően. Amennyiben nem helyileg futtatja az adatbázist, akkor be kell állítani az adatbázis-kapcsolatot, valamint érdemes a JWT-titkosító kulcsot megváltoztatni. 
 \end{enumerate}
 
 A konfigurációban az alábbi módon szerepelnek a változó-érték párok.
@@ -60,15 +60,15 @@ npm install
 ng serve
 \end{verbatim}
 
-A kliensoldal ezt követően általában a http://localhost:4200 címen érhető el, míg a szerveroldal a konfigurációban meghatározott porton fogadja a kéréseket.
+A kliensoldal ezt követően általában a \texttt{http://localhost:4200} címen érhető el, míg a szerveroldal a konfigurációban meghatározott porton fogadja a kéréseket.
 
 Élő környezetben az alkalmazás futtatása eltér a fejlesztői környezetben alkalmazott módszertől és további teendőkre van szükség.
 \begin{enumerate}
-\item A backend konfigurációjában (.env fájlban) a fordított proxy és hosting platrformok használatához a\texttt{TRUST\_PROXY=TRUE} kell állítani, és át kell állítani a frontend címét.
-\item A frontend/src/enviroments mappában az environment.production.ts fájlban át kell állítani az \texttt{apiURL}, hogy a megfelelő címre mutasson.
+\item A backend konfigurációjában (\texttt{.env} fájlban) a fordított proxy és hosting platrformok használatához a\texttt{TRUST\_PROXY=TRUE} kell állítani, és át kell állítani a frontend címét.
+\item A \texttt{frontend/src/enviroments} mappában az \texttt{environment.production.ts} fájlban át kell állítani az \texttt{apiURL}, hogy a megfelelő címre mutasson.
 \end{enumerate}
 
-A backend éles környezetben is Node.js segítségével fut. A szerver elindítható a npm start paranccsal, azonban célszerű valamilyen folyamatkezelő eszközt (például a PM2-t) használni. Ez lehetővé teszi a backend folyamatos működésének biztosítását, az esetleges hibák utáni újraindítást és a naplófájlok kezelését.
+A backend éles környezetben is Node.js segítségével fut. A szerver elindítható a \texttt{npm start} paranccsal, azonban célszerű valamilyen folyamatkezelő eszközt (például a PM2-t) használni. Ez lehetővé teszi a backend folyamatos működésének biztosítását, az esetleges hibák utáni újraindítást és a naplófájlok kezelését.
 
 A frontenden az Angular alkalmazásból először optimalizált buildet kell készíteni az alábbi paranccsal:
 
@@ -102,7 +102,7 @@ A Sémák menüpontban (lásd a \ref{fig:semaLista} ábrát) a felhasználó meg
 \label{fig:semaLista}
 \end{figure}
 
-Ha új sémát akar feltölteni a felhasználó azt megteheti az új séma feltöltése gombra kattintva. A felhasználónak elsőként meg kell adnia a létrehozandó űrlap nevét, majd hozzá kell rendelnie az űrlap szerkezetét meghatározó XML sémát. A séma megadása kétféleképpen történhet: a felhasználó közvetlenül beillesztheti vagy begépelheti az XSD kódot a szöveges mezőbe, illetve feltölthet egy korábban elkészített XSD fájlt (lásd a \ref{fig:semaFeltolt}. ábrát). Ezt követően a séma feltöltés gombbal menthető az új séma és a felhasználó megkapja a linket amin az űrlap elérhető.
+Ha új sémát akar feltölteni a felhasználó azt megteheti az "új séma feltöltése" gombra kattintva. A felhasználónak elsőként meg kell adnia a létrehozandó űrlap nevét, majd hozzá kell rendelnie az űrlap szerkezetét meghatározó XML sémát. A séma megadása kétféleképpen történhet: a felhasználó közvetlenül beillesztheti vagy begépelheti az XSD kódot a szöveges mezőbe, illetve feltölthet egy korábban elkészített XSD fájlt (lásd a \ref{fig:semaFeltolt}. ábrát). Ezt követően a séma feltöltés gombbal menthető az új séma és a felhasználó megkapja a linket amin az űrlap elérhető.
 
 \begin{figure}[h]
 \centering
@@ -172,8 +172,10 @@ A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos f
 
 \section{Tesztforgatókönyvek és tesztesetek}
 
+A dolgozat következő részében a különböző funkciók teszteléséhez használt tesztesetek vannak táblázatokba foglalva.
+
 \subsection{Felhasználói hitelesítés ellenőrzése}
-A regisztráció és a bejelentkezés megfelelő működésének ellenőrzése.
+A regisztráció és a bejelentkezés megfelelő működésének ellenőrzése (lásd \ref{tab:tesztf1} táblázatot).
 \begin{table}[h]
 \centering
 \caption{Felhasználói hitelesítés tesztforgatókönyve}
@@ -188,13 +190,13 @@ Hibás jelszó & Helyes felhasználónév, hibás jelszó megadása & A bejelent
 \hline
 Hiányzó adatok & A bejelentkezési mezők üresen hagyása & A rendszer jelzi a kötelező mezők hiányát. \\
 \hline
-Nem jogosultan válasz elérés & A felhasználó megnyit egy nem saját sémához tartozó válaszoldalt & A betöltött oldal üresen marad \\
+Jogosultság nélküli válasz elérés & A felhasználó megnyit egy nem saját sémához tartozó válaszoldalt & A betöltött oldal üresen marad \\
 \hline
 \end{tabular}
 \end{table}
 
 \subsection{XSD feltöltésének és feldolgozásának ellenőrzése}
-Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML sémákat, és képes-e feldolgozni azok tartalmát.
+Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML sémákat, és képes-e feldolgozni azok tartalmát (lásd \ref{tab:tesztf2} táblázatot).
 \begin{table}[h]
 \centering
 \caption{XML séma feltöltés tesztforgatókönyve}
@@ -215,7 +217,7 @@ Séma feldolgozása & Egy feldolgozható szerkezetű XSD megadása és az űrlap
 \end{table}
 
 \subsection{Űrlap generálásának és validációjának ellenőrzése}
-Annak ellenőrzése, hogy megfelelőek-e az XML séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat.
+Annak ellenőrzése, hogy megfelelőek-e az XML séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat (lásd \ref{tab:tesztf3} táblázatot).
 \begin{table}[h]
 \centering
 \caption{Űrlap kitöltés tesztforgatókönyve}
@@ -234,4 +236,5 @@ Felsorolás ellenőrzése & Egy felsorolással korlátozott mezőnél az engedé
 \hline
 \end{tabular}
 \end{table}
+
 A bemutatott tesztforgatókönyvekhez tartozó tesztesetek az alkalmazás vizsgálata során sikeres eredménnyel végrehajtásra kerültek.
