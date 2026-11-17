@@ -55,7 +55,6 @@ A Mongoose emellett támogatja egyedi metódusok definiálását is. A sémákho
 Az alkalmazásban a Mongoose segítségével három fő modell került kialakításra, amik segítségével épül fel az adatbázis: a felhasználók, a projektek és a beküldött űrlapok kezelésére szolgáló modellek. Ezek részletes felépítése, mezői és a közöttük fennálló kapcsolatok az adatbázis bemutatásánál lesznek ismertetve.
 
 A kapcsolat létrehozásához a \texttt{mongoose.connect()} metódus szolgál, amelynek a \texttt{DATABASE\_URL} környezeti változóban megadott kapcsolati karakterláncot kell átadni. A kapcsolat sikeres létrejötte után a mongoose-t beállítja, hogy csak a sémákban szereplő mezőket engedje lekérdezne, és csak ez után kezdi meg a beérkező HTTP kérések fogadását. A szerver által használt portszámot a PORT környezeti változó határozza meg, amelynek hiányában az alkalmazás alapértelmezés szerint a 3000-es portot használja.
-\\
 \begin{java}
 async function main() {
     await mongoose.connect(process.env.DATABASE_URL);
