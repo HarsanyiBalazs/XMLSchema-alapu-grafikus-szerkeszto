@@ -1,14 +1,14 @@
-\chapter{Tesztelés}
+\Chapter{Tesztelés}
 
 A fejezet bemutatja, hogy mi szükséges a program futásához használt környezet kialakításához. Bemutatja a telepítés eljárását, a konfigurálás lépéseit, és az alkalmazás használatához leírást add. A futtatáson kívül opciókat add tesztelési lehetőségekre, és az elkészített teszteseteket  felvázolja.
 
-\section{A program függőségei}\label{sec:dependencies}
+\Section{A program függőségei}\label{sec:dependencies}
 
 A program futtatásához elsőként Node.js telepítése szükséges. A Node.js szoftver add futási környezetet a szerveroldal működéséhez, és a hozzá tartozó npm végzi a függőségek kezelését. A MongoDB az alkalmazás adatainak tárolására szolgáló adatbázis-kezelő rendszer, aminek a használatához le kell tölteni, vagy egy már meglévő kapcsolati sztringre van szükség külső szerveren történő futtatásához.
 
 A program backend és frontend függőségei külön-külön megtalálhatóak a \texttt{package.js} fájlokban.
 
-\subsection{Szerveroldali függőségek}
+\SubSection{Szerveroldali függőségek}
 
 \begin{itemize}
 \item Express.js(5.2.1) a HTTP-kéréseket, valamint szerveroldali útvonalak és végpontok kezelését felelős.
@@ -20,7 +20,7 @@ A program backend és frontend függőségei külön-külön megtalálhatóak a 
 \item A dotenv(17.4.1) egy könnyűsúlyú szoftvermodul, ami a környezeti változókat egy helyi .env fájlból az alkalmazás futási környezetébe tölti be. 
 \end{itemize}
 
-\subsection{Kliensoldali függőségek}
+\SubSection{Kliensoldali függőségek}
 
 \begin{itemize}
 \item Az Angular(21.1.0) egy kliensoldali keretrendszer, ami majdnem minden szükséges eszközt tartalmaz, legyen az navigáció, űrlapkezelést vagy adatlekérés.
@@ -28,7 +28,7 @@ A program backend és frontend függőségei külön-külön megtalálhatóak a 
 \item A fast-xml-parser(5.11.2) az XML dokumentumok és sémák feldogozására használt könyvtár.
 \end{itemize}
 
-\section{Telepítés és használat}\label{sec:install}
+\Section{Telepítés és használat}\label{sec:install}
 
 A program telepítése és konfigurálása több részből áll.
 \begin{enumerate}
@@ -80,7 +80,7 @@ A parancs létrehozza a frontend futtatásához szükséges statikus fájlokat, 
 
 Az adatbázis-kezelést ebben az esetben is a MongoDB-vel történik. Az adatbázis lehet ugyanazon a szerveren telepítve, mint a backend, de külön szerveren vagy felhőalapú szolgáltatásként is működhet.
 
-\section{Használati útmutató}
+\Section{Használati útmutató}
 Első lépésként felhasználói fiók létrehozása szükséges. A regisztráció során a felhasználónak meg kell adnia egy egyedi, még nem használatban lévő felhasználónevet és egy legalább nyolc karakterből álló jelszót, ezt követően igénybe veheti a weboldal szolgáltatásait.
 
 Ha a felhasználó már rendelkezik saját fiókkal, akkor a bejelentkezés (lásd a \ref{fig:bejelentkezes}. ábrát) után érheti el az alkalmazás funkcióit.
@@ -158,7 +158,7 @@ Minden beküldött űrlaphoz tartozik egy XML dokumentum, amely az űrlap kitöl
 \label{fig:kitoltottUrlapok}
 \end{figure}
 
-\section{Automatizált tesztelés lehetősége}
+\Section{Automatizált tesztelés lehetősége}
 
 A webalkalmazások fejlesztése alatt fontos szempont a felhasználói felület megfelelő működésének ellenőrzése. A manuális, kézi tesztelés mellett akár automatizált tesztelési módszerek is alkalmazhatók, amelyek segítségével előre megadott felhasználói műveletek és azok eredményei ismételhető módon vizsgálhatók. Az automatizált teszteléssel ellenőrizhető, hogy az alkalmazás különböző funkciói a meghatározott követelményeknek megfelelően működnek-e.
 
@@ -170,12 +170,12 @@ Egy másik lehetőség a Puppeteer\cite{puppeteer}, ami egy JavaScript-alapú k�
 
 A bemutatott webalkalmazás esetében az automatizált tesztelés több fontos funkció ellenőrzésére is felhasználható. A tesztelés kiterjedhet például a felhasználói regisztrációra és bejelentkezésre, az XML sémák feltöltésére és mentésére, vagy például a dinamikus űrlapok generálására és kitöltésére. Kiemelt területet jelenthet az űrlapok validációjának ellenőrzése, mivel hogy az alkalmazásnak alapvető feladata, hogy az XSD sémában meghatározott korlátozások és követelmények a generált űrlapokon is megfeleljenek.
 
-\section{Tesztforgatókönyvek és tesztesetek}
+\Section{Tesztforgatókönyvek és tesztesetek}
 
 A dolgozat következő részében a különböző funkciók teszteléséhez használt tesztesetek vannak táblázatokba foglalva.
 
-\subsection{Felhasználói hitelesítés ellenőrzése}
-A regisztráció és a bejelentkezés megfelelő működésének ellenőrzése (lásd \ref{tab:tesztf1} táblázatot).
+\SubSection{Felhasználói hitelesítés ellenőrzése}
+A regisztráció és a bejelentkezés megfelelő működésének ellenőrzése (lásd a \ref{tab:tesztf1} táblázatot).
 \begin{table}[h]
 \centering
 \caption{Felhasználói hitelesítés tesztforgatókönyve}
@@ -195,8 +195,8 @@ Jogosultság nélküli válasz elérés & A felhasználó megnyit egy nem saját
 \end{tabular}
 \end{table}
 
-\subsection{XSD feltöltésének és feldolgozásának ellenőrzése}
-Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML sémákat, és képes-e feldolgozni azok tartalmát (lásd \ref{tab:tesztf2} táblázatot).
+\SubSection{XSD feltöltésének és feldolgozásának ellenőrzése}
+Cél annak vizsgálata, hogy a rendszer megfelelően kezeli-e a különböző módokon megadott XML sémákat, és képes-e feldolgozni azok tartalmát (lásd a \ref{tab:tesztf2} táblázatot).
 \begin{table}[h]
 \centering
 \caption{XML séma feltöltés tesztforgatókönyve}
@@ -216,8 +216,8 @@ Séma feldolgozása & Egy feldolgozható szerkezetű XSD megadása és az űrlap
 \end{tabular}
 \end{table}
 
-\subsection{Űrlap generálásának és validációjának ellenőrzése}
-Annak ellenőrzése, hogy megfelelőek-e az XML séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat (lásd \ref{tab:tesztf3} táblázatot).
+\SubSection{Űrlap generálásának és validációjának ellenőrzése}
+Annak ellenőrzése, hogy megfelelőek-e az XML séma alapján generált űrlap, és helyesen alkalmazza-e az egyes mezőkhöz tartozó megszorításokat (lásd a \ref{tab:tesztf3} táblázatot).
 \begin{table}[h]
 \centering
 \caption{Űrlap kitöltés tesztforgatókönyve}

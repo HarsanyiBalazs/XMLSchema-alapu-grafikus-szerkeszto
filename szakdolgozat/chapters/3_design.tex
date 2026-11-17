@@ -1,8 +1,8 @@
-\chapter{Tervezés}
+\Chapter{Tervezés}
 
 A cél egy olyan webalkalmazás létrehozása, amely lehetővé teszi XML-sémák feltöltését, az azok alapján dinamikusan létrehozott űrlapok kitöltését, és a kitöltött űrlap alapján XML-formátumba történő beküldése. Ennek működési terve és a program felépítéséhez választott technológiák vannak bemutatva a fejezetben.
 
-\section{Az alkalmazás működésének terve}
+\Section{Az alkalmazás működésének terve}
 A rendszer tervezése során fontos szempont, hogy az űrlapok létrehozását és kitöltését külön folyamatként lehessen kezelni. Ennek megfelelően a regisztrált felhasználók által létrehozott űrlapok egy egyedi hivatkozáson keresztül más személyek számára is elérhetővé válhatnak, így azok kitöltéséhez nem kell megadniuk a sémát.
 
 Az alkalmazás használatához a felhasználóknak saját fiókot kell regisztrálnia, majd bejelentkeznie. A regisztrált felhasználók egy XML-séma feltöltésével készíthetnek egy dinamikus űrlapot. A feltöltött séma feldolgozása során a rendszernek fel kell ismernie az egyes elemek típusát, kötelezőségi feltételeit és egyéb megkötéseit, majd ezek alapján kell kialakítania a megfelelő beviteli mezőket és azok validációs szabályait.
@@ -23,7 +23,7 @@ A program használati folyamata a \ref{fig:allapot}. ábrán látható.
 \label{fig:folyamat}
 \end{figure}
 
-\section{Program architektúrája és a felhasznált technológiák}
+\Section{Program architektúrája és a felhasznált technológiák}
 
 A program elkészítésére a MEAN stack (MongoDB, Express.js, Angular, Node.js, lásd a \ref{fig:meanelemek}. ábra) szoftvertechnológiai csomagot választottam. Ennek a szoftvercsoportnak részei a MongoDB \cite{mongodb} adatbázis kezelő rendszer, a Node.js \cite{node} javascript futattó környezet,az Express.js \cite{express} egy minimalista szerveroldali webapplikációs keretrendszer, és az angular \cite{angular} kliensoldali keretrendszer. Ezek együttesen lefedik a webapplikáció kliensoldal felületének kialakítását, a szerveroldali műveletek végrehajtását és a szükséges adatok tárolását. A különböző technológiák kiválasztásánál szempont volt az egységes fejlesztési környezet, a webalkalmazás igényeinek igazodó funkcionalitás, és a szükség szerinti bővíthetőség.
 
@@ -43,13 +43,13 @@ A MEAN stack meghatározó jellemzője, hogy mind a négy fő technológiája a 
 \label{fig:architekt}
 \end{figure}
 
-\subsection{Angular keretrendszer}
+\SubSection{Angular keretrendszer}
 
 A kliensoldali alkalmazás fejlesztéséhez az Angular keretrendszert választottam ki. Az Angular egy komponens-orientált keretrendszer, amely összetett, interaktív online felhasználói felületek létrehozására lett fejlesztve. A komponensekből álló felépítése segíti az alkalmazás különböző részeinek elkülönítését, újbóli felhasználását és karbantarthatóságát. Ezeken felül az Angular a dinamikus űrlapkészítést is nagyban támogatja. A keretrendszer Reactive Forms moduljával lehetővé teszi fejlesztők számára, hogy az űrlapok programozottan legyenek létrehozva és validálva, de lehetőség van akár egyedi validációs szabályok definiálására is.
 
 Alternatívaként szóba jöhet például a React \cite{react}. Az Angularral szemben a React egy kevésbé kötött, modulárisabb felhasználói felületek készítésére tervezett könyvtár, amely nagyobb szabadságot biztosít a komponensek felépítésében és az alkalmazás architektúrájában. Bár a React kevesebb beépített funkcióval rendelkezek, egyszerűsége gyorsabbá teszi a tervezés és a program futtatását is. Ezzel szemben Angularban már beépítve rendelkezik egy robusztus függvénykönyvtárral, ami lefedi az applikáció majdnem minden szükségét, így nem szükséges külső könyvtárak használata.
 
-\subsection{Node.js és Express.js}
+\SubSection{Node.js és Express.js}
 
 A szerveroldal megalkotásához az Express.js és a futtatásához szükséges Node.js lett kiválasztva. 
 
@@ -59,7 +59,7 @@ A szerveroldali alkalmazás kialakításához az Express.js adja a keretrendszer
 
 A szerveroldali fejlesztéshez alternatívát jelenthettek volna például a Python-alapú Django \cite{django} vagy Flask \cite{flask}. A Flask egy Express-hez hasonlóan egyszerűen felépített és rugalmas keretrendszer, amivel lehetséges az Express-szel létrehozott program készítése, viszont a Python programnyelv miatt nem illet bele a készülő alkalmazásba. Ezzel szemben a Django egy komplex, teljes körű keretrendszer, amiben már beépítve lehet felhasználókat kezelni, kezeli a biztonsági fenyegetéseket és tartalmaz adatbázis kezelőt. Az Express.js számomra megfelelő az alkalmazás szerveroldali funkcióinak létrehozásához, anélkül, hogy egy összetettebb keretrendszer teljes funkcionalitására szükség lenne.
 
-\subsection{MongoDB}
+\SubSection{MongoDB}
 
 Az adatok tárolására MongoDB dokumentum orientált NoSQL adatbázist választottam ki. A relációs adatbázisokkal ellentétben a MongoDB az adatokat BSON alapú dokumentumok formájában tárolja, ami egy JSON dokumentum bináris kódolásával jön létre. Ez rugalmas adatmodellt biztosít, ami lehetővé teszi különböző szerkezetű dokumentumok kezelését. Az adatbázis kiválasztásánál fontos szempont volt, hogy jól illeszkedjen a program többi részéhez, mivel a JSON-hoz hasonló adatszerkezetek használata egyszerűsíti a kliens, a szerver és az adatbázis közötti adatcserét.
 
